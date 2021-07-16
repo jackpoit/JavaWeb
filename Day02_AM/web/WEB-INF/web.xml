@@ -30,6 +30,15 @@
         <url-pattern>/life</url-pattern>
     </servlet-mapping>
 
+    <!--3.测试Servlet的线程安全性-->
+    <servlet>
+        <servlet-name>SafeServlet</servlet-name>
+        <servlet-class>com.woniuxy.web.servlet.SafeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SafeServlet</servlet-name>
+        <url-pattern>/safe</url-pattern>
+    </servlet-mapping>
 
     <!--4.配置一个CalculatorServlet-->
     <servlet>
@@ -44,12 +53,12 @@
         <url-pattern>/buy/vip</url-pattern>
         <url-pattern>/buy/vvip</url-pattern>
 
-        <!--路由的写法-->
-        <url-pattern>/buy/books</url-pattern> <!--完全匹配-->
-        <url-pattern>/all/*</url-pattern>       <!--目录匹配-->
-        <url-pattern>*.buy</url-pattern>    <!--扩展名匹配-->
 
-        <!--<url-pattern>/</url-pattern>  --> <!--缺省匹配-->
+        <!--路由的写法-->
+        <url-pattern>/buy/boos</url-pattern>    <!--完全匹配(访问路由要一模一样)-->
+        <url-pattern>/all/*</url-pattern>       <!--目录匹配(all下的都可以访问) *:通配符-->
+        <url-pattern>*.buy</url-pattern>        <!--扩展名匹配(以buy结尾的都可以购买)-->
+        <!--<url-pattern>/</url-pattern>-->     <!--缺省匹配(过滤一切请求)-->
 
 
     </servlet-mapping>

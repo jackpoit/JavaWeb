@@ -22,6 +22,8 @@ import java.io.IOException;
  *
  *		 面试题:
  *		 	请你谈谈对Servlet的理解?
+ *		 	tomcat的一个小程序 用来处理请求request和响应response的
+ *		 	
  *		 	Servlet的生命周期?
  *
  *		 	Servlet是如何做到一个实例处理多个请求的?
