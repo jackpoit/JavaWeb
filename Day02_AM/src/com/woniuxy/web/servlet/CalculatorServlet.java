@@ -26,6 +26,7 @@ public class CalculatorServlet extends HttpServlet {
 		float oprice=price; //原价
 		String discount="不打折";
 		String level="普通用户";
+
 		//2.获取真实的请求URI(工程访问路由/请求路由)
 		String uri=req.getRequestURI();
 
