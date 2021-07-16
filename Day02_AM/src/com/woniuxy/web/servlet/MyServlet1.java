@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class MyServlet1 extends HttpServlet {
 		System.out.println("servletPath=" + servletPath);
 
 		//3.获取访问者的ip
-		String remoteIP = req.getRemoteAddr();  //my1
+		String remoteIP = req.getRemoteAddr();  //ip
 		System.out.println("remoteIP=" + remoteIP);
 
 		//4.获取请求的URL URI
@@ -56,6 +57,24 @@ public class MyServlet1 extends HttpServlet {
 		for (Map.Entry<String, String[]> entry:entries){
 			System.out.println(entry.getKey()+":"+ Arrays.toString(entry.getValue()));
 		}
+
+		//重点 请求域对象:request还可以当成一个数据存储的区域
+
+		//在域中存放若干个K-V
+		req.setAttribute("name","admin");
+		req.setAttribute("productList",new ArrayList<>());
+
+		//通过K来获取对应的V
+	//Object name=req.getAttribute("name");
+		String name=(String)req.getAttribute("name");
+		Object obj=req.getAttribute("productList");
+		if (obj instanceof ArrayList){
+			ArrayList<String> list=(ArrayList<String>) obj;
+		}
+
+		//通过K来删除键值对
+		req.removeAttribute("name");
+
 
 	}
 }
