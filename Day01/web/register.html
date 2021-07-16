@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>注册</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="bootstrap/js/jquery-3.5.1.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container col-md-6 col-md-offset-3" style="margin-top: 100px">
+    <form action="register" class="form-horizontal" method="post">
+        <div class="form-group">
+            <label for="r_username" class="control-label col-md-2 ">用户名</label>
+            <div class="col-md-5">
+                <input type="text" id="r_username" name="r_username" class="form-control">
+            </div>
+            <div class="col-md-5 " style="line-height: 2"><span>用户名只能是字母且6-16位</span></div>
+            <span></span>
+        </div>
+        <div class="form-group">
+            <label for="r_pwd" class="control-label col-md-2">密码</label>
+            <div class="col-md-5">
+                <input type="password" id="r_pwd" name="r_pwd" class="form-control">
+            </div>
+            <div class="col-md-4 " style="line-height: 2"><span>6-16位字母数组下划线组成</span></div>
+            <span></span>
+        </div>
+        <div class="form-group">
+            <label for="r_repwd" class="control-label col-md-2">密码确认</label>
+            <div class="col-md-5">
+                <input type="password" id="r_repwd" class="form-control">
+            </div>
+            <div class="col-md-4 " style="line-height: 2"><span>请再次确认密码</span></div>
+            <span></span>
+        </div>
+        <div class="form-group">
+            <label for="r_phone" class="control-label col-md-2">手机号</label>
+            <div class="col-md-5">
+                <input type="text" id="r_phone"  name="r_phone" class="form-control">
+            </div>
+            <div class="col-md-4 " style="line-height: 2"><span>请输入您的手机号码</span></div>
+            <span></span>
+        </div>
+        <div class="form-group">
+            <label for="r_email" class="control-label col-md-2">邮箱</label>
+            <div class="col-md-5">
+                <input type="text" id="r_email" name="r_email" class="form-control">
+            </div>
+            <div class="col-md-4 " style="line-height: 2"><span>请输入您的邮箱</span></div>
+            <span></span>
+        </div>
+        <div class="form-group">
+            <div class="checkbox col-md-10 col-md-offset-2">
+                <label>
+                    <input type="checkbox">
+                    我同意 <span style="color: red">用户注册协议</span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group t">
+            <div class="col-md-5 col-md-offset-2 ">
+                <button type="submit" class="btn btn-primary btn-block">注册</button>
+            </div>
+        </div>
+    </form>
+    <button class="btn bg-primary navbar-right"><a href="index.html" style="color: white">返回首页</a></button>
+</div>
+</body>
+</html>
