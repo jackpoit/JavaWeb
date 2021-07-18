@@ -40,6 +40,7 @@ public class LoginServlet extends HttpServlet {
 			}else {
 				resStr="登录成功";
 				req.setAttribute("name",user.getUsername());
+				System.out.println(user);
 			}
 		}
 		req.setAttribute("loginStr",resStr);

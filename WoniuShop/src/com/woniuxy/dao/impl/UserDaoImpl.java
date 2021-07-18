@@ -116,6 +116,8 @@ public class UserDaoImpl implements UserDao {
 		return list.isEmpty() ? null : list;
 	}
 
+
+
 	@Override
 	public User findByName(String username) throws SQLException {
 		Connection conn = DBUtil.getConnection();
@@ -134,5 +136,28 @@ public class UserDaoImpl implements UserDao {
 		}
 		DBUtil.release(conn, ps, rs);
 		return user;
+	}
+
+	@Override
+	public List<User> findByPage(int index,int len) throws SQLException {
+		Connection conn = DBUtil.getConnection();
+		String sql = "SELECT id,username,password,phone,email From t_user ORDER BY id LIMIT ?,?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setObject(1, (index-1)*len);
+		ps.setObject(2,len);
+		ResultSet rs = ps.executeQuery();
+		User user = null;
+		List<User> list = new ArrayList<>();
+		while (rs.next()) {            //ORM(Object Relational Mapping)
+			Integer ids = rs.getInt("id");
+			String username = rs.getString("username");
+			String password = rs.getString("password");
+			String phone = rs.getString("phone");
+			String email = rs.getString("email");
+			user=new User(ids,username,password,phone,email);
+			list.add(user);
+		}
+		DBUtil.release(conn, ps, rs);
+		return list.isEmpty() ? null : list;
 	}
 }

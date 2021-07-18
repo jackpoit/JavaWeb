@@ -68,4 +68,16 @@ public class UserDaoImplTest {
 	@org.junit.Test
 	public void findLike() {
 	}
+
+	@org.junit.Test
+	public void findByPage(){
+		List<User> list= null;
+		try {
+			list = udi.findByPage(1,3);
+			System.out.println(list);
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+
+	}
 }

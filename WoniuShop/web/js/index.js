@@ -34,4 +34,5 @@ function loginRes(name) {
     if (name!=""){
         changeName(name);
     }
+    window.location.href="index.jsp";
 }

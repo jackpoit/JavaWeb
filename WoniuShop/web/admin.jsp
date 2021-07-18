@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -78,7 +79,7 @@
                         </button>
                     </div>
                 </div>
-                <div style="height: 217px">
+                <div style="min-height: 217px">
                 <table class="table table-hover table-bordered text-center" style="line-height: 2;">
                     <tbody>
                     <tr>
@@ -92,74 +93,46 @@
                         <td>用户类别</td>
                         <td colspan="2">操作</td>
                     </tr>
-                    <tr>
-                        <td>选择<input type="checkbox"></td>
-                        <td>1</td>
-                        <td>啦啦</td>
-                        <td>12345</td>
-                        <td>
-                            <img src="imges/user/4.jpg" width="40px" class="img-circle" alt=""></td>
-                        <td>普通用户</td>
-                        <td>
-                            <button type="button" class="btn btn-danger" onclick="delTr(this)">&times;删除</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modifyModal">
-                                <span class="glyphicon glyphicon-pencil"></span>修改
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>选择<input type="checkbox"></td>
-                        <td>1</td>
-                        <td>啦啦</td>
-                        <td>12345</td>
-                        <td>
-                            <img src="imges/user/4.jpg" width="40px" class="img-circle" alt=""></td>
-                        <td>普通用户</td>
-                        <td>
-                            <button type="button" class="btn btn-danger" onclick="delTr(this)">&times;删除</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modifyModal">
-                                <span class="glyphicon glyphicon-pencil"></span>修改
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>选择<input type="checkbox"></td>
-                        <td>1</td>
-                        <td>啦啦</td>
-                        <td>12345</td>
-                        <td>
-                            <img src="imges/user/4.jpg" width="40px" class="img-circle" alt=""></td>
-                        <td>普通用户</td>
-                        <td>
-                            <button type="button" class="btn btn-danger" onclick="delTr(this)">&times;删除</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modifyModal">
-                                <span class="glyphicon glyphicon-pencil"></span>修改
-                            </button>
-                        </td>
-                    </tr>
+                    <c:forEach var="u" items="${userList}">
+                        <tr>
+                            <td>选择<input type="checkbox"></td>
+                            <td>${u.id}</td>
+                            <td>${u.username}</td>
+                            <td>${u.phone}</td>
+                            <td>
+                                <img src="imges/user/4.jpg" width="40px" class="img-circle" alt=""></td>
+                            <td>普通用户</td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="delTr(this)">&times;删除</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#modifyModal">
+                                    <span class="glyphicon glyphicon-pencil"></span>修改
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+
+
+
                     </tbody>
                 </table>
                 </div>
                 <div class="container text-center">
                     <ul class="pagination">
-                        <li><a href="">&laquo;</a></li>
-                        <li><a href="">1</a></li>
-                        <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">&raquo;</a></li>
+                        <li><a href="javascript:;" onclick=" getPagePath(this)">&laquo;</a></li>
+                        <li><a href="javascript:;" onclick=" getPagePath(this)">1</a></li>
+                        <li><a href="javascript:;" onclick=" getPagePath(this)">2</a></li>
+                        <li><a href="javascript:;" onclick=" getPagePath(this)">3</a></li>
+                        <li><a href="javascript:;" onclick=" getPagePath(this)">4</a></li>
+                        <li><a href="javascript:;" onclick=" getPagePath(this)">&raquo;</a></li>
                     </ul>
                 </div>
 
+                <script>
+                    getUserPage(${userPage});
+                </script>
             </div>
             <%--商品界面--%>
             <div role="tabpanel" class="tab-pane" id="item">

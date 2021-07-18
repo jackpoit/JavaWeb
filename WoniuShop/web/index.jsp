@@ -26,13 +26,13 @@
     <div class="container">
         <div class="col-md-2 navbar-left" style="height: 60px;line-height: 60px">
             <img src="imges/user/4.jpg" width="40px" class="img-circle" alt="">
-            <span class="person" id="user-name-label">
+            <span class="person" id="user-name-label" onclick="$('#loginModal').modal('show')">
             请登录
             </span>
         </div>
 
         <div class="col-md-5 navbar-right">
-            <button type="button" class="btn btn-primary" onclick="changeName('sss')">
+            <button type="button" class="btn btn-primary" >
                 <span class="glyphicon glyphicon-home"></span>
                 首页
             </button>
@@ -390,10 +390,10 @@
 </script>
 <script>
     <%
-        String name="";
-        name=(String) request.getAttribute("name");
-       if (request.getAttribute("loginStr")!=null){
-       	out.write("loginRes("+name+")");
+        String name=(String) request.getAttribute("name");
+        System.out.println(name);
+        if (request.getAttribute("loginStr")!=null){
+       	out.write("loginRes('"+name+"')");  //此处name要加引号 不然就 undefined
        }
     %>
 </script>
