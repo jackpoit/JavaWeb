@@ -11,9 +11,10 @@ import java.io.IOException;
 /**
  * 模拟安居客租房经理
  *
+ * @author rua
  */
 @WebServlet("/anjuke/manager")
-public class ManegerServlet extends HttpServlet {
+public class ManagerServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

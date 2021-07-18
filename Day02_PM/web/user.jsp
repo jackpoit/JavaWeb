@@ -52,7 +52,7 @@ ${name}
 <br>
 EL获取集合的对象属性: ${userList[3].username}
 
-ISTL来遍历域中的集合对象:
+JSTL来遍历域中的集合对象:
 <br>
 <c:forEach var="u" items="${userList}">
     ${u} <br>

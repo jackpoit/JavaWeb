@@ -1,10 +1,8 @@
 package com.woniuxy.web.servlet;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * 测试Servlet生命周期
@@ -33,15 +31,16 @@ import java.io.IOException;
  *
  *		 	Servlet线程安全吗?
  *
+ * @author rua
  */
 public class LifeServlet extends HttpServlet {
 	@Override
-	public void init() throws ServletException {
+	public void init()  {
 		System.out.println("LifeServlet创建了");
 	}
 
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void service(HttpServletRequest req, HttpServletResponse resp)  {
 		System.out.println("LifeServlet执行了service()");
 	}
 

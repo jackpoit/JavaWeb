@@ -1,7 +1,6 @@
 package com.woniuxy.web.servlet;
 
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,11 +8,12 @@ import java.io.IOException;
 
 
 /**
+ * @author jackpoit
  * 模拟商场打折购买的结算系统
  */
 public class CalculatorServlet extends HttpServlet {
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/html;charset=utf-8");
 
 		//1.获取商品价格
@@ -23,7 +23,8 @@ public class CalculatorServlet extends HttpServlet {
 			return;
 		}
 		float price = Float.parseFloat(priceStr);
-		float oprice = price; //原价
+		float oPrice = price;
+		//原价
 		String discount = "不打折";
 		String level = "普通用户";
 
@@ -42,7 +43,6 @@ public class CalculatorServlet extends HttpServlet {
 		}
 
 		//4.返回响应
-		resp.getWriter().write("用户购买的商品原价为:" + oprice + "," +
-				"用户等级为:" + level + ",所有商品" + discount + ",最终结算金额:" + price);
+		resp.getWriter().write("用户购买的商品原价为:" + oPrice + "," + "用户等级为:" + level + ",所有商品" + discount + ",最终结算金额:" + price);
 	}
 }
