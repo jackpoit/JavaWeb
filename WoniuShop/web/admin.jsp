@@ -507,8 +507,8 @@
                     </div>
                     <div class="form-group ">
                         <div class="col-md-6 col-md-offset-3 text-center">
-                            <button type="submit" class="btn btn-primary " onclick="changeItem(true)">确认添加</button>
-                            <button type="submit" class="btn btn-primary " onclick="changeItem(true)">返回首页</button>
+                            <button type="submit" class="btn btn-primary " >确认添加</button>
+                            <button type="submit" class="btn btn-primary " >返回首页</button>
                         </div>
                     </div>
                 </form>
