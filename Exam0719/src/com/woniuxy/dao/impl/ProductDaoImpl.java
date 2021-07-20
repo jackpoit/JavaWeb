@@ -30,8 +30,15 @@ public class ProductDaoImpl implements ProductDao {
 		return rows;
 	}
 
+	@Override
+	public int deleteById(int id) throws SQLException {
+		return 0;
+	}
 
-
+	@Override
+	public int update(Product product) throws SQLException {
+		return 0;
+	}
 
 
 	@Override
@@ -46,17 +53,20 @@ public class ProductDaoImpl implements ProductDao {
 			Integer ids = rs.getInt("id");
 			String pname = rs.getString("pname");
 			String pinfo = rs.getString("pinfo");
-			BigDecimal price=rs.getBigDecimal("price");
+			BigDecimal price = rs.getBigDecimal("price");
 			Integer stock = rs.getInt("stock");
 			Integer sale = rs.getInt("sale");
 			String image = rs.getString("image");
-			product=new Product(ids,pname,pinfo,price,stock,sale,image);
-
+			product = new Product(ids, pname, pinfo, price, stock, sale, image);
 		}
 		DBUtil.release(conn, ps, rs);
 		return product;
 	}
 
+	@Override
+	public Product findByName(String name) throws SQLException {
+		return null;
+	}
 
 
 	@Override
@@ -71,15 +81,25 @@ public class ProductDaoImpl implements ProductDao {
 			Integer ids = rs.getInt("id");
 			String pname = rs.getString("pname");
 			String pinfo = rs.getString("pinfo");
-			BigDecimal price=rs.getBigDecimal("price");
+			BigDecimal price = rs.getBigDecimal("price");
 			Integer stock = rs.getInt("stock");
 			Integer sale = rs.getInt("sale");
 			String image = rs.getString("image");
-			product=new Product(ids,pname,pinfo,price,stock,sale,image);
+			product = new Product(ids, pname, pinfo, price, stock, sale, image);
 			list.add(product);
 		}
 		DBUtil.release(conn, ps, rs);
 		return list.isEmpty() ? null : list;
+	}
+
+	@Override
+	public List<Product> findLike(String str) throws SQLException {
+		return null;
+	}
+
+	@Override
+	public List<Product> findByPage(int index, int len) throws SQLException {
+		return null;
 	}
 
 

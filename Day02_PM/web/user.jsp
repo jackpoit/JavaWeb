@@ -54,8 +54,8 @@ EL获取集合的对象属性: ${userList[3].username}
 
 JSTL来遍历域中的集合对象:
 <br>
-<c:forEach var="u" items="${userList}">
-    ${u} <br>
+<c:forEach var="p" items="${userList}">
+    ${p} <br>
 </c:forEach>
 
 
@@ -78,12 +78,12 @@ JSTL来遍历域中的集合对象:
             <td>密码</td>
             <td>性别</td>
         </tr>
-        <c:forEach var="u" items="${userList}">
+        <c:forEach var="p" items="${userList}">
         <tr>
-            <td>${u.id}</td>
-            <td>${u.username}</td>
-            <td>${u.password}</td>
-            <td>${u.gender}</td>
+            <td>${p.id}</td>
+            <td>${p.username}</td>
+            <td>${p.password}</td>
+            <td>${p.gender}</td>
         </tr>
         </c:forEach>
 

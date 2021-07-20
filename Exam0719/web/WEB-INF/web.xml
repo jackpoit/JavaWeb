@@ -6,7 +6,7 @@
     
     <servlet>
         <servlet-name>ShowAllProcuctServlet</servlet-name>
-        <servlet-class>com.woniuxy.web.servlet.ShowAllProcuctServlet</servlet-class>
+        <servlet-class>com.woniuxy.web.servlet.FindAllServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShowAllProcuctServlet</servlet-name>
@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>ShowProductById</servlet-name>
-        <servlet-class>com.woniuxy.web.servlet.ShowProductById</servlet-class>
+        <servlet-class>com.woniuxy.web.servlet.FindOneServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShowProductById</servlet-name>
@@ -23,7 +23,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>addServlet</servlet-name>
-        <servlet-class>com.woniuxy.web.servlet.AddServlet</servlet-class>
+        <servlet-class>com.woniuxy.web.servlet.AddProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addServlet</servlet-name>

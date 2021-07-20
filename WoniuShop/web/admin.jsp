@@ -93,12 +93,12 @@
                         <td>用户类别</td>
                         <td colspan="2">操作</td>
                     </tr>
-                    <c:forEach var="u" items="${userList}">
+                    <c:forEach var="p" items="${userList}">
                         <tr>
                             <td>选择<input type="checkbox"></td>
-                            <td>${u.id}</td>
-                            <td>${u.username}</td>
-                            <td>${u.phone}</td>
+                            <td>${p.id}</td>
+                            <td>${p.username}</td>
+                            <td>${p.phone}</td>
                             <td>
                                 <img src="imges/user/4.jpg" width="40px" class="img-circle" alt=""></td>
                             <td>普通用户</td>
@@ -485,13 +485,6 @@
                             <input type="password" id="a_pwd" name="a_pwd" class="form-control" placeholder="请输入密码">
                         </div>
                     </div>
-                    <%--                    <div class="form-group">--%>
-                    <%--                        <label for="r_repwd" class="control-label col-md-2">密码确认:</label>--%>
-                    <%--                        <div class="col-md-9">--%>
-                    <%--                            <input type="password"  id="r_repwd" class="form-control" >--%>
-                    <%--                        </div>--%>
-
-                    <%--                    </div>--%>
                     <div class="form-group">
                         <label for="a_phone" class="control-label col-md-2">手机号:</label>
                         <div class="col-md-9">

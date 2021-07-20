@@ -1,3 +1,5 @@
+let priceFlag=false;
+let stockFlag=false;
 $(function () {
     $('#price').blur(function () {
         let pricePattern=/^\d+(\.\d+)?$/;
@@ -5,10 +7,13 @@ $(function () {
             if (!pricePattern.test($(this).val())){
                 alert("价格输入不合法");
                 $(this).val("");
+                priceFlag=false;
+            }else {
+                priceFlag=true;
             }
+        }else {
+            priceFlag=false;
         }
-
-
     });
     $('#stock').blur(function () {
         let pricePattern=/^[0-9]+$/;
@@ -16,7 +21,13 @@ $(function () {
             if (!pricePattern.test($(this).val())){
                 alert("库存输入不合法");
                 $(this).val("");
+                stockFlag=false;
+            }else {
+                stockFlag=true;
             }
+        }else {
+            stockFlag=false;
+
         }
 
     })
@@ -31,11 +42,11 @@ function delTr(obj) {
  $(obj).parent().parent().remove();
 
 }
-function searchById() {
+function searchById(){
     let id=prompt("请输入要查询的商品id");
     let idPattern=/^[1-9][0-9]*$/;
     if (idPattern.test(id)){
-        window.location.href="showById?id="+id;
+        window.location.href="http://localhost:8080/Exam0719/showById?id="+id;
     }else {
         alert("id输入不合法");
     }
@@ -58,4 +69,9 @@ function showAddModal() {
         $('#addResModal').modal('hide')
     }, 2000)
 
+}
+function addItemBtn() {
+    if (priceFlag&&stockFlag){
+       $('#addItem').submit();
+    }
 }

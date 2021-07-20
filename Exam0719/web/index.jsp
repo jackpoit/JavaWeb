@@ -1,11 +1,4 @@
 <%@ page import="com.woniuxy.entity.Product" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: rua
-  Date: 2021/7/19
-  Time: 9:16
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -24,7 +17,7 @@
 <div class="container" style="margin-top: 60px">
     <div class="row" style="margin-bottom: 60px">
         <div class="container">
-            <button class="btn btn-success"  data-toggle="modal" data-target="#addModal">
+            <button class="btn btn-success" data-toggle="modal" data-target="#addModal">
                 <span class="glyphicon glyphicon-plus"></span>添加商品
             </button>
             <button class="btn btn-primary" onclick="searchById()">
@@ -36,35 +29,38 @@
         </div>
     </div>
     <!--商品-->
-    <div class="container">
-        <div class="row"  style="min-height: 600px">
-        <c:forEach var="u" items="${userList}">
-            <div class="col-xs-6 col-sm-4 col-md-3">
-                <div class="thumbnail pro-item">
-                    <img src="imgs/${u.image}" alt="">
-                    <div class="caption">
-                        <h4 class="title">${u.pname}</h4>
-                        <p class="info">${u.pinfo} </p>
-                        <p class="price">${u.price}元起</p>
+    <c:if test="${!empty productList}">
+        <div class="container">
+            <div class="row" style="min-height: 600px">
+                <c:forEach var="p" items="${productList}">
+                    <div class="col-xs-6 col-sm-4 col-md-3">
+                        <div class="thumbnail pro-item">
+                            <img src="imgs/${p.image}" alt="">
+                            <div class="caption">
+                                <h4 class="title">${p.pname}</h4>
+                                <p class="info">${p.pinfo} </p>
+                                <p class="price">${p.price}元起</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </c:forEach>
             </div>
-            </c:forEach>
+            <!--分页导航条-->
+            <div class="row">
+                <ul class="pager">
+                    <li><a href="">上一页</a></li>
+                    <li><a href="">1</a></li>
+                    <li><a href="">2</a></li>
+                    <li><a href="">3</a></li>
+                    <li><a href="">4</a></li>
+                    <li><a href="">5</a></li>
+                    <li><a href="">下一页</a></li>
+                </ul>
+            </div>
         </div>
-        <!--分页导航条-->
-        <div class="row">
-            <ul class="pager">
-                <li><a href="">上一页</a></li>
-                <li><a href="">1</a></li>
-                <li><a href="">2</a></li>
-                <li><a href="">3</a></li>
-                <li><a href="">4</a></li>
-                <li><a href="">5</a></li>
-                <li><a href="">下一页</a></li>
-            </ul>
-        </div>
-    </div>
-<%--    商品添加模态框--%>
+    </c:if>
+
+    <%--    商品添加模态框--%>
     <div class="modal fade" id="addModal" tabindex="-1">
         <div class="modal-dialog" style="width: 500px;margin-top: 150px">
             <div class="modal-content">
@@ -73,7 +69,7 @@
                     <h4 class="modal-title text-left">商品添加</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="add" class="form-horizontal" method="get">
+                    <form action="add" class="form-horizontal" method="get" id="addItem">
                         <div class="form-group">
                             <label for="pname" class="control-label col-md-3 ">商品名:</label>
                             <div class="col-md-9">
@@ -88,7 +84,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label  class="control-label col-md-3">商品图片:</label>
+                            <label class="control-label col-md-3">商品图片:</label>
                             <div class="col-md-5">
                                 <select name="pimage" class="form-control">
                                     <option value="p1.webp">p1.webp</option>
@@ -117,7 +113,7 @@
                         </div>
                         <div class="form-group ">
                             <div class="col-md-6 col-md-offset-3 ">
-                                <button type="submit" class="btn btn-primary ">添加商品</button>
+                                <button type="button" class="btn btn-primary" onclick="addItemBtn()">添加商品</button>
                             </div>
                         </div>
                     </form>
@@ -126,7 +122,7 @@
         </div>
     </div>
 
-    <%--    查询成功模态框--%>
+    <%--查询成功模态框--%>
     <div class="modal fade" id="searchSuccessModal" tabindex="-1" data-backdrop='static'>
         <div class="modal-dialog" style="width: 1000px;margin-top: 150px">
             <div class="modal-content">
@@ -135,29 +131,31 @@
                     <h4 class="modal-title text-left">查询结果</h4>
                 </div>
                 <div class="modal-body text-center">
-                   <table class="table table-bordered text-center">
-                       <tbody>
-                       <tr>
-                           <td>编号</td>
-                           <td>商品名称</td>
-                           <td>商品图片</td>
-                           <td>商品价格</td>
-                           <td>商品库存</td>
-                           <td>商品销量</td>
-                           <td>其他操作</td>
-                       </tr>
-                       <tr style="line-height: 57px">
-                           <td>${product.id}</td>
-                           <td>${product.pname}</td>
-                           <td><img src="imgs/${product.image}" alt="" style="width: 40px"></td>
-                           <td>${product.price}元</td>
-                           <td>${product.stock}</td>
-                           <td>${product.sale}</td>
-                           <td><button class="btn btn-danger" onclick="delTr(this)">&times;删除</button></td>
-                       </tr>
-                       </tbody>
+                    <table class="table table-bordered text-center">
+                        <tbody>
+                        <tr>
+                            <td>编号</td>
+                            <td>商品名称</td>
+                            <td>商品图片</td>
+                            <td>商品价格</td>
+                            <td>商品库存</td>
+                            <td>商品销量</td>
+                            <td>其他操作</td>
+                        </tr>
+                        <tr style="line-height: 57px">
+                            <td>${product.id}</td>
+                            <td>${product.pname}</td>
+                            <td><img src="imgs/${product.image}" alt="" style="width: 60px"></td>
+                            <td>${product.price}元</td>
+                            <td>${product.stock}</td>
+                            <td>${product.sale}</td>
+                            <td>
+                                <button class="btn btn-danger" onclick="delTr(this)">&times;删除</button>
+                            </td>
+                        </tr>
+                        </tbody>
 
-                   </table>
+                    </table>
                 </div>
             </div>
         </div>
@@ -183,22 +181,24 @@
         </div>
     </div>
 
+
+    <c:if test="${!empty addResStr}">
+        <script>
+            showAddModal();
+        </script>
+    </c:if>
+    <c:if test="${!empty product}">
+        <script>
+            searchSuccess();
+        </script>
+    </c:if>
     <script>
         <%
-           String addResStr=(String) request.getAttribute("addResStr");
-           if (addResStr!=null){
-           	    out.write("showAddModal()");
-           }
-
             String flag="1";
             flag=(String) request.getAttribute("flag");
             if ("2".equals(flag)){
             	out.write("searchFailed()");
             }
-            Product product=(Product) request.getAttribute("product");
-            if (product!=null){
-            	 out.write("searchSuccess()");
-           }
         %>
     </script>
 </div>
