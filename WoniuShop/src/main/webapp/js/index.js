@@ -1,8 +1,3 @@
-$(function () {
-
-
-});
-
 
 function registerSuccess() {
     $('#registerModal').modal('hide');
@@ -12,12 +7,19 @@ function registerSuccess() {
         $('#loginModal').modal('show')
     }, 3000)
 }
+function registerFailed(){
+    $('#registerModal').modal('hide');
+    $('#infoModal').modal('show');
+    setTimeout(function () {
+        $('#infoModal').modal('hide')
+    }, 3000)
+}
 
 function loginRes(name) {
     $('#loginModal').modal('hide');
-    $('#loginSuccessModal').modal('show');
+    $('#infoModal').modal('show');
     setTimeout(function () {
-        $('#loginSuccessModal').modal('hide')
+        $('#infoModal').modal('hide')
     }, 3000)
     if (name!=""){
         $('#user-name-label').text(name)

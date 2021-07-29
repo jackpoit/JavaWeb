@@ -46,10 +46,8 @@ public class UserServlet extends BaseServlet {
 		user.setPhone(req.getParameter("r_phone"));
 		user.setEmail(req.getParameter("r_email"));
 		user.setImagePath(req.getParameter("r_img"));
-		user.setUserLevel(req.getParameter("r_level"));
-
+		user.setUserLevel("普通用户");
 		String imgPath = "http://localhost:8080/WoniuShop/images/user/1.jpg";
-
 		user.setImagePath(imgPath);
 		boolean flag = usi.registerUser(user);
 

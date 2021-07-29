@@ -252,63 +252,70 @@
                 <h4 class="modal-title text-center" style="color: #FFFFFF;letter-spacing: 5px">用户注册</h4>
             </div>
             <div class="modal-body">
-                <form  class="form-horizontal"  id="register_form">
+                <form class="form-horizontal" id="register_form">
+                    <input type="hidden" name="m" value="register">
                     <div class="form-group">
                         <label for="r_username" class="control-label col-md-2 ">用户名</label>
                         <div class="col-md-5">
                             <input type="text" id="r_username" name="r_username" class="form-control"
-                                   pattern="[a-zA-Z]{6-16}">
+                                   placeholder="请输入用户名">
                         </div>
-                        <div class="col-md-5 " style="line-height: 2"><span>用户名只能是字母且6-16位</span></div>
-                        <span></span>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="checkUserSpan">用户名只能是字母且6-16位</span>
+                        </label>
                     </div>
-                    <div class="row " style="height: 21px">
-                        <span class="col-md-offset-3" id="checkUserSpan"
-                              style="padding-left: 17px;font-size: 12px"></span>
-                    </div>
+
                     <div class="form-group">
                         <label for="r_pwd" class="control-label col-md-2">密码</label>
                         <div class="col-md-5">
-                            <input type="password" id="r_pwd" name="r_pwd" class="form-control" pattern="\d{6,16}">
+                            <input type="password" id="r_pwd" name="r_pwd" class="form-control" placeholder="请输入密码">
                         </div>
-                        <div class="col-md-4 " style="line-height: 2"><span>6-16位字母数组下划线组成</span></div>
-                        <span></span>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="rpwdSpan">6-16位字母数字下划线组成</span>
+                        </label>
+
                     </div>
                     <div class="form-group">
                         <label for="r_repwd" class="control-label col-md-2">密码确认</label>
                         <div class="col-md-5">
-                            <input type="password" id="r_repwd" name="r_repwd" class="form-control">
+                            <input type="password" id="r_repwd" name="r_repwd" class="form-control"
+                                   placeholder="请再次确认密码">
                         </div>
-                        <div class="col-md-4 " style="line-height: 2"><span>请再次确认密码</span></div>
-                        <span></span>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="rrepwdSpan"></span>
+                        </label>
+
                     </div>
                     <div class="form-group">
                         <label for="r_phone" class="control-label col-md-2">手机号</label>
                         <div class="col-md-5">
-                            <input type="text" id="r_phone" name="r_phone" class="form-control">
+                            <input type="text" id="r_phone" name="r_phone" class="form-control" placeholder="请输入您的手机号码">
                         </div>
-                        <div class="col-md-4 " style="line-height: 2"><span>请输入您的手机号码</span></div>
-                        <span></span>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="rphoneSpan"></span>
+                        </label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                         <label for="r_email" class="control-label col-md-2">邮箱</label>
                         <div class="col-md-5">
-                            <input type="text" id="r_email" name="r_email" class="form-control">
+                            <input type="text" id="r_email" name="r_email" class="form-control" placeholder="请输入您的邮箱">
                         </div>
-                        <div class="col-md-4 " style="line-height: 2"><span>请输入您的邮箱</span></div>
-                        <span></span>
+                        <label class="control-label col-md-4 " style="text-align: left">
+                            <span id="remailSpan"></span>
+                        </label>
+
                     </div>
                     <div class="form-group">
                         <div class="checkbox col-md-10 col-md-offset-2">
                             <label>
-                                <input type="checkbox">
+                                <input type="checkbox" id="ragree">
                                 我同意 <span style="color: red">用户注册协议</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group t">
                         <div class="col-md-5 col-md-offset-2 ">
-                            <button type="button" class="btn btn-primary btn-block" id="btn_">注册</button>
+                            <button type="button" class="btn btn-primary btn-block" id="register_btn">注册</button>
                         </div>
                     </div>
                 </form>
@@ -383,34 +390,64 @@
     </div>
 </div>
 <!--登录成功模态框-->
-<div class="modal fade" id="loginSuccessModal" tabindex="-1">
+<div class="modal fade" id="infoModal" tabindex="-1">
     <div class="modal-dialog" style="width: 400px;margin-top: 150px">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <h4 id="login_resp"></h4>
+                <h4 id="info"></h4>
             </div>
         </div>
     </div>
 </div>
-<c:if test="${!empty name}">
-    <script>
 
-    </script>
-</c:if>
-
-<%--<c:if test="${!empty registerFlag}">--%>
-<%--    <script>--%>
-<%--        registerSuccess();--%>
-<%--    </script>--%>
-<%--</c:if>--%>
 <script>
+
+    //登录按钮 ajax
+    $(function () {
+        $('#login_btn').click(function () {
+            let uname = $('#l_username').val();
+            let pwd = $('#l_pwd').val();
+            if (pwd == "" || uname == "") {
+                alert("请填写完整的用户名,密码!");
+                return;
+            }
+            let info = $('#info');
+            $.ajax({
+                url: "user",
+                type: "post",
+                data: {m: "login", l_username: uname, l_pwd: pwd},
+                dataType: "text",
+                success: function (text) {
+                    let name = '';
+                    if ("Y" == text) { //成功
+                        info.html("登录成功")
+                        name = uname;
+                    } else if ("N" == text) {
+                        info.html("密码错误")
+                    }
+                    loginRes(name);
+                }
+            })
+        })
+
+    })
+
+    //注册界面ajax
     $(function () {
         let r_nameFlag = false;
-
+        let pwdFlag = false;
+        let phoneFlag = false;
+        let emailFlag = false;
+        let ragreeFlag = false;
         $('#r_username').blur(function () {
             let checkUserSpan = $('#checkUserSpan');
             let uname = $(this).val(); //获取输入框中的内容
-            console.log(uname)
+            if ("" == uname) {
+                checkUserSpan.html("用户名只能是字母且6-16位");
+                checkUserSpan.css({"color": "black"});
+                r_nameFlag = false;
+                return;
+            }
             let unamePattern = /^[a-zA-Z][a-zA-Z0-9]*$/;
             if (!unamePattern.test(uname)) {
                 alert("请输入正确的用户名");
@@ -418,14 +455,12 @@
                 checkUserSpan.html("");
                 return;
             }
-
             $.ajax({
                 url: "user",
                 type: "get",
                 data: {m: "checkName", l_username: uname},
                 dataType: "text",
                 success: function (text) {
-
                     if ("Y" == text) { //存在
                         checkUserSpan.html("&times;该用户名已存在");
                         checkUserSpan.css({"color": "red"});
@@ -436,40 +471,136 @@
                         checkUserSpan.css({"color": "green"});
                         r_nameFlag = true;
                     }
-
                 }
             })
         })
-
-        $('#login_btn').click(function () {
-            let uname = $('#l_username').val();
-            let pwd = $('#l_pwd').val();
-            if (pwd == "" || uname == "") {
-                alert("请填写完整的用户名,密码!");
+        $('#ragree').click(function () {
+            ragreeFlag = this.checked;
+        })
+        $('#r_pwd').blur(function () {
+            let pwd = $(this).val();
+            let $repwd = $('#r_repwd');
+            let $rpwdSpan = $('#rpwdSpan');
+            let $rrepwdSpan = $('#rrepwdSpan');
+            if (pwd == "") {
+                $rpwdSpan.css({"color": "black"});
+                $rpwdSpan.html("6-16位字母数字下划线组成");
+                pwdFlag = false;
+                $rrepwdSpan.html("")
                 return;
             }
-
-            let login_resp = $('#login_resp');
-
-            $.ajax({
-                url: "user",
-                type: "post",
-                data: {m: "login", l_username: uname, l_pwd: pwd},
-                dataType: "text",
-                success: function (text) {
-                    let name = '';
-                    if ("Y" == text) { //成功
-                        login_resp.html("登录成功")
-                        name = uname;
-                    } else if ("N" == text) {
-                        login_resp.html("密码错误")
-                    }
-                    loginRes(name);
+            let pwdPattern = /^[0-9a-zA-Z_]{6,16}$/;
+            if (!pwdPattern.test(pwd)) {
+                pwdFlag = false;
+                alert("密码格式错误")
+                $(this).val("");
+                $rpwdSpan.html("6-16位字母数字下划线组成");
+                $rpwdSpan.css({"color": "black"});
+                $rrepwdSpan.html("")
+            } else {
+                $rpwdSpan.html("√")
+                $rpwdSpan.css({"color": "green"});
+                if ($repwd.val() == pwd) {
+                    $rrepwdSpan.html("√")
+                    $rrepwdSpan.css({"color": "green"});
+                    pwdFlag = true;
+                } else if ($repwd.val() != "") {
+                    $rrepwdSpan.html("&times")
+                    $rrepwdSpan.css({"color": "red"});
+                    pwdFlag = false;
+                } else {
+                    pwdFlag = false;
                 }
-            })
+            }
 
         })
+        $('#r_repwd').blur(function () {
+            let $rrepwdSpan = $('#rrepwdSpan');
+            let $r_pwd = $('#r_pwd');
+            let repwd = $(this).val();
+            if ($r_pwd.val() == "") {
+                return;
+            }
+            if ($r_pwd.val() == repwd) {
+                $rrepwdSpan.html("√")
+                $rrepwdSpan.css({"color": "green"});
+                pwdFlag = true;
+            } else {
+                $rrepwdSpan.html("&times")
+                $rrepwdSpan.css({"color": "red"});
+                pwdFlag = false;
+            }
+        })
+        $('#r_phone').blur(function () {
+            let phone = $(this).val();
+            let $span = $('#rphoneSpan');
+            if (phone == "") {
+                $span.html("");
+                phoneFlag = false;
+                return;
+            }
+            let phonePattern = /^[1][1-9][0-9]{9}$/
+            if (!phonePattern.test(phone)) {
+                phoneFlag = false;
+                alert("手机号格式错误");
+                $span.html("");
+                $(this).val("");
+            } else {
+                phoneFlag = true;
+                $span.html("√")
+                $span.css({"color": "green"});
+            }
+        })
+        $('#r_email').blur(function () {
+            let email = $(this).val();
+            let $span = $('#remailSpan');
+            if (email == "") {
+                $span.html("");
+                emailFlag = false;
+                return;
+            }
+            let emailPattern = /^[a-z0-9A-Z]+[a-z0-9A-Z._]*@[a-z0-9A-Z]+\.[a-zA-Z]{2,}$/
+            if (!emailPattern.test(email)) {
+                emailFlag = false;
+                alert("邮箱格式错误");
+                $span.html("");
+                $(this).val("");
+            } else {
+                emailFlag = true;
+                $span.html("√")
+                $span.css({"color": "green"});
+            }
+        })
+        $('#register_btn').click(function () {
+            if (!ragreeFlag) {
+                alert("请同意用户协议")
+                return;
+            }
+            if (r_nameFlag && pwdFlag && phoneFlag && emailFlag) {
+
+               $.ajax({
+                   url:"user",
+                   type:"post",
+                   data:$('#register_form').serialize(),
+                    dataType:"text",
+                   success:function (text) {
+                       if("Y"==text){
+                           registerSuccess();
+                       }else if ("N"==text){
+                           registerFailed();
+                           $('#info').html("注册失败");
+
+                       }
+                   }
+               })
+            } else {
+                alert("请正确填写所有信息");
+            }
+
+        })
+
     })
+
 
 </script>
 </body>
