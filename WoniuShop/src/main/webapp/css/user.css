@@ -1,0 +1,40 @@
+
+.aside{
+    height: 500px;
+    background-color:#D3D3D3;
+    padding: 120px 0 0 0;
+
+}
+.aside>nav>li>a{
+    width: 100%;
+    color:#6298C1 ;
+}
+.aside>nav>li>a:hover{
+    color: #607E98;
+}
+.container-fluid{
+    padding: 0;
+}
+.content{
+    height: 500px;
+}
+.title{
+    color: black;
+    height: 60px;
+    line-height: 60px;
+    font-size: 28px;
+}
+.person {
+    color: black;
+    margin-left: 10px;
+    font-size: 20px;
+}
+.table tbody tr td{
+    vertical-align: middle;
+}
+.commit_content{
+    max-width: 120px;!important;
+    overflow: hidden;!important;
+    white-space: nowrap;!important;
+    text-overflow: ellipsis;!important;
+}

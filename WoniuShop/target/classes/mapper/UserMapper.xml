@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniuxy.mapper.UserMapper">
+
+    <sql id="baseColumn">
+        id
+        ,username,phone,email,image,level
+    </sql>
+    <resultMap id="baseMap" type="com.woniuxy.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="image" property="imagePath"/>
+        <result column="level" property="userLevel"/>
+    </resultMap>
+
+    <!--    1.User findByName(String name);-->
+    <select id="findByName" resultMap="baseMap">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM t_user
+        WHERE username=#{value}
+    </select>
+
+    <!--    2.int add(User user);-->
+    <insert id="add" parameterType="com.woniuxy.entity.User" useGeneratedKeys="true" keyColumn="id"
+            keyProperty="id">
+        INSERT INTO t_user(username, password, phone, email, image, level)
+            VALUE (#{username},#{password},#{phone},#{email},#{imagePath},#{userLevel})
+    </insert>
+
+    <!--    3.List<User> findAll();-->
+    <select id="findAll" resultMap="baseMap">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM t_user
+    </select>
+
+    <!--    4.List<User> findLimitByKeyword(@Param("kw") String keyword, @Param("start") int start, @Param("num") int num);-->
+    <select id="findLimitByKeyword" resultMap="baseMap">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM t_user
+        WHERE username LIKE CONCAT('%',#{kw},'%') OR id LIKE CONCAT('%',#{kw},'%') OR phone LIKE CONCAT('%',#{kw},'%')
+        LIMIT #{start},#{num}
+    </select>
+
+    <!--    5.long count(String keyword);-->
+    <select id="count" resultType="long">
+        SELECT COUNT(*)
+        FROM t_user
+        WHERE username LIKE CONCAT('%', #{keyword}, '%')
+           OR id LIKE CONCAT('%', #{keyword}, '%')
+           OR phone LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <!--    6.int deleteByIds(@Param("ids")int...ids);//根据多个id来删除-->
+    <delete id="deleteByIds">
+        DELETE FROM t_user WHERE id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            <if test="id!=null ">
+                #{id}
+            </if>
+        </foreach>
+    </delete>
+
+    <!--7.int update(User user);//更新用户对象-->
+    <update id="update" parameterType="com.woniuxy.entity.User">
+        UPDATE t_user
+        <set>   <!--去掉后面多余的','-->
+            <if test="username!=null and username !=''">
+                username=#{username},
+            </if>
+            <if test="password!=null and password !=''">
+                password=#{password},
+            </if>
+            <if test="phone!=null and phone !=''">
+                phone=#{phone},
+            </if>
+
+            <if test="email!=null and email !=''">
+                email=#{email},
+            </if>
+            <if test="imagePath!=null and imagePath !=''">
+                image=#{imagePath},
+            </if>
+            <if test="userLevel!=null and userLevel !=''">
+                level=#{userLevel},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!--    8.User findNameAndPassword(@Param("username") String username,@Param("pwd") String password);-->
+    <select id="findNameAndPassword" resultMap="baseMap">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM t_user
+        WHERE username=#{username} AND password=#{pwd}
+    </select>
+
+    <!--9.    List<User> findByKeyword( String keyword);-->
+    <select id="findByKeyword" resultMap="baseMap">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM t_user
+        WHERE username LIKE CONCAT('%', #{value}, '%')
+        OR id LIKE CONCAT('%', #{value}, '%')
+        OR phone LIKE CONCAT('%', #{value}, '%')
+    </select>
+
+
+</mapper>
