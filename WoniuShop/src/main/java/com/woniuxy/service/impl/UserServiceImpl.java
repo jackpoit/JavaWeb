@@ -6,6 +6,7 @@ import com.woniuxy.entity.User;
 import com.woniuxy.mapper.UserMapper;
 import com.woniuxy.service.UserService;
 import com.woniuxy.util.DBUtil;
+import com.woniuxy.util.StringUtil;
 
 import java.util.List;
 
@@ -16,7 +17,29 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
-
+	/**
+	 * 检查用户名是否存在
+	 * @param name
+	 * @return 存在返回true
+	 */
+	@Override
+	public boolean isUserExist(String name) {
+		if (StringUtil.isEmpty(name)){
+			return false;
+		}
+		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
+		User user = new User();
+		user.setUsername(name);
+		List<User> list = mapper.findByCondition(user);
+		DBUtil.close();
+		return !list.isEmpty();
+	}
+	/**
+	 * 登录
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
 	@Override
 	public User loginUser(String userName, String password) {
 		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
@@ -25,6 +48,11 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	/**
+	 * 注册
+	 * @param user
+	 * @return
+	 */
 	@Override
 	public boolean registerUser(User user) {
 		if (user == null) {
@@ -36,6 +64,12 @@ public class UserServiceImpl implements UserService {
 		return row > 0;
 	}
 
+	/**
+	 * 分页
+	 * @param currentPage
+	 * @param keyword
+	 * @return
+	 */
 	@Override
 	public PageInfo<User> findOnePage(int currentPage, String keyword) {
 		if (currentPage < 0 || keyword == null) {
@@ -49,6 +83,11 @@ public class UserServiceImpl implements UserService {
 		return info;
 	}
 
+	/**
+	 * 删除
+	 * @param ids
+	 * @return
+	 */
 	@Override
 	public boolean remove(Integer... ids) {
 		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
@@ -57,6 +96,11 @@ public class UserServiceImpl implements UserService {
 		return row > 0;
 	}
 
+	/**
+	 * 更新
+	 * @param user
+	 * @return
+	 */
 	@Override
 	public boolean edit(User user) {
 		if (user == null) {

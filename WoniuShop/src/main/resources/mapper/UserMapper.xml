@@ -113,5 +113,33 @@
         OR phone LIKE CONCAT('%', #{value}, '%')
     </select>
 
-
+<!--    10.List<User> findByCondition(User user);-->
+    <select id="findByCondition" parameterType="com.woniuxy.entity.User" resultMap="baseMap">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM t_user
+        <where>
+            <if test="id!=null">
+                AND id=#{id}
+            </if>
+            <if test="username!=null and username !=''">
+                AND username=#{username}
+            </if>
+            <if test="password!=null and password !=''">
+                AND password=#{password}
+            </if>
+            <if test="phone!=null and phone !=''">
+                AND phone=#{phone}
+            </if>
+            <if test="email!=null and email !=''">
+                AND email=#{email}
+            </if>
+            <if test="imagePath!=null and imagePath !=''">
+                AND image=#{imagePath}
+            </if>
+            <if test="userLevel!=null and userLevel !=''">
+                AND level=#{userLevel}
+            </if>
+        </where>
+    </select>
 </mapper>

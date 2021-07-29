@@ -11,8 +11,6 @@ import com.woniuxy.entity.User;
 public interface UserService {
 	User loginUser(String userName,String password);
 
-//	User findByName(String userName);
-
 	boolean registerUser(User user);
 
 	PageInfo<User> findOnePage(int currentPage,String keyword);
@@ -20,4 +18,6 @@ public interface UserService {
 	boolean	remove(Integer... ids);
 
 	boolean edit(User user);
+
+	boolean isUserExist(String name);
 }

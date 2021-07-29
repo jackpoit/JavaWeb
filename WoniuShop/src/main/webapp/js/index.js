@@ -5,6 +5,7 @@ $(function () {
 
 
 function registerSuccess() {
+    $('#registerModal').modal('hide');
     $('#registerSuccessModal').modal('show');
     setTimeout(function () {
         $('#registerSuccessModal').modal('hide');
@@ -13,6 +14,7 @@ function registerSuccess() {
 }
 
 function loginRes(name) {
+    $('#loginModal').modal('hide');
     $('#loginSuccessModal').modal('show');
     setTimeout(function () {
         $('#loginSuccessModal').modal('hide')

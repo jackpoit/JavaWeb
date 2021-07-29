@@ -1,10 +1,5 @@
-<%@ page import="com.woniuxy.entity.User" %><%--
-  Created by IntelliJ IDEA.
-  User: rua
-  Date: 2021/7/16
-  Time: 22:10
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.woniuxy.entity.User" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -257,14 +252,19 @@
                 <h4 class="modal-title text-center" style="color: #FFFFFF;letter-spacing: 5px">用户注册</h4>
             </div>
             <div class="modal-body">
-                <form action="register" class="form-horizontal" method="post" enctype="multipart/form-data">
+                <form  class="form-horizontal"  id="register_form">
                     <div class="form-group">
                         <label for="r_username" class="control-label col-md-2 ">用户名</label>
                         <div class="col-md-5">
-                            <input type="text" id="r_username" name="r_username" class="form-control" pattern="[a-zA-Z]{6-16}">
+                            <input type="text" id="r_username" name="r_username" class="form-control"
+                                   pattern="[a-zA-Z]{6-16}">
                         </div>
                         <div class="col-md-5 " style="line-height: 2"><span>用户名只能是字母且6-16位</span></div>
                         <span></span>
+                    </div>
+                    <div class="row " style="height: 21px">
+                        <span class="col-md-offset-3" id="checkUserSpan"
+                              style="padding-left: 17px;font-size: 12px"></span>
                     </div>
                     <div class="form-group">
                         <label for="r_pwd" class="control-label col-md-2">密码</label>
@@ -308,7 +308,7 @@
                     </div>
                     <div class="form-group t">
                         <div class="col-md-5 col-md-offset-2 ">
-                            <button type="submit" class="btn btn-primary btn-block">注册</button>
+                            <button type="button" class="btn btn-primary btn-block" id="btn_">注册</button>
                         </div>
                     </div>
                 </form>
@@ -327,14 +327,15 @@
                 <h4 class="modal-title text-center" style="color: #FFFFFF;letter-spacing: 5px">用户登录</h4>
             </div>
             <div class="modal-body">
-                <form action="login" class="form-horizontal" method="post">
-                    <div class="form-group">
+                <form class="form-horizontal" id="login_form">
+                    <div class="form-group" style="margin-top: 20px;margin-bottom: 10px">
                         <label for="l_username" class="control-label col-md-3">用户名</label>
                         <div class="col-md-7">
                             <input type="text" id="l_username" name="l_username" class="form-control"
                                    placeholder="请输入用户名">
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="l_pwd" class="control-label col-md-3">密码</label>
                         <div class="col-md-7">
@@ -350,7 +351,7 @@
                     </div>
                     <div class="form-group ">
                         <div class="col-md-4 col-md-offset-2 ">
-                            <button type="submit" class="btn btn-primary btn-block">登录</button>
+                            <button type="button" class="btn btn-primary btn-block" id="login_btn">登录</button>
                         </div>
                         <div class="col-md-4 ">
                             <button type="button" class="btn btn-primary btn-block"
@@ -378,7 +379,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -387,22 +387,90 @@
     <div class="modal-dialog" style="width: 400px;margin-top: 150px">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <h4>${loginStr}</h4>
+                <h4 id="login_resp"></h4>
             </div>
         </div>
     </div>
 </div>
 <c:if test="${!empty name}">
     <script>
-        loginRes('${name}');
+
     </script>
 </c:if>
 
-<c:if test="${!empty registerFlag}">
-    <script>
-        registerSuccess();
-    </script>
-</c:if>
+<%--<c:if test="${!empty registerFlag}">--%>
+<%--    <script>--%>
+<%--        registerSuccess();--%>
+<%--    </script>--%>
+<%--</c:if>--%>
+<script>
+    $(function () {
+        let r_nameFlag = false;
 
+        $('#r_username').blur(function () {
+            let checkUserSpan = $('#checkUserSpan');
+            let uname = $(this).val(); //获取输入框中的内容
+            console.log(uname)
+            let unamePattern = /^[a-zA-Z][a-zA-Z0-9]*$/;
+            if (!unamePattern.test(uname)) {
+                alert("请输入正确的用户名");
+                $(this).val("");
+                checkUserSpan.html("");
+                return;
+            }
+
+            $.ajax({
+                url: "user",
+                type: "get",
+                data: {m: "checkName", l_username: uname},
+                dataType: "text",
+                success: function (text) {
+
+                    if ("Y" == text) { //存在
+                        checkUserSpan.html("&times;该用户名已存在");
+                        checkUserSpan.css({"color": "red"});
+                        r_nameFlag = false;
+
+                    } else if ("N" == text) {
+                        checkUserSpan.html("√ &nbsp;用户名可用")
+                        checkUserSpan.css({"color": "green"});
+                        r_nameFlag = true;
+                    }
+
+                }
+            })
+        })
+
+        $('#login_btn').click(function () {
+            let uname = $('#l_username').val();
+            let pwd = $('#l_pwd').val();
+            if (pwd == "" || uname == "") {
+                alert("请填写完整的用户名,密码!");
+                return;
+            }
+
+            let login_resp = $('#login_resp');
+
+            $.ajax({
+                url: "user",
+                type: "post",
+                data: {m: "login", l_username: uname, l_pwd: pwd},
+                dataType: "text",
+                success: function (text) {
+                    let name = '';
+                    if ("Y" == text) { //成功
+                        login_resp.html("登录成功")
+                        name = uname;
+                    } else if ("N" == text) {
+                        login_resp.html("密码错误")
+                    }
+                    loginRes(name);
+                }
+            })
+
+        })
+    })
+
+</script>
 </body>
 </html>
