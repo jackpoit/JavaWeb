@@ -4,8 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.woniuxy.entity.User;
 import com.woniuxy.service.impl.UserServiceImpl;
 import com.woniuxy.util.BaseServlet;
-import com.woniuxy.util.DBUtil;
-import com.woniuxy.util.StringUtil;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;

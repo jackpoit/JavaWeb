@@ -1,5 +1,6 @@
 package com.woniuxy.util;
 
+import com.github.pagehelper.util.StringUtil;
 import com.woniuxy.exception.NoSuchMethodException;
 
 import javax.servlet.ServletException;
