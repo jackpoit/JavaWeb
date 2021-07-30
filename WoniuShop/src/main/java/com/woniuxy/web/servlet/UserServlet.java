@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @Author: rua
  * @Date: 2021/7/29 19:08
- * @Description:
+ * @Description: 用于处理用户所有请求的Servlet
  */
 @MultipartConfig
 @WebServlet("/user")
@@ -43,12 +43,11 @@ public class UserServlet extends BaseServlet {
 		User user = new User();
 		user.setUsername(req.getParameter("r_username"));
 		user.setPassword(req.getParameter("r_pwd"));
-		user.setPhone(req.getParameter("r_phone"));
+		user.setMobile(req.getParameter("r_phone"));
 		user.setEmail(req.getParameter("r_email"));
-		user.setImagePath(req.getParameter("r_img"));
-		user.setUserLevel("普通用户");
+		user.setLevel(0);
 		String imgPath = "http://localhost:8080/WoniuShop/images/user/1.jpg";
-		user.setImagePath(imgPath);
+		user.setImage(imgPath);
 		boolean flag = usi.registerUser(user);
 
 		resp.getWriter().write(flag ? "Y" : "N");

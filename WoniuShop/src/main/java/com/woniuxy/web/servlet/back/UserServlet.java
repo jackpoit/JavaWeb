@@ -1,6 +1,7 @@
 package com.woniuxy.web.servlet.back;
 
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.util.StringUtil;
 import com.woniuxy.entity.User;
 import com.woniuxy.service.impl.UserServiceImpl;
 import com.woniuxy.util.BaseServlet;
@@ -13,9 +14,9 @@ import javax.servlet.http.Part;
 import java.io.File;
 
 /**
- * @Author: rua
+ * @Author: jackpoit
  * @Date: 2021/7/28 19:23
- * @Description:
+ * @Description: 后台处理用户所有请求的Servlet
  */
 @MultipartConfig
 @WebServlet("/page/admin/user")
@@ -46,8 +47,8 @@ public class UserServlet extends BaseServlet {
 		String username = req.getParameter("ename");
 		user.setId(Integer.parseInt(req.getParameter("eid")));
 		user.setUsername(req.getParameter("ename"));
-		user.setPhone(req.getParameter("ephone"));
-		user.setUserLevel(req.getParameter("elevel"));
+		user.setMobile(req.getParameter("ephone"));
+		user.setLevel(0);
 
 		Part part = req.getPart("eImg");
 		if (part != null) {
@@ -64,7 +65,7 @@ public class UserServlet extends BaseServlet {
 			// 上传到服务器
 			part.write(uploadPath); //part.write会自动覆盖原文件
 			String imgPath = "http://localhost/upload/" + username + "/" + fileName;
-			user.setImagePath(imgPath);
+			user.setImage(imgPath);
 		}
 
 		boolean flag = usi.edit(user);
@@ -111,16 +112,16 @@ public class UserServlet extends BaseServlet {
 		String username = req.getParameter("r_username");
 		user.setUsername(req.getParameter("r_username"));
 		user.setPassword(req.getParameter("r_pwd"));
-		user.setPhone(req.getParameter("r_phone"));
+		user.setMobile(req.getParameter("r_phone"));
 		user.setEmail(req.getParameter("r_email"));
-		user.setImagePath(req.getParameter("r_img"));
-		user.setUserLevel(req.getParameter("r_level"));
+		user.setImage(req.getParameter("r_img"));
+		user.setLevel(0);
 
 		String imgPath = "http://localhost:8080/WoniuShop/images/user/1.jpg";
 		Part part = req.getPart("r_img");
 
 		if (part.getSize() == 0) { //有name 但不传文件
-			user.setImagePath(imgPath);
+			user.setImage(imgPath);
 		} else {    //有name 传文件
 			String fileName = part.getSubmittedFileName();
 			String suffix = fileName.substring(fileName.lastIndexOf(".")); // 文件的扩展名
@@ -134,7 +135,7 @@ public class UserServlet extends BaseServlet {
 			// 上传到服务器
 			part.write(uploadPath);
 			imgPath = "http://localhost/upload/" + username + "/" + fileName;
-			user.setImagePath(imgPath);
+			user.setImage(imgPath);
 		}
 		boolean flag = usi.registerUser(user);
 		resp.getWriter().write("<script>alert('" + (flag ? "添加成功" : "添加失败") + "')</script>");

@@ -1,60 +1,51 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
 <head>
-    <%--设置根路径--%>
-    <%
-        String basePath = request.getScheme() + "://" + request.getServerName() + ":"
-                + request.getServerPort() + request.getContextPath() + "/";
-    %>
+    <% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";%>
     <base href="<%=basePath%>">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <script src="bootstrap/js/jquery-3.5.1.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
-    <script src="js/index.js"></script>
-    <link rel="stylesheet" href="css/index.css">
+    <script src="js/head.js"></script>
 </head>
-<body>
 <!--头部导航-->
-<div class="navbar-fixed-top" style="background:#333;height:60px; line-height: 60px;">
+<div class="navbar-fixed-top banner">
     <div class="container">
-        <div class="col-md-2 navbar-left" style="height: 60px;line-height: 60px">
-            <img src="images/user/4.jpg" width="40px" class="img-circle" alt="">
-            <span class="person" id="user-name-label" onclick="$('#loginModal').modal('show')">
+        <div class="row">
+            <div class="col-md-2 navbar-left">
+                <img src="images/user/4.jpg" width="40px" class="img-circle" alt="">
+                <span class="person" id="user-name-label" onclick="$('#loginModal').modal('show')">
             请登录
             </span>
-        </div>
+            </div>
+            <div class="col-md-5 navbar-right text-right">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#loginModal">
+                    <span class="glyphicon glyphicon-log-in"></span>
+                    登录
+                </button>
 
-        <div class="col-md-5 navbar-right">
-            <a href="page/user/index.jsp" class="btn btn-primary">
-                <span class="glyphicon glyphicon-home"></span>
-                首页
-            </a>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#loginModal">
-                <span class="glyphicon glyphicon-log-in"></span>
-                登录
-            </button>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#registerModal">
-                <span class="glyphicon glyphicon-plus"></span>
-                注册
-            </button>
-            <button type="button" class="btn btn-success" onclick="location.href = 'page/user/personal.jsp';">
-                <span class="glyphicon glyphicon-user"></span>
-                个人中心
-            </button>
-            <button type="button" class="btn btn-warning" onclick="location.href='page/user/shopcart.jsp'">
-                <span class="glyphicon glyphicon-shopping-cart"></span>
-                购物车
-            </button>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#registerModal">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    注册
+                </button>
+
+                <a href="page/user/index.jsp" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-home"></span>
+                    首页
+                </a>
+
+                <a href="page/user/personal.jsp" class="btn btn-success">
+                    <span class="glyphicon glyphicon-user"></span>
+                    个人中心
+                </a>
+
+                <a href="page/user/shopcart.jsp" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                    购物车
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
 <!--注册模态框-->
-<div class="modal fade" id="registerModal" tabindex="-1">
+<div class="modal fade" id="registerModal" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog" style="width: 700px;margin-top: 150px">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #7575d2">
@@ -136,7 +127,7 @@
 
 
 <!--登录模态框-->
-<div class="modal fade" id="loginModal" tabindex="-1">
+<div class="modal fade" id="loginModal" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog" style="width: 400px;margin-top: 150px">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #7575d2">
@@ -183,7 +174,7 @@
     </div>
 </div>
 <!--注册成功模态框-->
-<div class="modal fade" id="registerSuccessModal" tabindex="-1">
+<div class="modal fade" id="registerSuccessModal" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog" style="width: 400px;margin-top: 150px">
         <div class="modal-content">
             <div class="modal-body text-center">
@@ -199,8 +190,7 @@
         </div>
     </div>
 </div>
-<!--登录成功模态框-->
-
+<!--提示信息模态框-->
 <div class="modal fade" id="infoModal" tabindex="-1">
     <div class="modal-dialog" style="width: 400px;margin-top: 150px">
         <div class="modal-content">
@@ -210,5 +200,4 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+

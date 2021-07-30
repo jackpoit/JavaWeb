@@ -52,7 +52,7 @@ public interface UserMapper {
 
 	User findNameAndPassword(@Param("username") String username,@Param("pwd") String password);
 
-	List<User> findByKeyword( String keyword);
+	List<User> findByKeyword(String keyword);
 
 	List<User> findByCondition(User user);
 }

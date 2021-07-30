@@ -1,28 +1,21 @@
-<%@ page import="com.woniuxy.entity.User" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<html lang="en">
 <head>
-    <%--设置根路径--%>
-    <%
-        String basePath = request.getScheme() + "://" + request.getServerName() + ":"
-                + request.getServerPort() + request.getContextPath() + "/";
-    %>
+    <% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";%>
     <base href="<%=basePath%>">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>蜗牛商城</title>
+    <title>订单</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <script src="bootstrap/js/jquery-3.5.1.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
-    <script src="js/index.js"></script>
     <link rel="stylesheet" href="css/index.css">
+    <script src="bootstrap/js/jquery-3.5.1.js"></script>
 </head>
 <body>
 
-<jsp:include page="head.jsp"/>
+<%--包含头部菜单--%>
+<jsp:include page="head.jsp"></jsp:include>
+
 <!--分割线-->
 <div style="border-top: 1px solid #e0e0e0;margin-bottom: 10px"></div>
 
@@ -44,6 +37,6 @@
         </div>
     </div>
 </div>
-</div>
+
 </body>
 </html>

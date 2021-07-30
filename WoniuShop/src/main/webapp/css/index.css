@@ -1,13 +1,25 @@
+.banner {
+    background:#333;
+    height:60px;
+    line-height: 60px;
+}
 .person {
     color: #e0e0e0;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 .person:hover {
+    cursor: pointer;
     color: #fff;
 }
+.adv {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: 20px 0px;
+}
+
 .aside {
-    height: 346px;
-    padding: 10px 0px;
+    height: 366px;
+    padding: 15px 0px;
     background: rgba(0,0,0,.6);
 }
 .aside a{
@@ -36,14 +48,111 @@
     box-shadow: #999 1px 1px 10px;
 }
 .pro-item img{
-    width: 160px;
-    height: 160px;
+    width: 150px;
+    height: 150px;
 }
 .pro-item img:hover {
     transform: scale(1.1);
     transition: 1s;
 }
-#user-name-label:hover{
+.aside-tab {
+    height: 560px;
+    padding: 50px 0px;
+}
+.aside-tab li{
+    line-height: 50px;
+}
+.default-addr{
+    padding: 10px 12px;
+    background:#666;
+    color: #fff;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.detail .title {
+    font-size:30px;
+}
+.detail .activity {
+    font-size: 12px;
     color: #ff6700;
-    cursor: pointer;!important;
+}
+.detail .info {
+    font-size: 12px;
+    color: gray
+}
+.detail .price{
+    font-size: 35px;
+    color: red;
+}
+
+.detail .rule div{
+    margin-left: 10px;
+    margin-top: 10px;
+    line-height: 30px;
+    border: 1px solid gray;
+    color: gray;
+    font-size: 16px;
+}
+.detail .rule .active {
+    border-color: #ff6700;
+    color: #ff6700;
+    font-weight: bold;
+}
+.option{
+    margin-top: 20px;
+}
+.option div{
+    float: left;
+    padding: 10px 30px;
+    font-weight: bold;
+    font-family: 微软雅黑;
+    color: #fff;
+    font-size: 16px;
+}
+.option .shopcart{
+    background: linear-gradient(to right, yellow, orange);
+    border-radius: 20px 0px 0px 20px;
+}
+.option .buy{
+    background: linear-gradient(to right, orangered, darkorange);
+    border-radius: 0px 20px 20px 0px;
+}
+.order {
+    margin-top: 100px;
+}
+.order .addr {
+    height: 130px;
+    border: 2px solid #b0b0b0;
+    padding: 10px;
+    border-radius: 8px;
+}
+.order .logo span{
+    text-align: center;
+    line-height: 40px;
+    font-size: 26px;
+    height: 40px;
+    width: 40px;
+    display: block;
+    background: #ff6700;
+    margin-top: 45px;
+    border-radius: 50%;
+    color: #fff;
+
+}
+.order .info{
+    padding-left: 0px;
+    height: 130px;
+    line-height: 2;
+}
+.order .name{
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.order .mobile{
+    font-size: 16px;
+    color: #999;
+}
+.order .msg{
+    color: #ff6700;
 }
