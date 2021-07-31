@@ -11,12 +11,10 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 /**
- * @Author: jackpoit
- * @Date: 2021/7/28 16:44
- * @Description: 处理所有请求的通用Servlet
+ * @author: jackpoit
+ * @date: 2021/7/28 16:44
+ * @description: 处理所有请求的通用Servlet
  */
-
-
 public class BaseServlet extends HttpServlet {
 
 	@Override

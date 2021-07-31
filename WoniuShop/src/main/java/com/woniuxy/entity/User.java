@@ -8,7 +8,8 @@ import java.util.Date;
 
 /**
  * @author jackpoit
- * 用户类
+ * @date: 2021/7/28 16:58
+ * @description: 用户类
  */
 @Data
 @AllArgsConstructor

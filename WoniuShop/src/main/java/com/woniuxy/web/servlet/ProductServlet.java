@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * @Author: rua
- * @Date: 2021/7/31 17:20
- * @Description:
+ * @author: jackpoit
+ * @date: 2021/7/31 17:20
+ * @description:
  */
 @WebServlet("/product")
 public class ProductServlet extends BaseServlet {

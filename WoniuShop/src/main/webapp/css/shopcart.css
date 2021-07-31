@@ -2,6 +2,14 @@ body {
     font-family: 微软雅黑;
     font-size: 16px;
 }
+.person {
+    color: #e0e0e0;
+    margin-left: 20px;
+}
+.person:hover {
+    cursor: pointer;
+    color: #fff;
+}
 .banner {
     background:#333;
     height:60px;

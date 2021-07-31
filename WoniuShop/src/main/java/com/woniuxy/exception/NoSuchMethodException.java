@@ -1,9 +1,9 @@
 package com.woniuxy.exception;
 
 /**
- * @Author: rua
- * @Date: 2021/7/28 16:49
- * @Description: 自定义异常
+ * @author: jackpoit
+ * @date: 2021/7/28 16:49
+ * @description: 自定义异常
  */
 public class NoSuchMethodException extends RuntimeException{
 	private static final long serialVersionUID = 1L;

@@ -7,11 +7,16 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * @author jackpoit
+ * @date: 2021/7/28 16:58
+ * @description: 商品类
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product implements Serializable {
-	private static final long serialVersionUID =1l;
+	private static final long serialVersionUID = 1l;
 	private Integer id;
 	private String pName;
 	private String pInfo;
@@ -28,10 +33,6 @@ public class Product implements Serializable {
 		this.sale = sale;
 		this.image = image;
 	}
-
-
-
-
 
 
 }

@@ -10,9 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import java.util.List;
 
 /**
- * @Author: rua
- * @Date: 2021/7/31 17:19
- * @Description:
+ * @author: jackpoit
+ * @date: 2021/7/24 21:43
+ * @description: 商品业务逻辑层实现类
  */
 public class ProductServiceImpl implements ProductService {
 	@Override

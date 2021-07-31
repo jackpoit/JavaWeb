@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
     <% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";%>
     <base href="<%=basePath%>">
@@ -8,11 +9,8 @@
 <div class="navbar-fixed-top banner">
     <div class="container">
         <div class="row">
-            <div class="col-md-2 navbar-left">
-                <img src="images/user/4.jpg" width="40px" class="img-circle" alt="">
-                <span class="person" id="user-name-label" onclick="$('#loginModal').modal('show')">
-            请登录
-            </span>
+            <div class="col-md-2 navbar-left" id="user-name-label">
+                <img src="images/user/4.jpg" width="40px" class="img-circle" alt=""><span class="person"  onclick="$('#loginModal').modal('show')">请登录</span>
             </div>
             <div class="col-md-5 navbar-right text-right">
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#loginModal">

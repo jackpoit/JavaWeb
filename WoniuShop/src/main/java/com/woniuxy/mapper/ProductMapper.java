@@ -6,9 +6,9 @@ import com.woniuxy.entity.User;
 import java.util.List;
 
 /**
- * @Author: rua
- * @Date: 2021/7/31 16:58
- * @Description:
+ * @author: jackpoit
+ * @date: 2021/7/31 16:58
+ * @description: 商品持久层接口
  */
 public interface ProductMapper {
 

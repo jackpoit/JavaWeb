@@ -19,16 +19,15 @@ $(function () {
             url: "user",
             type: "post",
             data: {m: "login", l_username: uname, l_pwd: pwd},
-            dataType: "text",
-            success: function (text) {
-                let name = '';
-                if ("Y" == text) { //成功
+            dataType: "json",
+            success: function (user) {
+                if (user!=null) { //成功
                     info.html("登录成功")
-                    name = uname;
-                } else if ("N" == text) {
+                    $('#user-name-label').html("<img src='"+user.image+"' width='40px' class='img-circle' alt=''><span class='person'>"+user.username+"</span>")
+                } else if (user==null) {
                     info.html("密码错误")
                 }
-                loginRes(name);
+                loginRes();
             }
         })
     })
@@ -195,7 +194,6 @@ $(function () {
         }
     });
 
-
     $('#register_btn').click(function () {
         if (!ragreeFlag) {
             alert("请同意用户协议")
@@ -262,13 +260,10 @@ function registerFailed() {
     }, 3000)
 }
 
-function loginRes(name) {
+function loginRes() {
     $('#loginModal').modal('hide');
     $('#infoModal').modal('show');
     setTimeout(function () {
         $('#infoModal').modal('hide')
     }, 3000)
-    if (name != "") {
-        $('#user-name-label').text(name)
-    }
 }

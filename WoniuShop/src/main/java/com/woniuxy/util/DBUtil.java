@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @Author: rua
- * @Date: 2021/7/23 11:45
- * @Description: 基于Mybatis框架的数据库工具类
+ * @author: jackpoit
+ * @date: 2021/7/23 11:45
+ * @description: 基于Mybatis框架的数据库工具类
  */
 public class DBUtil {
 	private static SqlSessionFactory factory;

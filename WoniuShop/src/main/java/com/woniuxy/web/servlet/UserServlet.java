@@ -1,6 +1,8 @@
 package com.woniuxy.web.servlet;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.util.StringUtil;
+import com.mysql.cj.Session;
 import com.woniuxy.entity.User;
 import com.woniuxy.service.impl.UserServiceImpl;
 import com.woniuxy.util.BaseServlet;
@@ -10,14 +12,15 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
 /**
- * @Author: jackpoit
- * @Date: 2021/7/29 19:08
- * @Description: 用于处理用户所有请求的Servlet
+ * @author: jackpoit
+ * @date: 2021/7/29 19:08
+ * @description: 用于处理用户所有请求的Servlet
  */
 @MultipartConfig
 @WebServlet("/user")
@@ -31,15 +34,16 @@ public class UserServlet extends BaseServlet {
 		resp.getWriter().write(flag ? "Y" : "N");
 	}
 
-
 	//登录
 	public void login(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String username = req.getParameter("l_username");
 		String password = req.getParameter("l_pwd");
 		//仅登录为普通用户
 		User user = usi.doLogin(new User(username, password, 0));
-
-		resp.getWriter().write(user == null ? "N" : "Y");
+		HttpSession session = req.getSession();
+		session.setAttribute("sesUser",user);
+		String jsonStr = JSON.toJSONString(user);
+		resp.getWriter().write(jsonStr);
 	}
 
 

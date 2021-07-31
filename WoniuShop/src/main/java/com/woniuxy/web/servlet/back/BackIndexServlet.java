@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Author: rua
- * @Date: 2021/7/25 0:45
- * @Description:
+ * @author: rua
+ * @date: 2021/7/25 0:45
+ * @description:
  */
 @WebServlet("/page/admin/back")
 public class BackIndexServlet extends HttpServlet {

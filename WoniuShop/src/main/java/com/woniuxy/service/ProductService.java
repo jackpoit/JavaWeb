@@ -5,9 +5,9 @@ import com.woniuxy.entity.Product;
 import java.util.List;
 
 /**
- * @Author: rua
- * @Date: 2021/7/31 17:17
- * @Description:
+ * @author: jackpoit
+ * @date: 2021/7/31 17:17
+ * @description:
  */
 public interface ProductService {
 

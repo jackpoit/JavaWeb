@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @Author: jackpoit
- * @Date: 2021/7/24 21:40
- * @Description: 用户持久层接口
+ * @author: jackpoit
+ * @date: 2021/7/24 21:40
+ * @description: 用户持久层接口
  */
 public interface UserMapper {
 	/**

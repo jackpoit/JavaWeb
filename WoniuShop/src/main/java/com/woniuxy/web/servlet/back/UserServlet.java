@@ -15,9 +15,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 
 /**
- * @Author: jackpoit
- * @Date: 2021/7/28 19:23
- * @Description: 后台处理用户所有请求的Servlet
+ * @author: jackpoit
+ * @date: 2021/7/28 19:23
+ * @description: 后台处理用户所有请求的Servlet
  */
 @MultipartConfig
 @WebServlet("/page/admin/user")

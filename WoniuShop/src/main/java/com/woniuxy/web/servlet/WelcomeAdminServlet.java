@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 后台欢迎界面导向
  * @author jackpoit
+ * @date: 2021/7/29 19:08
+ * @description: 后台欢迎界面导向
  */
 @WebServlet("/welcome/admin")
 public class WelcomeAdminServlet extends HttpServlet {

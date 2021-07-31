@@ -4,9 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.woniuxy.entity.User;
 
 /**
- * @Author: rua
- * @Date: 2021/7/24 21:43
- * @Description: 用户类业务逻辑层接口
+ * @author: jackpoit
+ * @date: 2021/7/24 21:43
+ * @description: 用户类业务逻辑层接口
  */
 public interface UserService {
 	/**

@@ -7,13 +7,12 @@ import com.woniuxy.entity.User;
 import com.woniuxy.mapper.UserMapper;
 import com.woniuxy.service.UserService;
 import com.woniuxy.util.DBUtil;
-
 import java.util.List;
 
 /**
- * @Author: jackpoit
- * @Date: 2021/7/24 22:03
- * @Description: 用户业务逻辑层实现类
+ * @author: jackpoit
+ * @date: 2021/7/24 21:43
+ * @description: 用户业务逻辑层实现类
  */
 public class UserServiceImpl implements UserService {
 
