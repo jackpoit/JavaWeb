@@ -51,6 +51,7 @@
         <mybatis-ehcache-version>1.0.3</mybatis-ehcache-version>
 
         <pagehelper-version>5.2.0</pagehelper-version>
+        <fastjson-version>1.2.75</fastjson-version>
 
     </properties>
 
@@ -225,6 +226,12 @@
             <version>${pagehelper-version}</version>
         </dependency>
 
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson-version}</version>
+        </dependency>
     </dependencies>
 
     <build>

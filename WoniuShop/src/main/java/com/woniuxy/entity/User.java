@@ -24,7 +24,13 @@ public class User  {
 	private String realName; // 真实姓名
 	private String idCard; // 身份证号码
 	private String image; // 头像地址
-	private Integer level; // 用户等级【0:普通等级】
-	private Integer uType; // 用户类型
+	private Integer level;
+	// 用户等级[0:普通等级 1:vip 2:vvvip ]
+	private Integer uType; // 用户类型[0:用户 5:管理员 10:超级管理员]
 
+	public User(String username, String password, Integer uType) {
+		this.username = username;
+		this.password = password;
+		this.uType = uType;
+	}
 }

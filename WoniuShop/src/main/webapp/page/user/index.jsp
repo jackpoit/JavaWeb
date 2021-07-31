@@ -89,83 +89,8 @@
 <div class="container">
     <h3 style="line-height: 40px;">精选商品</h3>
     <!--热门商品展示区-->
-    <div class="row">
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p1.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+    <div class="row" id="productContent1">
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p2.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p3.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p4.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p5.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p6.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p1.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <div class="container">
@@ -181,83 +106,8 @@
 <div class="container">
     <h3 style="line-height: 40px;">热销商品</h3>
     <!--热门商品展示区-->
-    <div class="row">
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p1.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+    <div class="row" id="productContent2">
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p2.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p3.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p4.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p5.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p6.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p1.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <div class="container">
@@ -272,194 +122,83 @@
 <div class="container">
     <h3 style="line-height: 40px;">手机</h3>
     <!--热门商品展示区-->
-    <div class="row">
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p1.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+    <div class="row" id="productContent3">
+<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
+<%--            <div class="thumbnail pro-item">--%>
+<%--                <img src="images/p1.webp" alt="">--%>
+<%--                <div class="caption">--%>
+<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
+<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
+<%--                    <p class="price">1599元起</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p2.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
+<%--            <div class="thumbnail pro-item">--%>
+<%--                <img src="images/p2.webp" alt="">--%>
+<%--                <div class="caption">--%>
+<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
+<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
+<%--                    <p class="price">1599元起</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p3.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
+<%--            <div class="thumbnail pro-item">--%>
+<%--                <img src="images/p3.webp" alt="">--%>
+<%--                <div class="caption">--%>
+<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
+<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
+<%--                    <p class="price">1599元起</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p4.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
+<%--            <div class="thumbnail pro-item">--%>
+<%--                <img src="images/p4.webp" alt="">--%>
+<%--                <div class="caption">--%>
+<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
+<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
+<%--                    <p class="price">1599元起</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p5.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
+<%--            <div class="thumbnail pro-item">--%>
+<%--                <img src="images/p5.webp" alt="">--%>
+<%--                <div class="caption">--%>
+<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
+<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
+<%--                    <p class="price">1599元起</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p6.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
+<%--            <div class="thumbnail pro-item">--%>
+<%--                <img src="images/p6.webp" alt="">--%>
+<%--                <div class="caption">--%>
+<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
+<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
+<%--                    <p class="price">1599元起</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p1.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--登录的模态框-->
-<div class="modal" id="loginModal" tabindex="-1">
-    <div class="modal-dialog" style="width: 400px;">
-        <div class="modal-content">
-            <div class="modal-header" style="background:linear-gradient(to bottom,#3f6eaa,#157dc5);">
-                <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                <h3 class="text-center" style="color: #fff">用 户 登 录</h3>
-            </div>
-            <div class="modal-body">
-                <form action="doLogin" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="uname" class="col-md-3 control-label">用户名</label>
-                        <div class="col-md-7">
-                            <input type="text" id="uname" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pwd" class="col-md-3 control-label">密码</label>
-                        <div class="col-md-7">
-                            <input type="text" id="pwd" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-3 col-md-10">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> 记住用户名和密码
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-8 col-md-offset-2">
-                            <button type="button" class="btn btn-block btn-primary">登录</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--注册的模态框-->
-<div class="modal" id="registerModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background:linear-gradient(to bottom,#3f6eaa,#157dc5);" >
-                <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                <h3 class="text-center" style="color: #fff">用 户 注 册</h3>
-            </div>
-            <div class="modal-body">
-                <form action="" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="rg_uname" class="col-md-2 control-label">用户名</label>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" id="rg_uname" name="uname">
-                        </div>
-                        <div class="col-md-5 control-label" style="text-align: left;">用户名只能是字母，且6~16位</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="rg_pwd" class="col-md-2 control-label">密 码</label>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" id="rg_pwd" name="pwd">
-                        </div>
-                        <div class="col-md-5 control-label" style="text-align: left;">6~16字母数字下划线组成</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="rg_repwd" class="col-md-2 control-label">密码确认</label>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" id="rg_repwd">
-                        </div>
-                        <div class="col-md-5 control-label" style="text-align: left;">请再次确认密码</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="rg_mobile" class="col-md-2 control-label">手机号码</label>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" id="rg_mobile">
-                        </div>
-                        <div class="col-md-5 control-label" style="text-align: left;">请输入您的手机号码</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="rg_email" class="col-md-2 control-label">邮 箱</label>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" id="rg_email">
-                        </div>
-                        <div class="col-md-5 control-label" style="text-align: left;">请输入您的邮箱</div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> 我同意
-                                    <a href="" style="color: red">用户注册协议</a>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-5 col-md-offset-2">
-                            <button type="button" class="btn btn-block btn-danger">注 册</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
+<%--            <div class="thumbnail pro-item">--%>
+<%--                <img src="images/p1.webp" alt="">--%>
+<%--                <div class="caption">--%>
+<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
+<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
+<%--                    <p class="price">1599元起</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
     </div>
 </div>
 </body>

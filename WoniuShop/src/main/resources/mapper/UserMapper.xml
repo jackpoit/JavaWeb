@@ -24,48 +24,97 @@
     <sql id="baseCol">
         id,username,password,gender,birthday,mobile,email,realname,idcard,image,`level`,utype
     </sql>
+    <!--无密码列-->
+    <sql id="noPwdCol">
+        id,username,gender,birthday,mobile,email,realname,idcard,image,`level`,utype
+    </sql>
 
-    <!-- 1.User findByName(String name);-->
-    <select id="findByName" resultMap="baseMap">
-        SELECT
-        <include refid="baseColumn"/>
-        FROM t_user
-        WHERE username=#{value}
-    </select>
 
-    <!--    2.int add(User user);-->
-    <insert id="add" parameterType="com.woniuxy.entity.User" useGeneratedKeys="true" keyColumn="id"
-            keyProperty="id">
-        INSERT INTO t_user(username, password, phone, email, image, level)
-            VALUE (#{username},#{password},#{phone},#{email},#{imagePath},#{userLevel})
+    <!--    1.int add(User user);动态添加员工-->
+    <insert id="add" parameterType="com.woniuxy.entity.User">
+        INSERT INTO t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null and username != ''">
+                username,
+            </if>
+            <if test="password != null and password != ''">
+                password,
+            </if>
+            <if test="gender != null and gender != ''">
+                gender,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile,
+            </if>
+            <if test="email != null and email != ''">
+                email,
+            </if>
+            <if test="realName != null and realName != ''">
+                realname,
+            </if>
+            <if test="idCard != null and idCard != ''">
+                idcard,
+            </if>
+            <if test="image != null and image != ''">
+                image,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="uType != null">
+                utype,
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="username != null and username != ''">
+                #{username},
+            </if>
+            <if test="password != null and password != ''">
+                #{password},
+            </if>
+            <if test="gender != null and gender != ''">
+                #{gender},
+            </if>
+            <if test="birthday != null">
+                #{birthday},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                #{mobile},
+            </if>
+            <if test="email != null and email != ''">
+                #{email},
+            </if>
+            <if test="realName != null and realName != ''">
+                #{realName},
+            </if>
+            <if test="idCard != null and idCard != ''">
+                #{idCard},
+            </if>
+            <if test="image != null and image != ''">
+                #{image},
+            </if>
+            <if test="level != null">
+                #{level},
+            </if>
+            <if test="uType != null">
+                #{uType},
+            </if>
+        </trim>
+
     </insert>
 
-    <!--    3.List<User> findAll();-->
-    <select id="findAll" resultMap="baseMap">
-        SELECT
-        <include refid="baseColumn"/>
-        FROM t_user
-    </select>
 
-    <!--    4.List<User> findLimitByKeyword(@Param("kw") String keyword, @Param("start") int start, @Param("num") int num);-->
-    <select id="findLimitByKeyword" resultMap="baseMap">
-        SELECT
-        <include refid="baseColumn"/>
-        FROM t_user
-        WHERE username LIKE CONCAT('%',#{kw},'%') OR id LIKE CONCAT('%',#{kw},'%') OR phone LIKE CONCAT('%',#{kw},'%')
-        LIMIT #{start},#{num}
-    </select>
-
-    <!--    5.long count(String keyword);-->
-    <select id="count" resultType="long">
-        SELECT COUNT(*)
-        FROM t_user
-        WHERE username LIKE CONCAT('%', #{keyword}, '%')
-           OR id LIKE CONCAT('%', #{keyword}, '%')
-           OR phone LIKE CONCAT('%', #{keyword}, '%')
-    </select>
-
-    <!--    6.int deleteByIds(@Param("ids")int...ids);//根据多个id来删除-->
+    <!--   2. int deleteByIds(@Param("ids") Integer... ids);删除员工-->
     <delete id="deleteByIds">
         DELETE FROM t_user WHERE id in
         <foreach collection="ids" item="id" open="(" close=")" separator=",">
@@ -75,78 +124,104 @@
         </foreach>
     </delete>
 
-    <!--7.int update(User user);//更新用户对象-->
+    <!--    3.int update(User user);更新员工-->
     <update id="update" parameterType="com.woniuxy.entity.User">
         UPDATE t_user
-        <set>   <!--去掉后面多余的','-->
-            <if test="username!=null and username !=''">
+        <set>
+            <if test="id != null">
+                id=#{id},
+            </if>
+            <if test="username != null and username != ''">
                 username=#{username},
             </if>
-            <if test="password!=null and password !=''">
+            <if test="password != null and password != ''">
                 password=#{password},
             </if>
-            <if test="phone!=null and phone !=''">
-                phone=#{phone},
+            <if test="gender != null and gender != ''">
+                gender=#{gender},
             </if>
-
-            <if test="email!=null and email !=''">
+            <if test="birthday != null">
+                birthday=#{birthday},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile=#{mobile},
+            </if>
+            <if test="email != null and email != ''">
                 email=#{email},
             </if>
-            <if test="imagePath!=null and imagePath !=''">
-                image=#{imagePath},
+            <if test="realName != null and realName != ''">
+                realname=#{realName},
             </if>
-            <if test="userLevel!=null and userLevel !=''">
-                level=#{userLevel},
+            <if test="idCard != null and idCard != ''">
+                idcard=#{idCard},
+            </if>
+            <if test="image != null and image != ''">
+                image=#{image},
+            </if>
+            <if test="level != null">
+                level=#{level},
+            </if>
+            <if test="uType != null">
+                utype=#{uType},
             </if>
         </set>
         WHERE id = #{id}
     </update>
 
-    <!--    8.User findNameAndPassword(@Param("username") String username,@Param("pwd") String password);-->
-    <select id="findNameAndPassword" resultMap="baseMap">
-        SELECT
-        <include refid="baseColumn"/>
-        FROM t_user
-        WHERE username=#{username} AND password=#{pwd}
-    </select>
-
-    <!--9.    List<User> findByKeyword( String keyword);-->
-    <select id="findByKeyword" resultMap="baseMap">
-        SELECT
-        <include refid="baseColumn"/>
-        FROM t_user
-        WHERE username LIKE CONCAT('%', #{value}, '%')
-        OR id LIKE CONCAT('%', #{value}, '%')
-        OR phone LIKE CONCAT('%', #{value}, '%')
-    </select>
-
-<!--    10.List<User> findByCondition(User user);-->
+    <!--    4.List<User> findByCondition(User user);查询员工-->
     <select id="findByCondition" parameterType="com.woniuxy.entity.User" resultMap="baseMap">
         SELECT
-        <include refid="baseColumn"/>
+        <include refid="noPwdCol"/>
         FROM t_user
         <where>
-            <if test="id!=null">
+            <if test="id != null">
                 AND id=#{id}
             </if>
-            <if test="username!=null and username !=''">
+            <if test="username != null and username != ''">
                 AND username=#{username}
             </if>
-            <if test="password!=null and password !=''">
+            <if test="password != null and password != ''">
                 AND password=#{password}
             </if>
-            <if test="phone!=null and phone !=''">
-                AND phone=#{phone}
+            <if test="gender != null and gender != ''">
+                AND gender=#{gender}
             </if>
-            <if test="email!=null and email !=''">
+            <if test="birthday != null">
+                AND birthday=#{birthday}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile=#{mobile}
+            </if>
+            <if test="email != null and email != ''">
                 AND email=#{email}
             </if>
-            <if test="imagePath!=null and imagePath !=''">
-                AND image=#{imagePath}
+            <if test="realName != null and realName != ''">
+                AND realname=#{realName}
             </if>
-            <if test="userLevel!=null and userLevel !=''">
-                AND level=#{userLevel}
+            <if test="idCard != null and idCard != ''">
+                AND idcard=#{idCard}
+            </if>
+            <if test="image != null and image != ''">
+                AND image=#{image}
+            </if>
+            <if test="level != null">
+                AND level=#{level}
+            </if>
+            <if test="uType != null">
+                AND utype=#{uType}
             </if>
         </where>
     </select>
+
+    <!--   5.List<User> findByKeyword(String keyword);-->
+    <select id="findByKeyword" resultMap="baseMap">
+        SELECT
+        <include refid="noPwdCol"/>
+        FROM t_user
+        WHERE username LIKE CONCAT('%', #{value}, '%')
+        OR id LIKE CONCAT('%', #{value}, '%')
+        OR mobile LIKE CONCAT('%', #{value}, '%')
+    </select>
+
+
 </mapper>

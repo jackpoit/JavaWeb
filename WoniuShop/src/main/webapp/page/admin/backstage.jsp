@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <%String basePath = request.getScheme() + "://" + request.getServerName() + ":"
-                + request.getServerPort() + request.getContextPath() + "/";%>
+    <%
+        String basePath = request.getScheme() + "://" + request.getServerName() + ":"
+                + request.getServerPort() + request.getContextPath() + "/";
+    %>
     <base href="<%=basePath%>">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,8 +17,6 @@
     <script src="bootstrap/js/bootstrap.js"></script>
     <link rel="stylesheet" href="css/backstage.css">
     <script type="text/javascript" src="js/backstage.js"></script>
-
-
 </head>
 <body>
 <!--导航条-->
@@ -112,19 +113,18 @@
                                 <td><input type="checkbox" name="users" value="${user.id}"></td>
                                 <td>${user.id}</td>
                                 <td>${user.username}</td>
-                                <td>${user.phone}</td>
+                                <td>${user.mobile}</td>
                                 <td>
-                                    <c:if test="${!empty user.imagePath}">
-                                        <img src="${user.imagePath}" alt="" style="width: 50px;" class="img-circle">
+                                    <c:if test="${!empty user.image}">
+                                        <img src="${user.image}" alt="" style="width: 50px;" class="img-circle">
                                     </c:if>
-                                    <c:if test="${empty user.imagePath}">
+                                    <c:if test="${empty user.image}">
                                         <div class="img-circle" style="background-color: #607b84;
                                         width: 50px;height: 50px;margin: 0 auto">
                                         </div>
                                     </c:if>
                                 </td>
-                                <td><c:if test="${!empty user.userLevel}">${user.userLevel}</c:if><c:if
-                                        test="${empty user.userLevel}">普通用户</c:if></td>
+                                <td><c:if test="${empty user.level}">普通用户</c:if><c:if test="${!empty user.level}"><c:if test="${user.level==0}">普通用户</c:if><c:if test="${user.level==1}">vip</c:if><c:if test="${user.level==2}">vvvip</c:if></c:if></td>
                                 <td>
                                     <button type="button" class="btn btn-danger" onclick="deleteUser(${user.id})">
                                         <span class="glyphicon glyphicon-remove"></span>删除
@@ -135,10 +135,12 @@
                                         <span class="glyphicon glyphicon-pencil"></span>修改
                                     </button>
                                 </td>
+                                <td class="sr-only"><fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/></td>
+                                <td class="sr-only">${user.realName}</td>
+                                <td class="sr-only">${user.idCard}</td>
+                                <td class="sr-only">${user.email}</td>
                             </tr>
-
                         </c:forEach>
-
                     </table>
                 </div>
                 <!--用户分页展示-->
@@ -149,7 +151,6 @@
                             <li>
                                 <a href="page/admin/user?m=page&currentUserPage=${info.prePage}&keyword=${keyword}">上一页</a>
                             </li>
-
                                 <%--中间页码--%>
                             <c:forEach var="i" begin="1" end="${info.pages}">
                                 <c:if test="${info.pageNum==i}">
@@ -432,182 +433,236 @@
 </div>
 
 
-<%--编辑的模态框--%>
-<div class="modal fade" tabindex="-1" id="editUserModal">
-    <div class="modal-dialog" role="document">
+<%--编辑模态框--%>
+<div class="modal fade" id="editUserModal" tabindex="-1" data-backdrop="static">
+    <div class="modal-dialog" style="width: 700px;margin-top: 150px">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title text-center">用户编辑</h4>
+            <div class="modal-header" style="background-color: #7575d2">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 class="modal-title text-center" style="color: #FFFFFF;letter-spacing: 5px">修改用户</h4>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <form class="form-horizontal" action="page/admin/user" method="post" id="editUserForm"
-                              enctype="multipart/form-data">
-                            <input class="sr-only" type="text" name="m" value="edit">
-                            <input type="hidden" name="eid" id="eid">
-                            <div class="form-group">
-                                <label for="ename" class="col-sm-3 control-label">用户名</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="ename" name="ename" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="ephone" class="col-sm-3 control-label">手机号码</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="ephone" name="ephone" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">用户类别</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="elevel" id="elevel1" value="普通用户">普通用户
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="elevel" id="elevel2" value="vip"> vip
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="elevel" id="elevel3" value="vvvip"> vvvip
-                                </label>
-
-                            </div>
-                            <div class="form-group">
-                                <label for="eImg" class="control-label col-md-2 col-md-offset-1">头像</label>
-                                <div class="col-md-8">
-                                    <input type="file" name="eImg" id="eImg" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div id="showImg" class="col-md-6 col-md-offset-4"
-                                     style="width: 150px;height: 150px;"></div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="button" class="btn btn-primary btn-block" id="user_upload">更新</button>
-                                </div>
-                            </div>
-                        </form>
+                <form class="form-horizontal" action="page/admin/user" method="post" id="editUserForm"
+                      enctype="multipart/form-data">
+                    <input type="hidden" name="m" value="edit">
+                    <input type="hidden" name="eid" id="eid">
+                    <div class="form-group">
+                        <label for="e_username" class="control-label col-md-2 "><span
+                                style="color: red">*</span>用户名</label>
+                        <div class="col-md-5">
+                            <input type="text" id="e_username" name="e_username" class="form-control"disabled>
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="e_pwd" class="control-label col-md-2"><span style="color: red">*</span>密码</label>
+                        <div class="col-md-5">
+                            <input type="password" id="e_pwd" name="e_pwd" class="form-control" placeholder="请输入密码">
+                        </div>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="epwdSpan">6-16位字母数字下划线组成</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="e_repwd" class="control-label col-md-2"><span
+                                style="color: red">*</span>密码确认</label>
+                        <div class="col-md-5">
+                            <input type="password" id="e_repwd" name="e_repwd" class="form-control"
+                                   placeholder="请再次确认密码">
+                        </div>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="erepwdSpan"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="e_phone" class="control-label col-md-2"><span style="color: red">*</span>手机号</label>
+                        <div class="col-md-5">
+                            <input type="text" id="e_phone" name="e_phone" class="form-control" placeholder="请输入您的手机号码">
+                        </div>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="e_rphoneSpan"></span>
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="e_email" class="control-label col-md-2"><span style="color: red">*</span>邮箱</label>
+                        <div class="col-md-5">
+                            <input type="text" id="e_email" name="e_email" class="form-control" placeholder="请输入您的邮箱">
+                        </div>
+                        <label class="control-label col-md-4 " style="text-align: left">
+                            <span id="e_remailSpan"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">用户类别</label>
+                        <label class="radio-inline" style="margin-left: 20px;">
+                            <input type="radio" name="e_level" id="e_level1" value="0" checked> 普通用户
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="e_level" id="e_level2" value="1"> vip
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="e_level" id="e_level3" value="2">vvvip
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="e_image" class="control-label col-md-2">头像</label>
+                        <div class="col-md-5">
+                            <input type="file" id="e_image" name="e_image" class="form-control">
+                        </div>
+                        <div class="col-md-5" style="position: relative">
+                            <div class=" text-center" id="e_h_showImg" style="position: absolute;left: 20%"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="e_birthday" class="control-label col-md-2">生日</label>
+                        <div class="col-md-5">
+                            <input type="date" id="e_birthday" name="e_birthday" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="e_realName" class="control-label col-md-2">真实姓名</label>
+                        <div class="col-md-5">
+                            <input type="text" id="e_realName" name="e_realName" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="e_idCard" class="control-label col-md-2">身份证</label>
+                        <div class="col-md-5">
+                            <input type="text" id="e_idCard" name="e_idCard" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-5 col-md-offset-2 ">
+                            <button type="button" class="btn btn-primary btn-block" id="e_register_btn">更新</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<%--添加的模态框--%>
-<div class="modal fade" tabindex="-1" id="addUserModal">
-    <div class="modal-dialog" role="document">
+<%--添加模态框--%>
+<div class="modal fade" id="addUserModal" tabindex="-1" data-backdrop="static">
+    <div class="modal-dialog" style="width: 700px;margin-top: 150px">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title text-center">用户添加</h4>
+            <div class="modal-header" style="background-color: #7575d2">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 class="modal-title text-center" style="color: #FFFFFF;letter-spacing: 5px">用户添加</h4>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-
-                        <form class="form-horizontal" action="page/admin/user" method="post" id="addUserForm"
-                              enctype="multipart/form-data">
-                            <input type="hidden" name="m" value="add">
-                            <input type="hidden" name="id" id="id">
-                            <div class="form-group">
-                                <label for="r_username" class="col-sm-3 control-label">用户名</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="r_username" name="r_username" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="r_pwd" class="col-sm-3 control-label">密码</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="r_pwd" name="r_pwd" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="r_phone" class="col-sm-3 control-label">手机号码</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="r_phone" name="r_phone" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="r_email" class="col-sm-3 control-label">邮箱</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="r_email" name="r_email" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">用户类别</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="r_level" id="r_level1" value="普通用户" checked> 普通用户
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="r_level" id="r_level2" value="vip"> vip
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="r_level" id="r_level3" value="vvvip"> vvvip
-                                </label>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="r_img" class="control-label col-md-2 col-md-offset-1">头像</label>
-                                <div class="col-md-8">
-                                    <input type="file" name="r_img" id="r_img" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div id="showAddImg" class="col-md-6 col-md-offset-4"
-                                     style="width: 150px;height: 150px;"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="button" class="btn btn-primary btn-block" id="user_add">添加用户</button>
-                                </div>
-                            </div>
-                        </form>
+                <form class="form-horizontal" action="page/admin/user" method="post" id="addUserForm"
+                      enctype="multipart/form-data">
+                    <input type="hidden" name="m" value="add">
+                    <input type="hidden" name="id" id="id">
+                    <div class="form-group">
+                        <label for="r_username" class="control-label col-md-2 "><span
+                                style="color: red">*</span>用户名</label>
+                        <div class="col-md-5">
+                            <input type="text" id="r_username" name="r_username" class="form-control"
+                                   placeholder="请输入用户名">
+                        </div>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="checkUserSpan">用户名只能是字母且6-16位</span>
+                        </label>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="r_pwd" class="control-label col-md-2"><span style="color: red">*</span>密码</label>
+                        <div class="col-md-5">
+                            <input type="password" id="r_pwd" name="r_pwd" class="form-control" placeholder="请输入密码">
+                        </div>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="rpwdSpan">6-16位字母数字下划线组成</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="r_repwd" class="control-label col-md-2"><span
+                                style="color: red">*</span>密码确认</label>
+                        <div class="col-md-5">
+                            <input type="password" id="r_repwd" name="r_repwd" class="form-control"
+                                   placeholder="请再次确认密码">
+                        </div>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="rrepwdSpan"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="r_phone" class="control-label col-md-2"><span style="color: red">*</span>手机号</label>
+                        <div class="col-md-5">
+                            <input type="text" id="r_phone" name="r_phone" class="form-control" placeholder="请输入您的手机号码">
+                        </div>
+                        <label class="control-label col-md-4 text-left" style="text-align: left">
+                            <span id="rphoneSpan"></span>
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="r_email" class="control-label col-md-2"><span style="color: red">*</span>邮箱</label>
+                        <div class="col-md-5">
+                            <input type="text" id="r_email" name="r_email" class="form-control" placeholder="请输入您的邮箱">
+                        </div>
+                        <label class="control-label col-md-4 " style="text-align: left">
+                            <span id="remailSpan"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">用户类别</label>
+                        <label class="radio-inline" style="margin-left: 20px;">
+                            <input type="radio" name="r_level" id="r_level1" value="0" checked> 普通用户
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="r_level" id="r_level2" value="1"> vip
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="r_level" id="r_level3" value="2">vvvip
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="r_image" class="control-label col-md-2">头像</label>
+                        <div class="col-md-5">
+                            <input type="file" id="r_image" name="r_image" class="form-control">
+                        </div>
+                        <div class="col-md-5" style="position: relative">
+                            <div class=" text-center" id="h_showImg" style="position: absolute;left: 20%"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-md-2">性别</label>
+                        <label class="radio-inline" style="margin-left: 20px;">
+                            <input type="radio" name="r_gender" id="r_gender1" value="男" checked> 男
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="r_gender" id="r_gender2" value="女"> 女
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="r_birthday" class="control-label col-md-2">生日</label>
+                        <div class="col-md-5">
+                            <input type="date" id="r_birthday" name="r_birthday" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="r_realName" class="control-label col-md-2">真实姓名</label>
+                        <div class="col-md-5">
+                            <input type="text" id="r_realName" name="r_realName" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="r_idCard" class="control-label col-md-2">身份证</label>
+                        <div class="col-md-5">
+                            <input type="text" id="r_idCard" name="r_idCard" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-5 col-md-offset-2 ">
+                            <button type="button" class="btn btn-primary btn-block" id="register_btn">注册</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 
-<script>
-
-    function deleteUser(id) {
-        let flag = confirm("您确认要删除" + id + "号用户吗?");
-        if (flag) {
-            location.href = "page/admin/user?m=deleteByIds&uid=" + id
-        }
-    }
-
-    function deleteUsers() {
-        let $ids = $('input[name="users"]').filter(":checked")
-        if ($ids.length === 0) {
-            alert("没有选择的用户")
-            return;
-        }
-        let idStr = "";
-        let idRes = "";
-        for (let i = 0; i < $ids.length; i++) {
-
-            idRes += "uid=" + $ids.eq(i).val();
-            idStr += $ids.eq(i).val();
-            if (i !== $ids.length - 1) {
-                idStr += ",";
-                idRes += "&"
-            }
-        }
-        let flag = confirm("您确认要删除" + idStr + "号用户吗?");
-        if (flag) {
-            location.href = "page/admin/user?m=deleteByIds&" + idRes;
-        }
-    }
-</script>
 </body>
 </html>

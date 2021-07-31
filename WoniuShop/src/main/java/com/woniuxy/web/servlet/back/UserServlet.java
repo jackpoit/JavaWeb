@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
+import java.text.SimpleDateFormat;
 
 /**
  * @Author: jackpoit
@@ -24,9 +25,7 @@ public class UserServlet extends BaseServlet {
 
 	UserServiceImpl usi = new UserServiceImpl();
 
-	/**
-	 * 根据id删除员工
-	 */
+	//根据id删除用户
 	public String deleteByIds(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
 		String[] uids = req.getParameterValues("uid");
@@ -36,51 +35,65 @@ public class UserServlet extends BaseServlet {
 				ids[i] = Integer.parseInt(uids[i]);
 			}
 		}
-		boolean flag = usi.remove(ids);
-		resp.getWriter().write("<script>alert('"+(flag?"删除成功":"删除失败")+"')</script>");
-
+		boolean flag = usi.doDelete(ids);
+		resp.getWriter().write("<script>alert('" + (flag ? "删除成功" : "删除失败") + "')</script>");
 		return "redirect:/page/admin/back";
 	}
 
+	//更新用户
 	public String edit(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		User user = new User();
-		String username = req.getParameter("ename");
-		user.setId(Integer.parseInt(req.getParameter("eid")));
-		user.setUsername(req.getParameter("ename"));
-		user.setMobile(req.getParameter("ephone"));
-		user.setLevel(0);
 
-		Part part = req.getPart("eImg");
-		if (part != null) {
+		user.setId(Integer.parseInt(req.getParameter("eid")));
+		String username = req.getParameter("e_username");
+
+		user.setPassword(StringUtil.isEmpty(req.getParameter("e_pwd")) ? null : req.getParameter("e_pwd"));
+
+		user.setMobile(StringUtil.isEmpty(req.getParameter("e_phone")) ? null : req.getParameter("e_phone"));
+		user.setEmail(StringUtil.isEmpty(req.getParameter("e_email")) ? null : req.getParameter("e_email"));
+		user.setGender(StringUtil.isEmpty(req.getParameter("e_gender")) ? null : req.getParameter("e_gender"));
+		user.setRealName(StringUtil.isEmpty(req.getParameter("e_realName")) ? null : req.getParameter("e_realName"));
+		user.setIdCard(StringUtil.isEmpty(req.getParameter("e_idCard")) ? null : req.getParameter("e_idCard"));
+		String birthday = req.getParameter("e_birthday");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		user.setBirthday(StringUtil.isEmpty(birthday) ? null : sdf.parse(birthday));
+		int level = 0;
+		if (!StringUtil.isEmpty(req.getParameter("e_level"))) {
+			level = Integer.parseInt(req.getParameter("e_level"));
+		}
+		user.setLevel(level);
+		user.setUType(0);
+		Part part = req.getPart("e_image");
+		if (part.getSize() != 0) {
 			String fileName = part.getSubmittedFileName();
 			String suffix = fileName.substring(fileName.lastIndexOf(".")); // 文件的扩展名
 			fileName = "head" + suffix;
-			String uploadPath = "D:/MyProgram/Tomcat/nginx-1.18.0/html/upload/" + username;
+			String uploadPath = "D:/MyProgram/nginx-1.18.0/html/upload/" + username;
 			File file = new File(uploadPath);
 			if (!file.exists()) {
 				file.mkdirs(); // 创建用户目录用于存放自己的图片
 			}
 			uploadPath = uploadPath + File.separator + fileName;
-
 			// 上传到服务器
-			part.write(uploadPath); //part.write会自动覆盖原文件
+			part.write(uploadPath);
 			String imgPath = "http://localhost/upload/" + username + "/" + fileName;
 			user.setImage(imgPath);
 		}
 
-		boolean flag = usi.edit(user);
+		boolean flag = usi.doUpdate(user);
 
 		resp.getWriter().write("<script>alert('" + (flag ? "更新成功" : "更新失败") + "')</script>");
 
 		return "redirect:/page/admin/back";
 	}
 
+
 	public String page(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
 		//获取当前页码
 		String currentUserPageStr = req.getParameter("currentUserPage");
 		int currentUserPage = 1;
-		if (!StringUtil.isEmpty(currentUserPageStr) ) {
+		if (!StringUtil.isEmpty(currentUserPageStr)) {
 			currentUserPage = Integer.parseInt(currentUserPageStr);
 		}
 		//获取模糊查询关键字
@@ -102,7 +115,7 @@ public class UserServlet extends BaseServlet {
 
 		PageInfo<User> info = usi.findOnePage(currentUserPage, keyword);
 		req.setAttribute("info", info);
-		req.setAttribute("keyword",keyword);
+		req.setAttribute("keyword", keyword);
 
 		return "forward:/page/admin/backstage.jsp";
 	}
@@ -110,15 +123,28 @@ public class UserServlet extends BaseServlet {
 	public String add(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		User user = new User();
 		String username = req.getParameter("r_username");
-		user.setUsername(req.getParameter("r_username"));
+		if (!StringUtil.isEmpty(username)) {
+			user.setUsername(username);
+		}
 		user.setPassword(req.getParameter("r_pwd"));
 		user.setMobile(req.getParameter("r_phone"));
 		user.setEmail(req.getParameter("r_email"));
-		user.setImage(req.getParameter("r_img"));
-		user.setLevel(0);
+		user.setGender(StringUtil.isEmpty(req.getParameter("r_gender")) ? null : req.getParameter("r_gender"));
+		user.setRealName(StringUtil.isEmpty(req.getParameter("r_realName")) ? null : req.getParameter("r_realName"));
+		user.setIdCard(StringUtil.isEmpty(req.getParameter("r_idCard")) ? null : req.getParameter("r_idCard"));
+
+		String birthday = req.getParameter("r_birthday");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		user.setBirthday(StringUtil.isEmpty(birthday) ? null : sdf.parse(birthday));
+		int level = 0;
+		if (!StringUtil.isEmpty(req.getParameter("r_level"))) {
+			level = Integer.parseInt(req.getParameter("r_level"));
+		}
+		user.setLevel(level);
+		user.setUType(0);
 
 		String imgPath = "http://localhost:8080/WoniuShop/images/user/1.jpg";
-		Part part = req.getPart("r_img");
+		Part part = req.getPart("r_image");
 
 		if (part.getSize() == 0) { //有name 但不传文件
 			user.setImage(imgPath);
@@ -126,7 +152,7 @@ public class UserServlet extends BaseServlet {
 			String fileName = part.getSubmittedFileName();
 			String suffix = fileName.substring(fileName.lastIndexOf(".")); // 文件的扩展名
 			fileName = "head" + suffix;
-			String uploadPath = "D:/MyProgram/Tomcat/nginx-1.18.0/html/upload/" + username;
+			String uploadPath = "D:/MyProgram/nginx-1.18.0/html/upload/" + username;
 			File file = new File(uploadPath);
 			if (!file.exists()) {
 				file.mkdirs(); // 创建用户目录用于存放自己的图片
@@ -137,7 +163,7 @@ public class UserServlet extends BaseServlet {
 			imgPath = "http://localhost/upload/" + username + "/" + fileName;
 			user.setImage(imgPath);
 		}
-		boolean flag = usi.registerUser(user);
+		boolean flag = usi.doRegister(user);
 		resp.getWriter().write("<script>alert('" + (flag ? "添加成功" : "添加失败") + "')</script>");
 		return "redirect:/page/admin/user?m=page";
 	}

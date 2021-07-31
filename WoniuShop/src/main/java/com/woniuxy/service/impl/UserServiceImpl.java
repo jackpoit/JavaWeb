@@ -11,20 +11,15 @@ import com.woniuxy.util.DBUtil;
 import java.util.List;
 
 /**
- * @Author: rua
+ * @Author: jackpoit
  * @Date: 2021/7/24 22:03
- * @Description:
+ * @Description: 用户业务逻辑层实现类
  */
 public class UserServiceImpl implements UserService {
 
-	/**
-	 * 检查用户名是否存在
-	 * @param name
-	 * @return 存在返回true
-	 */
 	@Override
 	public boolean isUserExist(String name) {
-		if (StringUtil.isEmpty(name)){
+		if (StringUtil.isEmpty(name)) {
 			return false;
 		}
 		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
@@ -34,27 +29,20 @@ public class UserServiceImpl implements UserService {
 		DBUtil.close();
 		return !list.isEmpty();
 	}
-	/**
-	 * 登录
-	 * @param userName
-	 * @param password
-	 * @return
-	 */
+
 	@Override
-	public User loginUser(String userName, String password) {
+	public User doLogin(User user) {
+		if (user == null) {
+			return null;
+		}
 		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
-		User user = mapper.findNameAndPassword(userName, password);
+		List<User> list = mapper.findByCondition(user);
 		DBUtil.close();
-		return user;
+		return list.size() == 1 ? list.get(0) : null;
 	}
 
-	/**
-	 * 注册
-	 * @param user
-	 * @return
-	 */
 	@Override
-	public boolean registerUser(User user) {
+	public boolean doRegister(User user) {
 		if (user == null) {
 			return false;
 		}
@@ -64,12 +52,28 @@ public class UserServiceImpl implements UserService {
 		return row > 0;
 	}
 
-	/**
-	 * 分页
-	 * @param currentPage
-	 * @param keyword
-	 * @return
-	 */
+	@Override
+	public boolean doDelete(Integer... ids) {
+		if (ids == null) {
+			return false;
+		}
+		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
+		int row = mapper.deleteByIds(ids);
+		DBUtil.close();
+		return row > 0;
+	}
+
+	@Override
+	public boolean doUpdate(User user) {
+		if (user == null) {
+			return false;
+		}
+		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
+		int row = mapper.update(user);
+		DBUtil.close();
+		return row > 0;
+	}
+
 	@Override
 	public PageInfo<User> findOnePage(int currentPage, String keyword) {
 		if (currentPage < 0 || keyword == null) {
@@ -83,32 +87,4 @@ public class UserServiceImpl implements UserService {
 		return info;
 	}
 
-	/**
-	 * 删除
-	 * @param ids
-	 * @return
-	 */
-	@Override
-	public boolean remove(Integer... ids) {
-		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
-		int row = mapper.deleteByIds(ids);
-		DBUtil.close();
-		return row > 0;
-	}
-
-	/**
-	 * 更新
-	 * @param user
-	 * @return
-	 */
-	@Override
-	public boolean edit(User user) {
-		if (user == null) {
-			return false;
-		}
-		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
-		int row = mapper.update(user);
-		DBUtil.close();
-		return row > 0;
-	}
 }

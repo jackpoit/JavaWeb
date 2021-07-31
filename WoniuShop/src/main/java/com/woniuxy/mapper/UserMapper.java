@@ -6,54 +6,46 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @Author: rua
+ * @Author: jackpoit
  * @Date: 2021/7/24 21:40
- * @Description:
+ * @Description: 用户持久层接口
  */
 public interface UserMapper {
-
 	/**
-	 * 根据用户名查找用户
-	 * @param userName 用户名
-	 * @return 用户对象
-	 */
-	User findByName(String userName);
-
-	/**
-	 * 添加对象
+	 * 添加员工
 	 * @param user 用户对象
 	 * @return 受影响行数
 	 */
 	int add(User user);
 
 	/**
-	 * 查询所有
-	 * @return 用户集合
+	 * 删除员工
+	 * @param ids 员工id数组
+	 * @return 受影响行数
 	 */
-	List<User> findAll();
+	int deleteByIds(@Param("ids") Integer... ids);
 
 	/**
-	 * 根据关键词查用户
-	 * @param keyword 关键词
-	 * @return 用户集合
+	 * 更新员工
+	 * @param user 包含更新信息的员工对象
+	 * @return 受影响行数
 	 */
-	List<User> findLimitByKeyword(@Param("kw") String keyword, @Param("start") int start, @Param("num") int num);
+	int update(User user);
 
 	/**
-	 * 根据关键词查用户总数
-	 * @param keyword 关键词
-	 * @return 总数
+	 * 根据特定条件查询员工集合(user为null查所有)
+	 * @param user 包含要查询信息的员工对象
+	 * @return 查询到的员工集合
 	 */
-	long count(String keyword);
+	List<User> findByCondition(User user);
 
-	int deleteByIds(@Param("ids") Integer...ids);//根据多个id来删除
-
-	int update(User user);//更新用户对象
-
-	User findNameAndPassword(@Param("username") String username,@Param("pwd") String password);
-
+	/**
+	 * 根据关键词查id username mobile
+	 * @param keyword 关键词
+	 * @return 查询到的员工集合
+	 */
 	List<User> findByKeyword(String keyword);
 
-	List<User> findByCondition(User user);
+
 }
 

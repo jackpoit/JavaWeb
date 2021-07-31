@@ -56,7 +56,7 @@
                 <form class="form-horizontal" id="register_form">
                     <input type="hidden" name="m" value="register">
                     <div class="form-group">
-                        <label for="r_username" class="control-label col-md-2 ">用户名</label>
+                        <label for="r_username" class="control-label col-md-2 "><span style="color: red">*</span>用户名</label>
                         <div class="col-md-5">
                             <input type="text" id="r_username" name="r_username" class="form-control"
                                    placeholder="请输入用户名">
@@ -65,9 +65,8 @@
                             <span id="checkUserSpan">用户名只能是字母且6-16位</span>
                         </label>
                     </div>
-
                     <div class="form-group">
-                        <label for="r_pwd" class="control-label col-md-2">密码</label>
+                        <label for="r_pwd" class="control-label col-md-2"><span style="color: red">*</span>密码</label>
                         <div class="col-md-5">
                             <input type="password" id="r_pwd" name="r_pwd" class="form-control" placeholder="请输入密码">
                         </div>
@@ -77,7 +76,7 @@
 
                     </div>
                     <div class="form-group">
-                        <label for="r_repwd" class="control-label col-md-2">密码确认</label>
+                        <label for="r_repwd" class="control-label col-md-2"><span style="color: red">*</span>密码确认</label>
                         <div class="col-md-5">
                             <input type="password" id="r_repwd" name="r_repwd" class="form-control"
                                    placeholder="请再次确认密码">
@@ -85,10 +84,9 @@
                         <label class="control-label col-md-4 text-left" style="text-align: left">
                             <span id="rrepwdSpan"></span>
                         </label>
-
                     </div>
                     <div class="form-group">
-                        <label for="r_phone" class="control-label col-md-2">手机号</label>
+                        <label for="r_phone" class="control-label col-md-2"><span style="color: red">*</span>手机号</label>
                         <div class="col-md-5">
                             <input type="text" id="r_phone" name="r_phone" class="form-control" placeholder="请输入您的手机号码">
                         </div>
@@ -97,7 +95,7 @@
                         </label>
                     </div>
                     <div class="form-group row">
-                        <label for="r_email" class="control-label col-md-2">邮箱</label>
+                        <label for="r_email" class="control-label col-md-2"><span style="color: red">*</span>邮箱</label>
                         <div class="col-md-5">
                             <input type="text" id="r_email" name="r_email" class="form-control" placeholder="请输入您的邮箱">
                         </div>
@@ -106,6 +104,43 @@
                         </label>
 
                     </div>
+                    <div class="form-group row">
+                        <label for="r_image" class="control-label col-md-2">头像</label>
+                        <div class="col-md-5">
+                            <input type="file" id="r_image" name="r_image" class="form-control">
+                        </div>
+                        <div class="col-md-5" style="position: relative">
+                            <div class=" text-center" id="h_showImg" style="position: absolute;left: 20%"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label  class="control-label col-md-2">性别</label>
+                            <label class="radio-inline" style=" margin-left: 20px;">
+                                <input type="radio" name="r_gender" id="r_gender1" value="男" checked> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="r_gender" id="r_gender2" value="女"> 女
+                            </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="r_birthday" class="control-label col-md-2">生日</label>
+                        <div class="col-md-5">
+                            <input type="date" id="r_birthday" name="r_birthday" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="r_realName" class="control-label col-md-2">真实姓名</label>
+                        <div class="col-md-5">
+                            <input type="text" id="r_realName" name="r_realName" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="r_idCard" class="control-label col-md-2">身份证</label>
+                        <div class="col-md-5">
+                            <input type="text" id="r_idCard" name="r_idCard" class="form-control">
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="checkbox col-md-10 col-md-offset-2">
                             <label>
@@ -114,7 +149,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="form-group t">
+                    <div class="form-group ">
                         <div class="col-md-5 col-md-offset-2 ">
                             <button type="button" class="btn btn-primary btn-block" id="register_btn">注册</button>
                         </div>

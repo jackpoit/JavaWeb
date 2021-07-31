@@ -172,17 +172,42 @@ $(function () {
             $span.css({"color": "green"});
         }
     })
+    $('#r_realName').blur(function () {
+       let realName=$(this).val();
+        if (realName==""){
+            return;
+        }
+       let realNamePattern=/^[\u4e00-\u9fa5]+$/;
+       if (!realNamePattern.test(realName)){
+           alert("请输入真实中文名");
+           $(this).val("");
+       }
+    });
+    $('#r_idCard').blur(function () {
+        let idCard=$(this).val();
+        if (idCard==""){
+            return;
+        }
+        let idCardPattern=/^[0-9]{18}$/;
+        if (!idCardPattern.test(idCard)){
+            alert("请输入18位身份证号");
+            $(this).val("");
+        }
+    });
+
+
     $('#register_btn').click(function () {
         if (!ragreeFlag) {
             alert("请同意用户协议")
             return;
         }
         if (r_nameFlag && pwdFlag && phoneFlag && emailFlag) {
-
             $.ajax({
                 url: "user",
                 type: "post",
-                data: $('#register_form').serialize(),
+                data: new FormData($('#register_form')[0]),
+                contentType: false,
+                processData: false,
                 dataType: "text",
                 success: function (text) {
                     if ("Y" == text) {
@@ -196,10 +221,28 @@ $(function () {
         } else {
             alert("请正确填写所有信息");
         }
-
     })
-
 })
+
+$(function () {
+    // 1. 头像预览
+    $('#r_image').change(function () {
+        let file = this.files[0];
+        let imgPattern = /image\/\w+/;// 用来匹配以 image/
+        if (!imgPattern.test(file.type)) {
+            alert("文件必须为图片！");
+            imgFlag = false;
+            addFlag = false;
+            return false;
+        }
+        let reader = new FileReader(); // 创建文件预览器
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            $('#h_showImg').html("<img src=" + this.result + " width='160px';height='160px' >");
+            $('#h_showImg').slideDown(2000);
+        }
+    });
+});
 
 
 function registerSuccess() {

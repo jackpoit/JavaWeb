@@ -29,6 +29,5 @@ public class BackIndexServlet extends HttpServlet {
 
 		req.setAttribute("info", info);
 		req.getRequestDispatcher("/page/admin/backstage.jsp").forward(req, resp);
-
 	}
 }
