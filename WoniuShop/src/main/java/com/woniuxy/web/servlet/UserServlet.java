@@ -68,7 +68,6 @@ public class UserServlet extends BaseServlet {
 		user.setLevel(0);
 		user.setUType(0);
 
-
 		String imgPath = "http://localhost:8080/WoniuShop/images/user/1.jpg";
 		Part part = req.getPart("r_image");
 

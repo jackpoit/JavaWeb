@@ -12,6 +12,7 @@
     <script src="bootstrap/js/bootstrap.js"></script>
     <link rel="stylesheet" href="css/index.css">
     <script src="js/city.js"></script>
+    <script src="js/personal.js"></script>
 </head>
 <body>
 <%--包含头部菜单--%>
@@ -30,8 +31,9 @@
         <div class="col-md-2 text-center">
             <ul class="nav nav-stacked navbar-default aside-tab" role="tablist">
                 <li role="presentation" class="active"><a href="#person" data-toggle="tab">个人资料</a></li>
-                <li role="presentation"><a href="#address" data-toggle="tab">收货地址</a></li>
+                <li role="presentation"><a href="#address" data-toggle="tab" id="address-btn">收货地址</a></li>
                 <li role="presentation"><a href="#order" data-toggle="tab">订单管理</a></li>
+                ${sesUser.id}
             </ul>
         </div>
 
@@ -46,6 +48,7 @@
                             <img src="${sesUser.image}" width="100%" class="img-circle">
                         </div>
                         <form class="form-horizontal" action="/WoniuShop/edit" method="post">
+                            <input type="hidden" id="id" name="id" value="${sesUser.id}">
                             <div class="form-group">
                                 <label for="user" class="col-sm-2 control-label">用户名</label>
                                 <div class="col-sm-10">
@@ -101,36 +104,26 @@
                                         <td>邮政编码</td>
                                         <td colspan="3">操作</td>
                                     </tr>
-                                    <tr>
-                                        <td>jack</td>
-                                        <td>18817386666</td>
-                                        <td>上海市 浦东新区</td>
-                                        <td>燕乔大厦15楼前台蜗牛学院</td>
-                                        <td>021209</td>
-                                        <td><span class="default-addr">默认地址</span></td>
-                                        <td>
-                                            <button class="btn btn-info">修改</button>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger">删除</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>admin</td>
-                                        <td>18817386666</td>
-                                        <td>上海市 浦东新区</td>
-                                        <td>燕乔大厦15楼前台蜗牛学院</td>
-                                        <td>021209</td>
-                                        <td>
-                                            <button class="btn btn-success">设置默认</button>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-info">修改</button>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger">删除</button>
-                                        </td>
-                                    </tr>
+                                    <tbody id="add_content">
+
+
+                                    </tbody>
+<%--                                    <tr>--%>
+<%--                                        <td>admin</td>--%>
+<%--                                        <td>18817386666</td>--%>
+<%--                                        <td>上海市 浦东新区</td>--%>
+<%--                                        <td>燕乔大厦15楼前台蜗牛学院</td>--%>
+<%--                                        <td>021209</td>--%>
+<%--                                        <td>--%>
+<%--                                            <button class="btn btn-success">设置默认</button>--%>
+<%--                                        </td>--%>
+<%--                                        <td>--%>
+<%--                                            <button class="btn btn-info">修改</button>--%>
+<%--                                        </td>--%>
+<%--                                        <td>--%>
+<%--                                            <button class="btn btn-danger">删除</button>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
                                 </table>
                             </div>
                         </div>
@@ -194,17 +187,19 @@
                 <h4 class="modal-title text-center">添加收货地址</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="addAddress" method="post">
+                <form class="form-horizontal" id="addAddForm">
                     <div class="form-group">
-                        <label for="name" class="col-sm-3 control-label">收货人</label>
+                        <input type="hidden" name="m" value="add">
+                        <input type="hidden" id="add_uid" name="add_uid" value="${sesUser.id}">
+                        <label for="add_name" class="col-sm-3 control-label">收货人</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" id="name" placeholder="名字">
+                            <input type="email" class="form-control" name="add_name" id="add_name" placeholder="名字">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="phone" class="col-sm-3 control-label">手机号码</label>
+                        <label for="add_phone" class="col-sm-3 control-label">手机号码</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" id="phone" placeholder="手机号">
+                            <input type="text" class="form-control" name="add_phone" id="add_phone" placeholder="手机号">
                         </div>
                     </div>
                     <div class="form-group">
@@ -225,27 +220,28 @@
                                     <option value="-1">区</option>
                                 </select>
                             </div>
+                            <input type="hidden" name="districtCode" id="districtCode" value="-1">
                         </div>
-
                     </div>
                     <div class="form-group">
                         <label for="fullAddress" class="col-sm-3 control-label">详细地址</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" id="fullAddress" placeholder="详细地址">
+                            <input type="text" class="form-control" name="fullAddress" id="fullAddress" placeholder="详细地址">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-8 col-sm-offset-3">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="flag"> 设为默认地址
+                                    <input type="checkbox" id="setDefault"> 设为默认地址
+                                    <input type="hidden" id="isdefault" name="isdefault" value="false">
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-8 col-sm-offset-3">
-                            <button type="submit" class="btn btn-primary btn-block">保存</button>
+                            <button type="button" class="btn btn-primary btn-block" id="add_add_btn">保存</button>
                         </div>
                     </div>
                 </form>

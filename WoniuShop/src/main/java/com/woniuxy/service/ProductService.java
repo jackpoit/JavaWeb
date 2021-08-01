@@ -23,4 +23,11 @@ public interface ProductService {
 	 */
 	List<Product> findByPage(int currentPage);
 
+	/**
+	 * 根据关键词排序
+	 * @param keyword 排序关键词
+	 * @return 商品集合
+	 */
+	List<Product> getOrderByKeyword(String keyword ,String rule);
+
 }

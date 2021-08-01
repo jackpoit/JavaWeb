@@ -18,7 +18,7 @@ import java.util.List;
  */
 @WebServlet("/product")
 public class ProductServlet extends BaseServlet {
-	private ProductServiceImpl psi=new ProductServiceImpl();
+	private ProductServiceImpl psi = new ProductServiceImpl();
 
 	public void showAll(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
@@ -26,16 +26,21 @@ public class ProductServlet extends BaseServlet {
 
 	}
 
+	//展示页面
 	public void showPage(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-
-		int currentPage=1;
-		if (!StringUtil.isEmpty(req.getParameter("currentPage"))){
-			currentPage=Integer.parseInt(req.getParameter("currentPage"));
+		int currentPage = 1;
+		if (!StringUtil.isEmpty(req.getParameter("currentPage"))) {
+			currentPage = Integer.parseInt(req.getParameter("currentPage"));
 		}
-
 		List<Product> list = psi.findByPage(currentPage);
 		String jsonStr = JSON.toJSONString(list);
 		resp.getWriter().write(jsonStr);
+	}
 
+	//销量排序
+	public void showSalePage(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		List<Product> list = psi.getOrderByKeyword("sale","DESC");
+		String jsonStr = JSON.toJSONString(list);
+		resp.getWriter().write(jsonStr);
 	}
 }

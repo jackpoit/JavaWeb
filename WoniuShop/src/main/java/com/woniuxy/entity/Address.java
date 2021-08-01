@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Address {
-	private Integer id;
-	private String username;
-	private String mobile;
-	private String area;
-	private String location;
-	private String postcode;
-	private Integer defaultAdd;
-	private Integer uid;
+	private Integer id;        //自增id
+	private Integer uid;       //用户id
+	private String username;   //收货人姓名
+	private String mobile;     //收货人手机号
+	private String area;       //区域id
+	private String location;   //具体地址
+	private String postcode;   //邮政编码
+	private Integer isDefault; //1:默认地址
 }

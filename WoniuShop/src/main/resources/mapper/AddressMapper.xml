@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniuxy.mapper.AddressMapper">
+
+    <!--编写标准的resultMap-->
+    <resultMap id="baseMap" type="com.woniuxy.entity.Address">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="username" property="username"/>
+        <result column="mobile" property="mobile"/>
+        <result column="area" property="area"/>
+        <result column="location" property="location"/>
+        <result column="postcode" property="postcode"/>
+        <result column="isdefault" property="isDefault"/>
+    </resultMap>
+
+    <!--编写一个标准的列-->
+    <sql id="baseCol">
+        id,uid,username,mobile,area,location,postcode,isdefault
+    </sql>
+
+    <!--    1.List<Address> findByCondition(@Param("add") Address address, @Param("kw") String keyword, @Param("rule") String rule);-->
+    <select id="findByCondition" resultMap="baseMap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM t_address
+        <where>
+            <if test="add.id != null">
+                AND id=#{add.id}
+            </if>
+            <if test="add.uid != null">
+                AND uid=#{add.uid}
+            </if>
+            <if test="add.username != null and add.username != ''">
+                AND username=#{add.username}
+            </if>
+            <if test="add.mobile != null and add.mobile != ''">
+                AND mobile=#{add.mobile}
+            </if>
+            <if test="add.area != null and add.area != ''">
+                AND area=#{add.area}
+            </if>
+            <if test="add.location != null and add.location !=''">
+                AND location=#{add.location}
+            </if>
+            <if test="add.postcode != null and add.postcode != ''">
+                AND postcode=#{add.postcode}
+            </if>
+            <if test="add.isDefault != null">
+                AND isdefault=#{add.isDefault}
+            </if>
+        </where>
+        ORDER BY ${kw} ${rule}
+    </select>
+
+    <!--    2.int add(Address address);-->
+    <insert id="add" parameterType="com.woniuxy.entity.Address">
+        INSERT INTO t_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="username != null and username != ''">
+                username,
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile,
+            </if>
+            <if test="area != null and area != ''">
+                area,
+            </if>
+            <if test="location != null and location !=''">
+                location,
+            </if>
+            <if test="postcode != null and postcode != ''">
+                postcode,
+            </if>
+            <if test="isDefault != null">
+                isdefault,
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="username != null and username != ''">
+                #{username},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                #{mobile},
+            </if>
+            <if test="area != null and area != ''">
+                #{area},
+            </if>
+            <if test="location != null and location !=''">
+                #{location},
+            </if>
+            <if test="postcode != null and postcode != ''">
+                #{postcode},
+            </if>
+            <if test="isDefault != null">
+                #{isDefault},
+            </if>
+        </trim>
+    </insert>
+
+    <!--    3.int updateDefault(Address address);-->
+    <update id="updateDefault" parameterType="com.woniuxy.entity.Address">
+        UPDATE t_address
+        <set>
+            <if test="username != null and username != ''">
+                username=#{username},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile=#{mobile},
+            </if>
+            <if test="area != null and area != ''">
+                area=#{area},
+            </if>
+            <if test="location != null and location !=''">
+                location=#{location},
+            </if>
+            <if test="postcode != null and postcode != ''">
+                postcode=#{postcode},
+            </if>
+            <if test="isDefault != null">
+                isdefault=#{isDefault},
+            </if>
+        </set>
+        WHERE uid=#{uid} AND id=#{id}
+    </update>
+
+    <!--    4.int updateNormal(int uid);-->
+    <update id="updateNormal">
+        UPDATE t_address
+        SET isdefault=0
+        WHERE uid = #{value}
+          AND isdefault = 1
+    </update>
+    <!--    5.String findPostCode(String districtId);-->
+    <select id="findPostCode" parameterType="string" resultType="string">
+        SELECT zip
+        FROM zipcode
+        WHERE areaid = #{value}
+    </select>
+
+
+</mapper>

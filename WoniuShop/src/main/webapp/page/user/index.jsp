@@ -89,7 +89,7 @@
 <div class="container">
     <h3 style="line-height: 40px;">精选商品</h3>
     <!--热门商品展示区-->
-    <div class="row" id="productContent1">
+    <div class="row" id="primeProduct">
 
     </div>
 </div>
@@ -106,7 +106,7 @@
 <div class="container">
     <h3 style="line-height: 40px;">热销商品</h3>
     <!--热门商品展示区-->
-    <div class="row" id="productContent2">
+    <div class="row" id="saleProduct">
 
     </div>
 </div>
@@ -122,83 +122,8 @@
 <div class="container">
     <h3 style="line-height: 40px;">手机</h3>
     <!--热门商品展示区-->
-    <div class="row" id="productContent3">
-<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
-<%--            <div class="thumbnail pro-item">--%>
-<%--                <img src="images/p1.webp" alt="">--%>
-<%--                <div class="caption">--%>
-<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
-<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
-<%--                    <p class="price">1599元起</p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
+    <div class="row" id="phoneProduct">
 
-<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
-<%--            <div class="thumbnail pro-item">--%>
-<%--                <img src="images/p2.webp" alt="">--%>
-<%--                <div class="caption">--%>
-<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
-<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
-<%--                    <p class="price">1599元起</p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
-<%--            <div class="thumbnail pro-item">--%>
-<%--                <img src="images/p3.webp" alt="">--%>
-<%--                <div class="caption">--%>
-<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
-<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
-<%--                    <p class="price">1599元起</p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
-<%--            <div class="thumbnail pro-item">--%>
-<%--                <img src="images/p4.webp" alt="">--%>
-<%--                <div class="caption">--%>
-<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
-<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
-<%--                    <p class="price">1599元起</p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
-<%--            <div class="thumbnail pro-item">--%>
-<%--                <img src="images/p5.webp" alt="">--%>
-<%--                <div class="caption">--%>
-<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
-<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
-<%--                    <p class="price">1599元起</p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
-<%--            <div class="thumbnail pro-item">--%>
-<%--                <img src="images/p6.webp" alt="">--%>
-<%--                <div class="caption">--%>
-<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
-<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
-<%--                    <p class="price">1599元起</p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-<%--        <div class="col-xs-6 col-sm-4 col-md-3">--%>
-<%--            <div class="thumbnail pro-item">--%>
-<%--                <img src="images/p1.webp" alt="">--%>
-<%--                <div class="caption">--%>
-<%--                    <h4 class="title">Redmi Note 10 Pro</h4>--%>
-<%--                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>--%>
-<%--                    <p class="price">1599元起</p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
     </div>
 </div>
 </body>

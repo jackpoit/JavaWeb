@@ -32,4 +32,13 @@ public class ProductServiceImpl implements ProductService {
 		return list.isEmpty()?null:list;
 
 	}
+
+	@Override
+	public List<Product> getOrderByKeyword(String keyword,String rule) {
+		ProductMapper mapper = DBUtil.getMapper(ProductMapper.class);
+		PageHelper.startPage(1,8);
+		List<Product> list = mapper.findOrderByKeyword(null, keyword,rule);
+		DBUtil.close();
+		return list.isEmpty()?null:list;
+	}
 }

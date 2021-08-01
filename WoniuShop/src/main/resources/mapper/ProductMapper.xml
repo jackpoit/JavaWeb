@@ -50,5 +50,37 @@
         </where>
     </select>
 
+    <!--    2.List<Product> findOrderByKeyword(@Param("product") Product product, @Param("kw") String keyword, @Param("rule") String rule);-->
+    <select id="findOrderByKeyword" parameterType="com.woniuxy.entity.Product" resultMap="baseMap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM t_product
+        <where>
+            <if test="product!=null">
+                <if test="product.id != null">
+                    AND id=#{product.id}
+                </if>
+                <if test="product.pName != null and product.pName != ''">
+                    AND pname=#{product.pName}
+                </if>
+                <if test="product.pInfo != null and product.pInfo != ''">
+                    AND pinfo=#{product.pInfo}
+                </if>
+                <if test="product.price != null">
+                    AND price=#{product.price}
+                </if>
+                <if test="product.stock != null">
+                    AND stock=#{product.stock}
+                </if>
+                <if test="product.sale != null">
+                    AND sale=#{product.sale}
+                </if>
+                <if test="product.image != null and product.image != ''">
+                    AND image=#{product.image}
+                </if>
+            </if>
+        </where>
+        ORDER BY ${kw} ${rule}
+    </select>
 
 </mapper>

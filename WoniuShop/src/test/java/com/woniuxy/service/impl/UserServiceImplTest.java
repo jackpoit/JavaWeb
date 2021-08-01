@@ -13,6 +13,7 @@ public class UserServiceImplTest {
 		usi=new UserServiceImpl();
 	}
 
+
 	@Test
 	public void isUserExist() {
 	}

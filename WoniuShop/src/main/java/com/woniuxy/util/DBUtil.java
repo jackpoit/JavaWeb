@@ -94,9 +94,4 @@ public class DBUtil {
 		threadLocal.remove();
 	}
 
-
-
-
-
-
 }
