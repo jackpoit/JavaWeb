@@ -33,7 +33,6 @@
                 <li role="presentation" class="active"><a href="#person" data-toggle="tab">个人资料</a></li>
                 <li role="presentation"><a href="#address" data-toggle="tab" id="address-btn">收货地址</a></li>
                 <li role="presentation"><a href="#order" data-toggle="tab">订单管理</a></li>
-                ${sesUser.id}
             </ul>
         </div>
 

@@ -5,6 +5,7 @@ import com.github.pagehelper.util.StringUtil;
 import com.woniuxy.entity.User;
 import com.woniuxy.service.impl.UserServiceImpl;
 import com.woniuxy.util.BaseServlet;
+import com.woniuxy.util.MD5Util;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -46,8 +47,12 @@ public class UserServlet extends BaseServlet {
 
 		user.setId(Integer.parseInt(req.getParameter("eid")));
 		String username = req.getParameter("e_username");
-
-		user.setPassword(StringUtil.isEmpty(req.getParameter("e_pwd")) ? null : req.getParameter("e_pwd"));
+		String password = req.getParameter("e_pwd");
+		if (StringUtil.isEmpty(password)) {
+			password = "123456";
+		}
+		user.setPassword(password);
+		user.setMd5Code(MD5Util.getMd5(password, "com.woniuxy"));
 
 		user.setMobile(StringUtil.isEmpty(req.getParameter("e_phone")) ? null : req.getParameter("e_phone"));
 		user.setEmail(StringUtil.isEmpty(req.getParameter("e_email")) ? null : req.getParameter("e_email"));
@@ -126,7 +131,11 @@ public class UserServlet extends BaseServlet {
 		if (!StringUtil.isEmpty(username)) {
 			user.setUsername(username);
 		}
-		user.setPassword(req.getParameter("r_pwd"));
+		String password = req.getParameter("r_pwd");
+		if (!StringUtil.isEmpty(password)) {
+			user.setPassword(password);
+			user.setMd5Code(MD5Util.getMd5(password, "com.woniuxy"));
+		}
 		user.setMobile(req.getParameter("r_phone"));
 		user.setEmail(req.getParameter("r_email"));
 		user.setGender(StringUtil.isEmpty(req.getParameter("r_gender")) ? null : req.getParameter("r_gender"));

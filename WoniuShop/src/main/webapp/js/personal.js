@@ -3,17 +3,20 @@ $(function () {
         e.preventDefault()
         $(this).tab('show')
         let id = $('#id').val();
-        alert(id)
         if (id == '') {
             return;
         }
+        showAllAdd(id);
+    })
+
+    //展示地址
+    function showAllAdd(id) {
         $.ajax({
             url: "address",
             type: "get",
             data: {m: "showAll", uid: id},
             dataType: "json",
             success: function (list) {
-                alert(list)
                 let trs = ""
                 for (let add of list) {
                     trs += "<tr><td>" + add.username + "</td><td>" + add.mobile + "</td><td>" + add.area + "</td><td>" + add.location + "</td><td>" + add.postcode + "</td><td>";
@@ -21,15 +24,13 @@ $(function () {
                         trs += "<span class='default-addr'>默认地址</span></td>"
                     } else {
                         trs += "<span class='btn btn-success'>设置默认</span></td>"
-
                     }
                     trs += "<td><button class='btn btn-info'>修改</button></td><td><button class='btn btn-danger'>删除</button></td></tr>"
                 }
                 $("#add_content").html(trs);
             }
         })
-    })
-
+    }
 
     $('#setDefault').click(function () {
         let flag = this.checked;

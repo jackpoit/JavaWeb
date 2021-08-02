@@ -7,6 +7,47 @@
 // });
 //登录按钮 ajax
 $(function () {
+    function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    //删除cookie
+    function delCookie(name, domain) {
+        document.cookie = name + '=' + getCookie(name) + ';expires=' + (new Date(1)) + ';domain=' + domain + ';path=/';
+    }
+
+
+    $('#n_nav_loginSpan').click(function () {
+        $('#loginModal').modal('show');
+        showCookie();
+    })
+    $('#n_nav_login').click(function () {
+        $('#loginModal').modal('show');
+        showCookie();
+
+    })
+
+
+    function showCookie() {
+        let $cookieName = getCookie('cookieName');
+        let $cookiePwd = getCookie('cookiePwd');
+        if ($cookieName != '' && $cookiePwd != '') {
+            $('#l_username').val($cookieName)
+            $('#l_pwd').val($cookiePwd)
+            $('#cookieFlag').val("true")
+            $('#rememberLogin').prop("checked", true);
+        }
+    }
+
+
     $('#login_btn').click(function () {
         let uname = $('#l_username').val();
         let pwd = $('#l_pwd').val();
@@ -14,24 +55,68 @@ $(function () {
             alert("请填写完整的用户名,密码!");
             return;
         }
+        let $cookiePwd = getCookie('cookiePwd');
+        if ($cookiePwd != '' && pwd != $cookiePwd) {
+            delCookie('cookiePwd',"localhost");
+        }
         let info = $('#info');
         $.ajax({
             url: "user",
             type: "post",
-            data: {m: "login", l_username: uname, l_pwd: pwd},
+            data: $('#login_form').serialize(),
             dataType: "json",
             success: function (user) {
-                if (user!=null) { //成功
+                if (user != null) { //成功
                     info.html("登录成功")
-                    $('#user-name-label').html("<img src='"+user.image+"' width='40px' class='img-circle' alt=''><span class='person'>"+user.username+"</span>")
-                } else if (user==null) {
+                    // $('#nav_name').html("<img src='${sesUser.image}' width='40px' class='img-circle' alt=''><span class='person' >${sesUser.username}</span>");
+                    $('#n_nav_name').html("<img src='" + user.image + "' width='40px' class='img-circle' alt=''><span class='person' >" + user.username + "</span>");
+                    $('#n_nav_login').css({"display": "none"});
+                    $('#n_nav_exist').css({"display": "inline-block"});
+                    $('#n_nav_register').addClass("disabled");
+                    $('#n_nav_personal').removeClass("disabled");
+                    $('#n_nav_shopcart').removeClass("disabled");
+                } else if (user == null) {
                     info.html("密码错误")
                 }
                 loginRes();
             }
         })
     })
+
+    $('#nav_exist').click(function () {
+        exitLogin();
+    })
+    $('#n_nav_exist').click(function () {
+        exitLogin();
+    })
+
+    function exitLogin() {
+        $.ajax({
+            url: "user",
+            type: "get",
+            data: {m: "exit"},
+            datatype: "text",
+            success: function (text) {
+                if ("Y" == text) {
+                    alert("注销成功");
+                    location.href = "welcome/user";
+                }
+            }
+        })
+    }
+
+    $('#rememberLogin').click(function () {
+        let flag = this.checked;
+        if (flag) {
+            $('#cookieFlag').val("true");
+        } else {
+            $('#cookieFlag').val("false");
+        }
+    })
+
+
 })
+
 
 //注册界面ajax
 $(function () {
@@ -172,23 +257,23 @@ $(function () {
         }
     })
     $('#r_realName').blur(function () {
-       let realName=$(this).val();
-        if (realName==""){
+        let realName = $(this).val();
+        if (realName == "") {
             return;
         }
-       let realNamePattern=/^[\u4e00-\u9fa5]+$/;
-       if (!realNamePattern.test(realName)){
-           alert("请输入真实中文名");
-           $(this).val("");
-       }
+        let realNamePattern = /^[\u4e00-\u9fa5]+$/;
+        if (!realNamePattern.test(realName)) {
+            alert("请输入真实中文名");
+            $(this).val("");
+        }
     });
     $('#r_idCard').blur(function () {
-        let idCard=$(this).val();
-        if (idCard==""){
+        let idCard = $(this).val();
+        if (idCard == "") {
             return;
         }
-        let idCardPattern=/^[0-9]{18}$/;
-        if (!idCardPattern.test(idCard)){
+        let idCardPattern = /^[0-9]{18}$/;
+        if (!idCardPattern.test(idCard)) {
             alert("请输入18位身份证号");
             $(this).val("");
         }

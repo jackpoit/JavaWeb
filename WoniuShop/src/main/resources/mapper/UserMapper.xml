@@ -9,6 +9,7 @@
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
+        <result column="md5code" property="md5Code"/>
         <result column="gender" property="gender"/>
         <result column="birthday" property="birthday"/>
         <result column="mobile" property="mobile"/>
@@ -22,11 +23,11 @@
 
     <!--编写一个标准的列-->
     <sql id="baseCol">
-        id,username,password,gender,birthday,mobile,email,realname,idcard,image,`level`,utype
+        id,username,password,md5code,gender,birthday,mobile,email,realname,idcard,image,`level`,utype
     </sql>
     <!--无密码列-->
     <sql id="noPwdCol">
-        id,username,gender,birthday,mobile,email,realname,idcard,image,`level`,utype
+        id,username,md5code,gender,birthday,mobile,email,realname,idcard,image,`level`,utype
     </sql>
 
 
@@ -42,6 +43,9 @@
             </if>
             <if test="password != null and password != ''">
                 password,
+            </if>
+            <if test="md5Code != null and md5Code != ''">
+                md5code,
             </if>
             <if test="gender != null and gender != ''">
                 gender,
@@ -81,6 +85,9 @@
             </if>
             <if test="password != null and password != ''">
                 #{password},
+            </if>
+            <if test="md5Code != null and md5Code != ''">
+                #{md5Code},
             </if>
             <if test="gender != null and gender != ''">
                 #{gender},
@@ -137,6 +144,9 @@
             <if test="password != null and password != ''">
                 password=#{password},
             </if>
+            <if test="md5Code != null and md5Code != ''">
+                md5code=#{md5Code},
+            </if>
             <if test="gender != null and gender != ''">
                 gender=#{gender},
             </if>
@@ -182,6 +192,9 @@
             </if>
             <if test="password != null and password != ''">
                 AND password=#{password}
+            </if>
+            <if test="md5Code != null and md5Code != ''">
+                AND md5code=#{md5Code}
             </if>
             <if test="gender != null and gender != ''">
                 AND gender=#{gender}

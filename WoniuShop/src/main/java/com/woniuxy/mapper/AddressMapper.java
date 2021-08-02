@@ -36,7 +36,7 @@ public interface AddressMapper {
 	/**
 	 * 更新普通地址
 	 * @param uid 用户地址
-	 * @return
+	 * @return 受影响行数
 	 */
 	int updateNormal(int uid);
 

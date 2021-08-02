@@ -7,13 +7,13 @@ import com.woniuxy.entity.User;
 import com.woniuxy.service.impl.UserServiceImpl;
 import com.woniuxy.util.BaseServlet;
 import com.woniuxy.util.DBUtil;
+import com.woniuxy.util.MD5Util;
+import javafx.scene.control.Alert;
+import sun.security.provider.MD5;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
@@ -38,10 +38,45 @@ public class UserServlet extends BaseServlet {
 	public void login(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String username = req.getParameter("l_username");
 		String password = req.getParameter("l_pwd");
-		//仅登录为普通用户
-		User user = usi.doLogin(new User(username, password, 0));
+		if (StringUtil.isEmpty(password)){
+			return;
+		}
+		String cookieFlag = req.getParameter("cookieFlag");
+		System.out.println(cookieFlag);
+		User user = null;
+		Cookie[] cookies = req.getCookies();
+		String md5Code = "";
+		if (cookies != null) {
+			for (int i = 0; i < cookies.length; i++) {
+				if ("cookiePwd".equalsIgnoreCase(cookies[i].getName())) {
+					md5Code = cookies[i].getValue();
+				}
+			}
+		}
+		if (StringUtil.isEmpty(md5Code)) {
+			md5Code = MD5Util.getMd5(password, "com.woniuxy");
+		}
+		user = usi.doLogin(new User(username, md5Code, 0));
+
+		if (user != null && "true".equals(cookieFlag)) {
+
+			Cookie cookieName = new Cookie("cookieName", user.getUsername());
+			Cookie cookiePwd = new Cookie("cookiePwd", user.getMd5Code());
+
+			cookieName.setMaxAge(24 * 60 * 60);
+			cookieName.setPath("/");//同一服务器内所有应用都可访问到该Cookie
+
+			cookiePwd.setMaxAge(24 * 60 * 60);
+			cookiePwd.setPath("/");//同一服务器内所有应用都可访问到该Cookie
+
+			resp.addCookie(cookieName);
+			resp.addCookie(cookiePwd);
+
+		}
+
 		HttpSession session = req.getSession();
-		session.setAttribute("sesUser",user);
+		session.setAttribute("sesUser", user);
+
 		String jsonStr = JSON.toJSONString(user);
 		resp.getWriter().write(jsonStr);
 	}
@@ -55,7 +90,12 @@ public class UserServlet extends BaseServlet {
 		if (!StringUtil.isEmpty(username)) {
 			user.setUsername(username);
 		}
-		user.setPassword(req.getParameter("r_pwd"));
+		String password = req.getParameter("r_pwd");
+		if (StringUtil.isEmpty(password)) {
+			password = "123456";
+		}
+		user.setPassword(password);
+		user.setMd5Code(MD5Util.getMd5(password, "com.woniuxy"));
 		user.setMobile(req.getParameter("r_phone"));
 		user.setEmail(req.getParameter("r_email"));
 		user.setGender(StringUtil.isEmpty(req.getParameter("r_gender")) ? null : req.getParameter("r_gender"));
@@ -93,7 +133,14 @@ public class UserServlet extends BaseServlet {
 		resp.getWriter().write(flag ? "Y" : "N");
 	}
 
+	//注销
+	public void exit(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
+		HttpSession session = req.getSession();
+		session.invalidate();
+		resp.getWriter().write("Y");
+
+	}
 }
 
 
