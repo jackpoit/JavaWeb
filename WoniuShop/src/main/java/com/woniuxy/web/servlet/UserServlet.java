@@ -38,7 +38,7 @@ public class UserServlet extends BaseServlet {
 	public void login(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String username = req.getParameter("l_username");
 		String password = req.getParameter("l_pwd");
-		if (StringUtil.isEmpty(password)){
+		if (StringUtil.isEmpty(password)) {
 			return;
 		}
 		String cookieFlag = req.getParameter("cookieFlag");
@@ -140,6 +140,49 @@ public class UserServlet extends BaseServlet {
 		session.invalidate();
 		resp.getWriter().write("Y");
 
+	}
+
+	//更新用户
+	public String edit(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		User user = new User();
+
+		user.setId(Integer.parseInt(req.getParameter("id")));
+		String username = req.getParameter("username");
+		user.setUsername(StringUtil.isEmpty(req.getParameter("username")) ? null : req.getParameter("username"));
+
+		String password = req.getParameter("pwd");
+		if (!StringUtil.isEmpty(password)) {
+			user.setPassword(password);
+			user.setMd5Code(MD5Util.getMd5(password, "com.woniuxy"));
+		}
+
+		user.setMobile(StringUtil.isEmpty(req.getParameter("mobile")) ? null : req.getParameter("mobile"));
+
+		Part part = req.getPart("myImg");
+		if (part.getSize() != 0) {
+			String fileName = part.getSubmittedFileName();
+			String suffix = fileName.substring(fileName.lastIndexOf(".")); // 文件的扩展名
+			fileName = "head" + suffix;
+			String uploadPath = "C:/JavaProgram/java_class/1/" + username;
+			File file = new File(uploadPath);
+			if (!file.exists()) {
+				file.mkdirs(); // 创建用户目录用于存放自己的图片
+			}
+			uploadPath = uploadPath + File.separator + fileName;
+			// 上传到服务器
+			part.write(uploadPath);
+			String imgPath = "http://localhost/upload/" + username + "/" + fileName;
+			user.setImage(imgPath);
+		}
+
+		boolean flag = usi.doUpdate(user);
+		if (flag){
+			HttpSession session = req.getSession();
+			session.setAttribute("sesUser", user);
+		}
+		resp.getWriter().write("<script>alert('" + (flag ? "更新成功" : "更新失败") + "')</script>");
+
+		return "redirect:/page/user/personal.jsp";
 	}
 }
 

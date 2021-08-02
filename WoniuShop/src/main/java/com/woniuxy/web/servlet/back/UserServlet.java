@@ -48,12 +48,10 @@ public class UserServlet extends BaseServlet {
 		user.setId(Integer.parseInt(req.getParameter("eid")));
 		String username = req.getParameter("e_username");
 		String password = req.getParameter("e_pwd");
-		if (StringUtil.isEmpty(password)) {
-			password = "123456";
+		if (!StringUtil.isEmpty(password)) {
+			user.setPassword(password);
+			user.setMd5Code(MD5Util.getMd5(password, "com.woniuxy"));
 		}
-		user.setPassword(password);
-		user.setMd5Code(MD5Util.getMd5(password, "com.woniuxy"));
-
 		user.setMobile(StringUtil.isEmpty(req.getParameter("e_phone")) ? null : req.getParameter("e_phone"));
 		user.setEmail(StringUtil.isEmpty(req.getParameter("e_email")) ? null : req.getParameter("e_email"));
 		user.setGender(StringUtil.isEmpty(req.getParameter("e_gender")) ? null : req.getParameter("e_gender"));
@@ -67,7 +65,6 @@ public class UserServlet extends BaseServlet {
 			level = Integer.parseInt(req.getParameter("e_level"));
 		}
 		user.setLevel(level);
-		user.setUType(0);
 		Part part = req.getPart("e_image");
 		if (part.getSize() != 0) {
 			String fileName = part.getSubmittedFileName();

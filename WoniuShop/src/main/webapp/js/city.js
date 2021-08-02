@@ -13757,7 +13757,7 @@ $(function () {
     let cityList = null; // 已选中省份的城市列表
 
     //1. 同步省份数据
-    let options = "<option value='-1'>省</option>";
+    let options = "<option value='-1' selected>省</option>";
     for(let province of cityData){
         let provinceNo = province.code; // 省份代号
         let provinceName = province.name; // 省份及直辖市名
@@ -13769,9 +13769,9 @@ $(function () {
     $('#e_province').change(function () {  // change 只要值发生变化，则会触发该事件
         //2.1 获取已选择的省份的代号code
         let provinceNo = $(this).val();
-        $('#e_district').html("<option value='-1'>区</option>");
+        $('#e_district').html("<option value='-1' selected>区</option>");
         if(provinceNo == -1){ // 没有选择省份
-            $('#e_city').html("<option value='-1'>市</option>");
+            $('#e_city').html("<option value='-1' selected>市</option>");
             cityList = null;
             return;
         }
@@ -13783,7 +13783,7 @@ $(function () {
             }
         }
         //2.3 更新城市的下拉列表
-        let options = "<option value='-1'>市</option>";
+        let options = "<option value='-1' selected>市</option>";
         for(let city of cityList){
             let cityNo = city.code;
             let cityName = city.name;
@@ -13797,7 +13797,7 @@ $(function () {
         //3.1 获取已选中的城市代号
         let cityNo = $(this).val(); // 城市代号：获取到下拉列表中被选中的value
         if(cityNo == -1){ // 没有选择城市
-            $('#e_district').html("<option value='-1'>区</option>");
+            $('#e_district').html("<option value='-1' selected>区</option>");
             return;
         }
         //3.2 在城市列表中查询到该城市及城市下的所有区县列表
@@ -13808,7 +13808,7 @@ $(function () {
                 break;
             }
         }
-        let options = "<option value='-1'>区</option>";
+        let options = "<option value='-1' selected>区</option>";
         //3.3 更新区级列表到下拉列表中
         for(let district of districtList){
             let districtNo = district.code;

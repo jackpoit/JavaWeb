@@ -44,38 +44,39 @@
                     <div class="col-md-8 col-md-offset-2">
                         <h3 class="text-center">个 人 资 料</h3>
                         <div id="showBox" style="height: 100px;width: 100px;margin: 30px auto">
-                            <img src="${sesUser.image}" width="100%" class="img-circle">
+                            <img src="${sesUser.image}" width="100%" class="img-circle" id="myTitleImg">
                         </div>
-                        <form class="form-horizontal" action="/WoniuShop/edit" method="post">
+                        <form class="form-horizontal" action="user" method="post" enctype="multipart/form-data" id="userEditForm">
+                            <input type="hidden" name="m" value="edit">
                             <input type="hidden" id="id" name="id" value="${sesUser.id}">
                             <div class="form-group">
                                 <label for="user" class="col-sm-2 control-label">用户名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="user" value="${sesUser.username}">
+                                    <input type="text" class="form-control" name="username" id="user" value="${sesUser.username}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="pwd" class="col-sm-2 control-label">密码</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="pwd" value="">
+                                    <input type="password" name="pwd" class="form-control" id="pwd" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="mobile" class="col-sm-2 control-label">手机号码</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="mobile" value="${sesUser.mobile}">
+                                    <input type="text" class="form-control" name="mobile" id="mobile" value="${sesUser.mobile}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="MyImg" class="col-sm-2 control-label">更新头像</label>
                                 <div class="col-sm-10">
-                                    <input type="file" class="form-control" id="MyImg">
+                                    <input type="file" class="form-control" name="myImg" id="myImg">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-4">
-                                    <button type="submit" class="btn btn-success navbar-left">确认修改</button>
-                                    <a href="/WoniuShop/index.html" class="btn btn-primary navbar-right">返回首页</a>
+                                    <button type="button" class="btn btn-success navbar-left" id="userConfirmBtn">确认修改</button>
+                                    <a href="welcome/user" class="btn btn-primary navbar-right">返回首页</a>
                                 </div>
                             </div>
                         </form>
@@ -107,22 +108,7 @@
 
 
                                     </tbody>
-<%--                                    <tr>--%>
-<%--                                        <td>admin</td>--%>
-<%--                                        <td>18817386666</td>--%>
-<%--                                        <td>上海市 浦东新区</td>--%>
-<%--                                        <td>燕乔大厦15楼前台蜗牛学院</td>--%>
-<%--                                        <td>021209</td>--%>
-<%--                                        <td>--%>
-<%--                                            <button class="btn btn-success">设置默认</button>--%>
-<%--                                        </td>--%>
-<%--                                        <td>--%>
-<%--                                            <button class="btn btn-info">修改</button>--%>
-<%--                                        </td>--%>
-<%--                                        <td>--%>
-<%--                                            <button class="btn btn-danger">删除</button>--%>
-<%--                                        </td>--%>
-<%--                                    </tr>--%>
+
                                 </table>
                             </div>
                         </div>
@@ -266,13 +252,19 @@
                         <input type="hidden" id="e_add_uid" name="add_uid" value="${sesUser.id}">
                         <label for="add_name" class="col-sm-3 control-label">收货人</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" name="add_name" id="e_add_name" >
+                            <input type="text" class="form-control" name="add_name" id="e_add_name" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="add_phone" class="col-sm-3 control-label">手机号码</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="add_phone" id="e_add_phone" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add_phone" class="col-sm-3 control-label">原地址:</label>
+                        <div class="col-sm-8" id="origin_address" style="padding:7px 0 0 12px">
+
                         </div>
                     </div>
                     <div class="form-group">
@@ -285,7 +277,7 @@
                             </div>
                             <div class="col-sm-4" style="padding: 0 7.5px">
                                 <select name="city" id="e_city" class="form-control">
-                                    <option value="-1" selected>市</option>
+                                    <option value="-1" >市</option>
                                 </select>
                             </div>
                             <div class="col-sm-4" style="padding-right: 0">

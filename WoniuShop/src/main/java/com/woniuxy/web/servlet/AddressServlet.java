@@ -108,19 +108,23 @@ public class AddressServlet extends BaseServlet {
 		Address address = new Address();
 		address.setUid(Integer.parseInt(uid));
 		address.setId(Integer.parseInt(id));
-		address.setUsername(req.getParameter("add_name"));
-		address.setMobile(req.getParameter("add_phone"));
+		address.setUsername(StringUtil.isEmpty(req.getParameter("add_name"))?null:req.getParameter("add_name"));
+		address.setMobile(StringUtil.isEmpty(req.getParameter("add_phone"))?null:req.getParameter("add_phone"));
+		address.setLocation(StringUtil.isEmpty(req.getParameter("fullAddress"))?null:req.getParameter("fullAddress"));
+
 		String province = req.getParameter("province");
 		String city = req.getParameter("city");
 		String district = req.getParameter("district");
-		String area = province + " ";
-		if (province.endsWith("市")) {
-			area += district;
-		} else {
-			area += city + " " + district;
+		if (!"-1".equals(province) && !"-1".equals(city) && !"-1".equals(district)) {
+			String area = province + " ";
+			if (province.endsWith("市")) {
+				area += district;
+			} else {
+				area += city + " " + district;
+			}
+			address.setArea(area);
 		}
-		address.setArea(area);
-		address.setLocation(req.getParameter("fullAddress"));
+
 		String isDefault = req.getParameter("isdefault");
 		if ("true".equals(isDefault)) {
 			address.setIsDefault(1);
@@ -128,11 +132,9 @@ public class AddressServlet extends BaseServlet {
 			address.setIsDefault(0);
 		}
 		String districtCode = req.getParameter("districtCode");
-		System.out.println(districtCode);
-		if (!StringUtil.isEmpty(districtCode)) {
+		if (!StringUtil.isEmpty(districtCode) && !"-1".equals(districtCode)) {
 			address.setPostcode(asi.getPostCode(districtCode));
 		}
-
 		boolean flag = asi.update(address);
 		resp.getWriter().write(flag ? "Y" : "N");
 	}

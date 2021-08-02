@@ -76,7 +76,7 @@ $(function () {
                     }, 2500);
                     // hideAndShowNav();
                 } else if (user == null) {
-                    info.html("密码错误")
+                    info.html("用户名或密码错误")
                 }
                 loginRes();
             }
