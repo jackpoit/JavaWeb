@@ -21,4 +21,9 @@ public class Address {
 	private String location;   //具体地址
 	private String postcode;   //邮政编码
 	private Integer isDefault; //1:默认地址
+
+	public Address(Integer uid, Integer isDefault) {
+		this.uid = uid;
+		this.isDefault = isDefault;
+	}
 }

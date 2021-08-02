@@ -249,5 +249,79 @@
     </div>
 </div>
 
+<!--修改地址的模态框-->
+<div class="modal fade" tabindex="-1" role="dialog" id="editAddress">
+    <div class="modal-dialog" style="width: 550px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-center">修改收货地址</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="editAddForm">
+                    <div class="form-group">
+                        <input type="hidden" name="m" value="edit">
+                        <input type="hidden" name="add_id" id="add_id">
+                        <input type="hidden" id="e_add_uid" name="add_uid" value="${sesUser.id}">
+                        <label for="add_name" class="col-sm-3 control-label">收货人</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" name="add_name" id="e_add_name" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add_phone" class="col-sm-3 control-label">手机号码</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="add_phone" id="e_add_phone" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">选择地区</label>
+                        <div class="col-sm-8">
+                            <div class="col-sm-4" style="padding-left: 0">
+                                <select name="province" id="e_province" class="form-control">
+                                    <option value="-1">省</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4" style="padding: 0 7.5px">
+                                <select name="city" id="e_city" class="form-control">
+                                    <option value="-1" selected>市</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4" style="padding-right: 0">
+                                <select name="district" id="e_district" class="form-control">
+                                    <option value="-1">区</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="districtCode" id="e_districtCode" value="-1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullAddress" class="col-sm-3 control-label">详细地址</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="fullAddress" id="e_fullAddress" placeholder="详细地址">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="e_setDefault"> 设为默认地址
+                                    <input type="hidden" id="e_isdefault" name="isdefault" value="false">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <button type="button" class="btn btn-primary btn-block" id="e_add_add_btn">更新</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

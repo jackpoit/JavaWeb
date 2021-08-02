@@ -18,11 +18,11 @@ import java.util.List;
  **/
 @WebServlet("/address")
 public class AddressServlet extends BaseServlet {
-	private AddressServiceImpl asi=new AddressServiceImpl();
+	private AddressServiceImpl asi = new AddressServiceImpl();
 
 	public void showAll(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String uid = req.getParameter("uid");
-		if (StringUtil.isEmpty(uid)){
+		if (StringUtil.isEmpty(uid)) {
 			return;
 		}
 		List<Address> list = asi.findAll(Integer.parseInt(uid));
@@ -30,9 +30,9 @@ public class AddressServlet extends BaseServlet {
 		resp.getWriter().write(jsonStr);
 	}
 
-	public void add(HttpServletRequest req, HttpServletResponse resp)throws Exception{
+	public void add(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String uid = req.getParameter("add_uid");
-		if (StringUtil.isEmpty(uid)){
+		if (StringUtil.isEmpty(uid)) {
 			return;
 		}
 		Address address = new Address();
@@ -42,23 +42,23 @@ public class AddressServlet extends BaseServlet {
 		String province = req.getParameter("province");
 		String city = req.getParameter("city");
 		String district = req.getParameter("district");
-		String area=province+" ";
-		if (province.endsWith("市")){
-			area+=district;
-		}else {
-			area+=city+" "+district;
+		String area = province + " ";
+		if (province.endsWith("市")) {
+			area += district;
+		} else {
+			area += city + " " + district;
 		}
 		address.setArea(area);
 		address.setLocation(req.getParameter("fullAddress"));
 		String isDefault = req.getParameter("isdefault");
-		if ("true".equals(isDefault)){
+		if ("true".equals(isDefault)) {
 			address.setIsDefault(1);
-		}else {
+		} else {
 			address.setIsDefault(0);
 		}
 		String districtCode = req.getParameter("districtCode");
 		System.out.println(districtCode);
-		if (!StringUtil.isEmpty(districtCode)){
+		if (!StringUtil.isEmpty(districtCode)) {
 			address.setPostcode(asi.getPostCode(districtCode));
 		}
 
@@ -66,4 +66,74 @@ public class AddressServlet extends BaseServlet {
 		resp.getWriter().write(flag ? "Y" : "N");
 	}
 
+	public void remove(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		String id = req.getParameter("id");
+		if (StringUtil.isEmpty(id)) {
+			return;
+		}
+		int addId = Integer.parseInt(id);
+		boolean flag = asi.deleteById(addId);
+		resp.getWriter().write(flag ? "Y" : "N");
+
+	}
+
+	public void setDefault(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+		String uidStr = req.getParameter("uid");
+		if (StringUtil.isEmpty(uidStr)) {
+			return;
+		}
+		Address address = new Address();
+		address.setUid(Integer.parseInt(uidStr));
+		String idStr = req.getParameter("id");
+		if (!StringUtil.isEmpty(idStr)) {
+			address.setId(Integer.parseInt(idStr));
+		}
+		address.setIsDefault(1);
+
+		boolean flag = asi.setDefault(address);
+		resp.getWriter().write(flag ? "Y" : "N");
+
+	}
+
+	public void edit(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		String uid = req.getParameter("add_uid");
+		if (StringUtil.isEmpty(uid)) {
+			return;
+		}
+		String id = req.getParameter("add_id");
+		if (StringUtil.isEmpty(id)) {
+			return;
+		}
+		Address address = new Address();
+		address.setUid(Integer.parseInt(uid));
+		address.setId(Integer.parseInt(id));
+		address.setUsername(req.getParameter("add_name"));
+		address.setMobile(req.getParameter("add_phone"));
+		String province = req.getParameter("province");
+		String city = req.getParameter("city");
+		String district = req.getParameter("district");
+		String area = province + " ";
+		if (province.endsWith("市")) {
+			area += district;
+		} else {
+			area += city + " " + district;
+		}
+		address.setArea(area);
+		address.setLocation(req.getParameter("fullAddress"));
+		String isDefault = req.getParameter("isdefault");
+		if ("true".equals(isDefault)) {
+			address.setIsDefault(1);
+		} else {
+			address.setIsDefault(0);
+		}
+		String districtCode = req.getParameter("districtCode");
+		System.out.println(districtCode);
+		if (!StringUtil.isEmpty(districtCode)) {
+			address.setPostcode(asi.getPostCode(districtCode));
+		}
+
+		boolean flag = asi.update(address);
+		resp.getWriter().write(flag ? "Y" : "N");
+	}
 }

@@ -33,12 +33,12 @@
                         首页
                     </a>
 
-                    <a href="page/user/personal.jsp" id="n_nav_personal" class="btn btn-success disabled">
+                    <a href="javascript:;" id="n_nav_personal"  class="btn btn-success disabled" >
                         <span class="glyphicon glyphicon-user"></span>
                         个人中心
                     </a>
 
-                    <a href="page/user/shopcart.jsp" id="n_nav_shopcart" class="btn btn-warning disabled">
+                    <a href="javascript:;" id="n_nav_shopcart" class="btn btn-warning disabled" >
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                         购物车
                     </a>
@@ -51,17 +51,16 @@
                     <img src='${sesUser.image}' width='40px' class='img-circle' alt=''><span class='person' onclick='$("#loginModal").modal("show")'>${sesUser.username}</span>
                 </div>
                 <div class="col-md-5 navbar-right text-right">
-                    <button type="button" class="btn btn-danger" id="nav_login" data-toggle="modal"
-                            data-target="#loginModal"  style="display: none">
-                        <span class="glyphicon glyphicon-log-in"></span>
-                        登录
-                    </button>
+<%--                    <button type="button" class="btn btn-danger" id="nav_login" data-toggle="modal"--%>
+<%--                            data-target="#loginModal"  style="display: none">--%>
+<%--                        <span class="glyphicon glyphicon-log-in"></span>--%>
+<%--                        登录--%>
+<%--                    </button>--%>
                     <button type="button" class="btn btn-warning" id="nav_exist">
                         <span class="glyphicon glyphicon-log-in"></span>
                         注销
                     </button>
-                    <button type="button" class="btn btn-info disabled" id="nav_register" data-toggle="modal"
-                            data-target="#registerModal">
+                    <button type="button" class="btn btn-info " id="nav_register"  disabled>
                         <span class="glyphicon glyphicon-plus"></span>
                         注册
                     </button>

@@ -46,4 +46,13 @@ public interface AddressMapper {
 	 * @return 邮政编码
 	 */
 	String findPostCode(String districtId);
+
+	/**
+	 * 根据id删除
+	 * @param id 地址id
+	 * @return 受影响行数
+	 */
+	int deleteById(int id);
+
+
 }

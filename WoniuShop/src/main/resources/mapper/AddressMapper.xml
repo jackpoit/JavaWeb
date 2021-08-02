@@ -147,5 +147,10 @@
         WHERE areaid = #{value}
     </select>
 
+<!--    6.int deleteById(int id);-->
+    <delete id="deleteById">
+        DELETE FROM t_address WHERE id=#{value}
+    </delete>
+
 
 </mapper>

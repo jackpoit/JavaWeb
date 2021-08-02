@@ -13750,5 +13750,72 @@ $(function () {
     });
 });
 
+$(function () {
 
+
+    // 定义一些公用的变量
+    let cityList = null; // 已选中省份的城市列表
+
+    //1. 同步省份数据
+    let options = "<option value='-1'>省</option>";
+    for(let province of cityData){
+        let provinceNo = province.code; // 省份代号
+        let provinceName = province.name; // 省份及直辖市名
+        options += "<option value='"+provinceNo+"'>"+provinceName+"</option>";
+    }
+    $('#e_province').html(options); // 更新身份数据
+
+    //2. 根据省份变化来联动查询市级
+    $('#e_province').change(function () {  // change 只要值发生变化，则会触发该事件
+        //2.1 获取已选择的省份的代号code
+        let provinceNo = $(this).val();
+        $('#e_district').html("<option value='-1'>区</option>");
+        if(provinceNo == -1){ // 没有选择省份
+            $('#e_city').html("<option value='-1'>市</option>");
+            cityList = null;
+            return;
+        }
+        //2.2 从城市的cityData中匹配选择的省份对应的城市列表
+        for(let province of cityData){
+            if(province.code == provinceNo){ // 匹配省份的代号
+                cityList = province.areaList; // 获取省份下的所有城市列表
+                break;
+            }
+        }
+        //2.3 更新城市的下拉列表
+        let options = "<option value='-1'>市</option>";
+        for(let city of cityList){
+            let cityNo = city.code;
+            let cityName = city.name;
+            options += "<option value='"+cityNo+"'>"+cityName+"</option>";
+        }
+        $('#e_city').html(options);
+    });
+
+    //3. 根据城市的变化来联动查询区级（市级 -> 区级）
+    $('#e_city').change(function () {
+        //3.1 获取已选中的城市代号
+        let cityNo = $(this).val(); // 城市代号：获取到下拉列表中被选中的value
+        if(cityNo == -1){ // 没有选择城市
+            $('#e_district').html("<option value='-1'>区</option>");
+            return;
+        }
+        //3.2 在城市列表中查询到该城市及城市下的所有区县列表
+        let districtList = null;
+        for(let city of cityList){
+            if(city.code == cityNo){
+                districtList = city.areaList; // 获取到区级列表
+                break;
+            }
+        }
+        let options = "<option value='-1'>区</option>";
+        //3.3 更新区级列表到下拉列表中
+        for(let district of districtList){
+            let districtNo = district.code;
+            let districtName = district.name;
+            options += "<option value='"+districtNo+"'>"+districtName+"</option>";
+        }
+        $('#e_district').html(options);
+    });
+});
 

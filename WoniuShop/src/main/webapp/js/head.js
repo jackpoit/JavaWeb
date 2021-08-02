@@ -7,6 +7,9 @@
 // });
 //登录按钮 ajax
 $(function () {
+
+
+    //得到cookie
     function getCookie(cname) {
         let name = cname + "=";
         let ca = document.cookie.split(';');
@@ -35,7 +38,7 @@ $(function () {
 
     })
 
-
+    //填充账号密码
     function showCookie() {
         let $cookieName = getCookie('cookieName');
         let $cookiePwd = getCookie('cookiePwd');
@@ -57,7 +60,7 @@ $(function () {
         }
         let $cookiePwd = getCookie('cookiePwd');
         if ($cookiePwd != '' && pwd != $cookiePwd) {
-            delCookie('cookiePwd',"localhost");
+            delCookie('cookiePwd', "localhost");
         }
         let info = $('#info');
         $.ajax({
@@ -67,14 +70,11 @@ $(function () {
             dataType: "json",
             success: function (user) {
                 if (user != null) { //成功
-                    info.html("登录成功")
-                    // $('#nav_name').html("<img src='${sesUser.image}' width='40px' class='img-circle' alt=''><span class='person' >${sesUser.username}</span>");
-                    $('#n_nav_name').html("<img src='" + user.image + "' width='40px' class='img-circle' alt=''><span class='person' >" + user.username + "</span>");
-                    $('#n_nav_login').css({"display": "none"});
-                    $('#n_nav_exist').css({"display": "inline-block"});
-                    $('#n_nav_register').addClass("disabled");
-                    $('#n_nav_personal').removeClass("disabled");
-                    $('#n_nav_shopcart').removeClass("disabled");
+                    info.html("登录成功,正在跳转首页...")
+                    setTimeout(function () {
+                        location.href = "welcome/user";
+                    }, 2500);
+                    // hideAndShowNav();
                 } else if (user == null) {
                     info.html("密码错误")
                 }
@@ -82,6 +82,17 @@ $(function () {
             }
         })
     })
+
+    function hideAndShowNav() {
+        $('#n_nav_login').css({"display": "none"});
+        $('#n_nav_exist').css({"display": "inline-block"});
+        $('#n_nav_register').addClass("disabled");
+        $('#n_nav_register').attr("data-target", "####");
+        $('#n_nav_personal').removeClass("disabled");
+        $('#n_nav_personal').attr("href", "page/user/personal.jsp");
+        $('#n_nav_shopcart').removeClass("disabled");
+        $('#n_nav_shopcart').attr("href", "page/user/shopcart.jsp");
+    }
 
     $('#nav_exist').click(function () {
         exitLogin();
@@ -350,5 +361,5 @@ function loginRes() {
     $('#infoModal').modal('show');
     setTimeout(function () {
         $('#infoModal').modal('hide')
-    }, 3000)
+    }, 2000)
 }

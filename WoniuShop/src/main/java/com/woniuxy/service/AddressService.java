@@ -30,4 +30,18 @@ public interface AddressService {
 	 * @return 邮政编码
 	 */
 	String getPostCode(String districtId);
+
+	/**
+	 * 根据id删除
+	 * @param id 地址id
+	 * @return true 成功
+	 */
+	boolean deleteById(Integer id);
+
+	/**
+	 * 更新地址
+	 * @param address 地址对象
+	 * @return true:成功
+	 */
+	boolean update(Address address);
 }
