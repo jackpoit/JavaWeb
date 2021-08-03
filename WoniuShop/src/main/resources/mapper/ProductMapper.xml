@@ -180,5 +180,50 @@
         </foreach>
     </delete>
 
+    <!--    6.List<Product> findByNameAndPrice(@Param("kw") String keyword,@Param("fp") Integer from,@Param("tp") Integer to);-->
+    <select id="findByNameAndPrice" resultMap="baseMap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM t_product
+        WHERE pname LIKE CONCAT("%",#{kw},"%")
+        <if test='fp != null'>
+            AND price >= #{fp}
+        </if>
+        <if test='tp != null'>
+            AND price <![CDATA[<=]]> #{tp}
+        </if>
+    </select>
+
+    <!--    7.int update(Product product);-->
+    <update id="update" parameterType="com.woniuxy.entity.Product">
+            UPDATE t_product 
+        <set>
+            <if test="pname != null and pname != ''">
+                 pname=#{pname},
+            </if>
+            <if test="pinfo != null and pinfo != ''">
+                 pinfo=#{pinfo},
+            </if>
+            <if test="price != null">
+                 price=#{price},
+            </if>
+            <if test="stock != null">
+                 stock=#{stock},
+            </if>
+            <if test="sale != null">
+                 sale=#{sale},
+            </if>
+            <if test="image != null and image != ''">
+                 image=#{image},
+            </if>
+            <if test="ptype != null ">
+                 ptype=#{ptype},
+            </if>
+            <if test="status != null ">
+                 status=#{status},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
 
 </mapper>

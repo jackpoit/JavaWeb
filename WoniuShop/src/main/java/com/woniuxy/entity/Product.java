@@ -22,7 +22,7 @@ public class Product {
 	private Integer stock;
 	private Integer sale;
 	private String image;
-	private Integer ptype; // 商品类别0:刀 1:枪 2:手套 3:音乐盒 探员 4:印花
+	private Integer ptype; // 商品类别0:刀 1:枪 2:手套 3:杂项 4:印花
 	private Integer status; //商品状态 0:上架 1:下架
 
 

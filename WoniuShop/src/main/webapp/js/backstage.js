@@ -1,3 +1,4 @@
+//用户
 //全选全消
 $(function () {
     let $users = $('input[name="users"]');
@@ -413,20 +414,23 @@ $(function () {
         }
     });
 });
-// 往上是编辑
+// 往上是用户
 
-
+//商品
 //展示商品
-
 let totalPage = 0;
-let keyword = "";
+let keyword = -1;
+let fromPrice = -1;
+let toPrice = -1;
 
-function currentPage(num, kw) {
-        keyword = kw;
+function currentPage(num, kw, fp, tp) {
+    keyword = kw;
+    fromPrice = fp;
+    toPrice = tp;
     $.ajax({
         url: "product",
         type: "post",
-        data: {m: "showByKeyword", currentPage: num, keyword: keyword},
+        data: {m: "showByKeyword", currentPage: num, keyword: keyword, fromPrice: fp, toPrice: tp},
         dataType: "json",
         success: function (info) {
             totalPage = info.pages;
@@ -438,17 +442,17 @@ function currentPage(num, kw) {
                 } else if (pro.ptype == 2) {
                     type = "手套"
                 } else if (pro.ptype == 3) {
-                    type = "音乐盒"
+                    type = "杂项"
                 } else if (pro.ptype == 4) {
                     type = "印花"
                 }
 
-                let status="上架";
-                if (pro.status==1){
-                    status="下架";
+                let status = "上架";
+                if (pro.status == 1) {
+                    status = "下架";
                 }
                 trs += " <tr>\n" +
-                    "        <td><input type='checkbox' name='products' value=''></td>\n" +
+                    "        <td><input type='checkbox' name='products' value='"+pro.id+"'></td>\n" +
                     "        <td>" + pro.id + "</td>\n" +
                     "        <td>" + pro.pname + "</td>\n" +
                     "        <td><img src='" + pro.image + "' width='60px' alt=''>\n</td>\n" +
@@ -457,52 +461,130 @@ function currentPage(num, kw) {
                     "     <td>" + pro.sale + "</td>\n" +
                     "     <td>" + type + "</td>\n" +
                     "     <td>" + status + "</td>\n" +
-                    "     <td><a href='#' class='btn btn-danger'>" +
-                    "         <span class='glyphicon glyphicon-remove'></span>删除</a></td>" +
-                    "    <td><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#updateModal'><span" +
-                    "             class='glyphicon glyphicon-pencil'></span>修改</a></td>" +
+                    "     <td><button class='btn btn-danger' onclick='deletePros("+pro.id+")'>" +
+                    "         <span class='glyphicon glyphicon-remove'></span>删除</button></td>" +
+                    "    <td><button class='btn btn-primary' onclick='showeEdit(this)'><span" +
+                    "             class='glyphicon glyphicon-pencil'></span>修改</button></td>" +
+                    "<td style='display: none'>"+pro.pinfo+"</td>"
                     " </tr>"
             }
             $('#pro_content').html(trs);
-
             let lis = "<li><a href='javascript:;' onclick='prePage(" + info.pageNum + ")'>上一页</a></li>";
             for (let i = 1; i <= info.pages; i++) {
                 if (i == info.pageNum) {
                     lis += "<li class='active'><a href='javascript:;'>" + i + "</a></li>"
                 } else {
-                    lis += "<li><a href='javascript:;' onclick='currentPage(" + i + ","+keyword+")'>" + i + "</a></li>"
+                    lis += "<li><a href='javascript:;' onclick='currentPage(" + i + "," + keyword + "," + fromPrice + "," + toPrice + ")'>" + i + "</a></li>"
                 }
             }
             lis += "<li><a href='javascript:;' onclick='nextPage(" + info.pageNum + ")'>下一页</a></li>";
             $('#proPageNav').html(lis);
-
+            checkBoxClick();
         }
     });
+}
+
+function checkBoxClick() {
+    let $products = $('input[name="products"]');
+    let total = $('input[name="products"]').length;
+
+    //全选全消
+    $('#pall').click(function () {
+        let flag = this.checked;
+        $products.prop("checked", flag);
+    });
+    $products.click(function () {
+        let count = $('input[name="products"]').filter(":checked").length;
+        $('#pall').prop("checked", count === total);
+    });
+}
+
+//删除
+function deleteAjax(ids) {
+    $.ajax({
+        url: "product",
+        type: "post",
+        traditional: "true",//数组选项
+        data: {m: "deleteByIds", ids: ids},
+        dataType: "text",
+        success: function (text) {
+            if ("Y" == text) {
+                alert("删除成功")
+                currentPage(1, keyword,fromPrice,toPrice);
+            } else if ("N" == text) {
+                alert("删除失败")
+            }
+        }
+    })
+}
+function deletePros(id) {
+    let flag = confirm("您确认要删除" + id + "号商品吗?");
+    if (flag) {
+        deleteAjax(id);
+    }
+}
+
+function deleteAll() {
+    let $ids = $('input[name="products"]').filter(":checked")
+    if ($ids.length === 0) {
+        alert("没有选择的商品")
+        return;
+    }
+    let ids=[];
+    let idStr = "";
+    for (let i = 0; i < $ids.length; i++) {
+        ids[i]=$ids.eq(i).val();
+        idStr += ids[i];
+        if (i != $ids.length-1) {
+            idStr += ",";
+        }
+    }
+    let flag = confirm("您确认要删除" + idStr + "号商品吗?");
+    if (flag) {
+        deleteAjax(ids);
+    }
 }
 
 //ajax查询上一页
 function prePage(num) {
     if (num == 1) {
-        currentPage(totalPage,keyword)
+        currentPage(totalPage, keyword, fromPrice, toPrice)
     } else {
-        currentPage(num - 1)
+        currentPage(num - 1, keyword, fromPrice, toPrice)
     }
 }
 
 //ajax查询下一页
 function nextPage(num) {
     if (num == totalPage) {
-        currentPage(1,keyword)
+        currentPage(1, keyword, fromPrice, toPrice)
     } else {
-        currentPage(num + 1,keyword)
+        currentPage(num + 1, keyword, fromPrice, toPrice)
     }
 }
 
+//添加
 $(function () {
+
+    //搜索按钮
+    $('#pro_search').click(function () {
+        let kw = $('#pname').val()
+        let fp = $('#start').val()
+        let tp = $('#end').val()
+        keyword = kw == '' ? -1 : kw
+        fromPrice = fp == '' ? -1 : fp
+        toPrice = tp == '' ? -1 : tp
+        currentPage(1, keyword, fromPrice, toPrice);
+    })
+
+    //标签页按钮
     $('#pro-btn').click(function (e) {
         e.preventDefault()
         $(this).tab('show')
-        currentPage(1,"")
+        keyword = -1;
+        fromPrice = -1;
+        toPrice = -1;
+        currentPage(1, keyword, fromPrice, toPrice)
     })
 
     // 1. 头像预览
@@ -540,12 +622,56 @@ $(function () {
             priceFlag = true;
         }
     })
-
-    $('#add_proBtn').click(function () {
-        if (!priceFlag || !priceFlag) {
-            alert("请正确输入价格或头像")
+    let stockFlag = false;
+    $('#add_stock').blur(function () {
+        let stock = $(this).val();
+        if (stock == '') {
+            stockFlag = false;
             return;
         }
+        let stockPattern = /^[0-9]+$/;
+        if (!stockPattern.test(stock)) {
+            alert("请输入正确价格")
+            stockFlag = false;
+            $('#add_stock').val("");
+        } else {
+            stockFlag = true;
+        }
+    })
+    let saleFlag = false;
+    $('#add_sale').blur(function () {
+        let sale = $(this).val();
+        if (sale == '') {
+            saleFlag = false;
+            return;
+        }
+        let salePattern = /^[0-9]+$/;
+        if (!salePattern.test(sale)) {
+            alert("请输入正确价格")
+            saleFlag = false;
+            $('#add_sale').val("");
+        } else {
+            saleFlag = true;
+        }
+    })
+    let pInfoFlag = false;
+    $('#add_pinfo_area').blur(function () {
+        let pInfo = $(this).val();
+        if (pInfo == '') {
+            pInfoFlag = false;
+            alert("请输入商品描述信息")
+            return;
+        }
+        pInfoFlag = true;
+    })
+
+
+    $('#add_proBtn').click(function () {
+        if (!priceFlag || !imgFlag || !saleFlag || !stockFlag || !pInfoFlag) {
+            alert("请输入正确商品信息")
+            return;
+        }
+        $('#add_pinfo').val($('#add_pinfo_area').val());
         $.ajax({
             url: "product",
             type: "post",
@@ -556,7 +682,7 @@ $(function () {
             success: function (text) {
                 if ("Y" == text) {
                     alert("添加成功")
-                    currentPage(1,"")
+                    currentPage(1, keyword,fromPrice,toPrice);
                 } else if ("N" == text) {
                     alert("添加失败")
                 }
@@ -564,17 +690,149 @@ $(function () {
                 $('#addProModal').modal('hide')
             }
         })
-
-
     })
 
-
+    
 });
 
 
+//修改
+function showeEdit(obj){
+    $('#e_add_showImg').hide(); // 让图片预览隐藏
+    let tds = $(obj).parent().parent().children();
+    let id=tds.eq(1).text();
+    let name = tds.eq(2).text();
+    let priceStr = tds.eq(4).text();
+    let price=priceStr.substr(0,priceStr.indexOf('元'))
+    let stock = tds.eq(5).text();
+    let sale = tds.eq(6).text();
+    let type = tds.eq(7).text();
+    let status = tds.eq(8).text();
+    let info = tds.eq(11).text();
 
 
+    $('#pid').val(id);
+    $('#e_add_pname').val(name);
+    $('#e_add_pinfo_area').val(info);
+    $('#e_add_price').val(price);
+    $('#e_add_stock').val(stock);
+    $('#e_add_sale').val(sale);
+    if (type == '刀') {
+        $("#e_add_ptype>option[value='0']").prop("selected", true);
+    }else if (type == '枪') {
+        $("#e_add_ptype option[value='1']").prop("selected", true)
+    }else if (type == "手套") {
+        $("#e_add_ptype option[value='2']").prop("selected", true)
+    }else if (type == "杂项") {
+        $("#e_add_ptype option[value='3']").prop("selected", true)
+    }else if (type == "印花") {
+        $("#e_add_ptype option[value='4']").prop("selected", true)
+    }
 
+    if (status == '上架') {
+        $("#e_add_status>option[value='0']").prop("selected", true);
+    }else if (status == '下架') {
+        $("#e_add_status option[value='1']").prop("selected", true)
+    }
+
+
+    $('#editProModal').modal('show');
+}
+
+$(function () {
+
+    // 1. 头像预览
+    let imgFlag = true;
+    $('#e_add_image').change(function () {
+        let file = this.files[0];
+        let imgPattern = /image\/\w+/;// 用来匹配以 image/
+        if (!imgPattern.test(file.type)) {
+            alert("文件必须为图片！");
+            imgFlag = false;
+            return false;
+        }
+        let reader = new FileReader(); // 创建文件预览器
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            $('#e_add_showImg').html("<img src=" + this.result + " width='160px';height='160px' >");
+            $('#e_add_showImg').slideDown(1000);
+            imgFlag = true;
+        }
+    });
+
+
+    $('#e_add_price').blur(function () {
+        let price = $(this).val();
+        if (price == '') {
+            return;
+        }
+        let pricePattern = /^([1-9][0-9]*)|([1-9][0-9]*\.[0-9]+)$/;
+        if (!pricePattern.test(price)) {
+            alert("请输入正确价格")
+            $('#e_add_price').val("");
+        }
+    })
+
+    $('#e_add_stock').blur(function () {
+        let stock = $(this).val();
+        if (stock == '') {
+            return;
+        }
+        let stockPattern = /^[0-9]+$/;
+        if (!stockPattern.test(stock)) {
+            alert("请输入正确价格")
+            $('#e_add_stock').val("");
+        }
+    })
+
+    $('#e_add_sale').blur(function () {
+        let sale = $(this).val();
+        if (sale == '') {
+            return;
+        }
+        let salePattern = /^[0-9]+$/;
+        if (!salePattern.test(sale)) {
+            alert("请输入正确价格")
+            $('#e_add_sale').val("");
+        }
+    })
+
+    // $('#e_add_pinfo_area').blur(function () {
+    //     let pInfo = $(this).val();
+    //     if (pInfo == '') {
+    //         alert("请输入商品描述信息")
+    //         return;
+    //     }
+    // })
+
+
+    $('#e_add_proBtn').click(function () {
+        if ( !imgFlag) {
+            alert("请添加商品图片")
+            return;
+        }
+        $('#e_add_pinfo').val($('#e_add_pinfo_area').val());
+        $.ajax({
+            url: "product",
+            type: "post",
+            data: new FormData($('#pro_editForm')[0]),
+            contentType: false,
+            processData: false,
+            dataType: "text",
+            success: function (text) {
+                if ("Y" == text) {
+                    alert("修改成功")
+                    currentPage(1, keyword,fromPrice,toPrice);
+                } else if ("N" == text) {
+                    alert("修改失败")
+                }
+                $('#editProModal').modal('hide')
+            }
+        })
+    })
+})
+
+//向上是商品
 
 
 

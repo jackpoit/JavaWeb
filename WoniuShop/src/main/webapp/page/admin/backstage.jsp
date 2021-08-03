@@ -185,21 +185,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="start" class="control-label">价格范围:</label>
-                                <input type="text" id="start" class="form-control" style="width: 120px"
+                                <input type="number" id="start" class="form-control" style="width: 120px" min="0"
                                        placeholder="起始价格">
                             </div>
                             <div class="form-group">
                                 <label for="end" class="control-label">-</label>
-                                <input type="text" id="end" class="form-control" style="width: 120px"
+                                <input type="number" id="end" class="form-control" style="width: 120px" min="0"
                                        placeholder="最终价格">
                             </div>
-                            <button type="button" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-search"></span> 搜索
+                            <button type="button" class="btn btn-primary" id="pro_search">
+                                <span class="glyphicon glyphicon-search" ></span> 搜索
                             </button>
                         </div>
 
                         <div class="col-md-4 col-md-offset-1">
-                            <button type="button" class="btn btn-danger">
+                            <button type="button" class="btn btn-danger" onclick="deleteAll();">
                                 <span class="glyphicon glyphicon-remove-sign"></span> 批量删除
                             </button>
                             <button type="button" class="btn btn-primary" onclick=" $('#addProModal').modal('show');">
@@ -311,7 +311,7 @@
                             <td>其他操作</td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" name="products" value=""></td>
+                            <td><input type="checkbox" name="orders" value=""></td>
                             <td>202107150034</td>
                             <td>蜗牛Plus</td>
                             <td>
@@ -327,7 +327,7 @@
                                     class="glyphicon glyphicon-remove"></span>删除</a></td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" name="products" value=""></td>
+                            <td><input type="checkbox" name="orders" value=""></td>
                             <td>202107150023</td>
                             <td>iphone</td>
                             <td>
@@ -618,7 +618,8 @@
                     <div class="form-group">
                         <label for="add_pinfo" class="col-sm-3 control-label">商品信息</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="add_pinfo" id="add_pinfo" placeholder="商品信息">
+                            <input type="hidden" class="form-control" name="add_pinfo" id="add_pinfo" >
+                            <textarea class="form-control" rows="3" id="add_pinfo_area" placeholder="商品描述信息"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -673,6 +674,93 @@
                     <div class="form-group">
                         <div class="col-sm-8 col-sm-offset-3">
                             <button type="button" class="btn btn-primary btn-block" id="add_proBtn">添加</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%--商品修改模态框--%>
+<div class="modal fade" tabindex="-1" data-backdrop="static" id="editProModal">
+    <div class="modal-dialog" style="width: 550px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-center">修改商品</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="pro_editForm">
+                    <div class="form-group">
+                        <input type="hidden" name="m" value="edit">
+                        <input type="hidden" name="pid" id="pid" >
+                        <label for="e_add_pname" class="col-sm-3 control-label">商品名称</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="e_add_pname" id="e_add_pname" placeholder="商品名字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="e_add_pinfo" class="col-sm-3 control-label">商品信息</label>
+                        <div class="col-sm-8">
+                            <input type="hidden" class="form-control" name="e_add_pinfo" id="e_add_pinfo" >
+                            <textarea class="form-control" rows="3" id="e_add_pinfo_area" placeholder="商品描述信息"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="e_add_price" class="col-sm-3 control-label">商品价格</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="e_add_price" id="e_add_price" placeholder="价格">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="e_add_image" class="control-label col-md-3">商品图片</label>
+                        <div class="col-md-4">
+                            <input type="file" id="e_add_image" name="e_add_image" class="form-control">
+                        </div>
+                        <div class="col-md-5" style="position: relative">
+                            <div class=" text-center" id="e_add_showImg" style="position: absolute;"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="e_add_stock" class="col-sm-3 control-label">库存</label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" name="e_add_stock" id="e_add_stock" min="0" max="100" step="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="e_add_sale" class="col-sm-3 control-label">销量</label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" name="e_add_sale" id="e_add_sale" min="0" max="100" step="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="e_add_ptype" class="col-sm-3 control-label">类型</label>
+                        <div class="col-sm-4">
+                            <select name="e_add_ptype" id="e_add_ptype" class="form-control">
+                                <option value="0">刀</option>
+                                <option value="1">枪</option>
+                                <option value="2">手套</option>
+                                <option value="3">杂项</option>
+                                <option value="4">印花</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="e_add_status" class="col-sm-3 control-label">状态</label>
+                        <div class="col-sm-4">
+                            <select name="e_add_status" id="e_add_status" class="form-control">
+                                <option value="0">上架</option>
+                                <option value="1">下架</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <button type="button" class="btn btn-primary btn-block" id="e_add_proBtn">添加</button>
                         </div>
                     </div>
                 </form>

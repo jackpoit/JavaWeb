@@ -87,7 +87,7 @@
 
 <!--精选商品-->
 <div class="container">
-    <h3 style="line-height: 40px;">热门饰品</h3>
+    <h3 style="line-height: 40px;">精选商品</h3>
     <!--热门商品展示区-->
     <div class="row" id="primeProduct">
 
@@ -104,7 +104,7 @@
 
 <!-- 热销商品-->
 <div class="container">
-    <h3 style="line-height: 40px;">精选刀类</h3>
+    <h3 style="line-height: 40px;">热销商品</h3>
     <!--热门商品展示区-->
     <div class="row" id="saleProduct">
 
@@ -122,14 +122,14 @@
 <div class="container">
     <h3 style="line-height: 40px;">精选步枪</h3>
     <!--热门商品展示区-->
-    <div class="row" id="phoneProduct">
+    <div class="row" id="gunProduct">
 
     </div>
 </div>
 <div class="container">
     <h3 style="line-height: 40px;">杂项</h3>
     <!--热门商品展示区-->
-    <div class="row" id="phoneProduct">
+    <div class="row" id="itemProduct">
 
     </div>
 </div>

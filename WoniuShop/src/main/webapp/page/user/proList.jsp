@@ -36,7 +36,7 @@
             <c:forEach var="product" items="${info.list}">
                 <div class="col-xs-6 col-sm-4 col-md-3">
                     <div class="thumbnail pro-item">
-                        <img src="images/${product.image}" alt="">
+                        <img src="${product.image}" alt="">
                         <div class="caption">
                             <h4 class="title">${product.pname}</h4>
                             <p class="info">${product.pinfo}</p>

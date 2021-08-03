@@ -51,4 +51,18 @@ public interface ProductMapper {
 	 * @return 受影响行数
 	 */
 	int deleteByIds(@Param("ids") Integer... ids);
+
+	/**
+	 * 根据名字价格搜索
+	 * @param keyword 名字关键词
+	 * @return 商品集合
+	 */
+	List<Product> findByNameAndPrice(@Param("kw") String keyword,@Param("fp") Integer from,@Param("tp") Integer to);
+
+	/**
+	 * 更新商品信息
+	 * @param product 包含商品信息的对象
+	 * @return 受影响行数
+	 */
+	int update(Product product);
 }
