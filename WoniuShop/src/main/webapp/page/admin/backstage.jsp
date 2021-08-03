@@ -40,7 +40,7 @@
     <div class="col-md-2 text-center">
         <ul class="nav nav-stacked navbar-default" style="height: 560px;padding: 50px 0px" role="tablist">
             <li role="presentation" class="active"><a href="#user" data-toggle="tab">用户管理</a></li>
-            <li role="presentation"><a href="#product" data-toggle="tab">商品管理</a></li>
+            <li role="presentation"><a href="#product" data-toggle="tab" id="pro-btn">商品管理</a></li>
             <li role="presentation"><a href="#order" data-toggle="tab">订单管理</a></li>
             <li role="presentation"><a href="#extend" data-toggle="tab">扩展功能</a></li>
         </ul>
@@ -124,7 +124,9 @@
                                         </div>
                                     </c:if>
                                 </td>
-                                <td><c:if test="${empty user.level}">普通用户</c:if><c:if test="${!empty user.level}"><c:if test="${user.level==0}">普通用户</c:if><c:if test="${user.level==1}">vip</c:if><c:if test="${user.level==2}">vvvip</c:if></c:if></td>
+                                <td><c:if test="${empty user.level}">普通用户</c:if><c:if test="${!empty user.level}"><c:if
+                                        test="${user.level==0}">普通用户</c:if><c:if test="${user.level==1}">vip</c:if><c:if
+                                        test="${user.level==2}">vvvip</c:if></c:if></td>
                                 <td>
                                     <button type="button" class="btn btn-danger" onclick="deleteUser(${user.id})">
                                         <span class="glyphicon glyphicon-remove"></span>删除
@@ -197,14 +199,18 @@
                         </div>
 
                         <div class="col-md-4 col-md-offset-1">
-                            <a href="" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-remove-sign"></span> 批量删除</a>
-                            <a href="" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-plus-sign"></span> 添加</a>
-                            <a href="" class="btn btn-success">
-                                <span class="glyphicon glyphicon-upload"></span> 上传</a>
-                            <a href="" class="btn btn-info">
-                                <span class="glyphicon glyphicon-download"></span> 下载</a>
+                            <button type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove-sign"></span> 批量删除
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick=" $('#addProModal').modal('show');">
+                                <span class="glyphicon glyphicon-plus-sign"></span> 添加
+                            </button>
+                            <button type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-upload"></span> 上传
+                            </button>
+                            <button  type="button" class="btn btn-info">
+                                <span class="glyphicon glyphicon-download"></span> 下载
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -227,87 +233,16 @@
                             <td>状态(上架/下架)</td>
                             <td colspan="2">其他操作</td>
                         </tr>
-                        <tr>
-                            <td><input type="checkbox" name="products" value=""></td>
-                            <td>1</td>
-                            <td>蜗牛Plus</td>
-                            <td>
-                                <img src="images/p1.webp" width="60px" alt="">
-                            </td>
-                            <td>2000元</td>
-                            <td>1000</td>
-                            <td>100</td>
-                            <td>手机</td>
-                            <td>上架</td>
-                            <td><a href="#" class="btn btn-danger"><span
-                                    class="glyphicon glyphicon-remove"></span>删除</a></td>
-                            <td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#updateModal"><span
-                                    class="glyphicon glyphicon-pencil"></span>修改</a></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="products" value=""></td>
-                            <td>1</td>
-                            <td>华为P40</td>
-                            <td>
-                                <img src="images/p3.webp" width="60px" alt="">
-                            </td>
-                            <td>2000元</td>
-                            <td>1000</td>
-                            <td>100</td>
-                            <td>手机</td>
-                            <td>上架</td>
-                            <td><a href="#" class="btn btn-danger"><span
-                                    class="glyphicon glyphicon-remove"></span>删除</a></td>
-                            <td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#updateModal"><span
-                                    class="glyphicon glyphicon-pencil"></span>修改</a></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="products" value=""></td>
-                            <td>1</td>
-                            <td>iphone 12</td>
-                            <td>
-                                <img src="images/p2.webp" width="60px" alt="">
-                            </td>
-                            <td>2000元</td>
-                            <td>1000</td>
-                            <td>100</td>
-                            <td>手机</td>
-                            <td>上架</td>
-                            <td><a href="#" class="btn btn-danger"><span
-                                    class="glyphicon glyphicon-remove"></span>删除</a></td>
-                            <td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#updateModal"><span
-                                    class="glyphicon glyphicon-pencil"></span>修改</a></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="products" value=""></td>
-                            <td>1</td>
-                            <td>iphone 12</td>
-                            <td>
-                                <img src="images/p4.webp" width="60px" alt="">
-                            </td>
-                            <td>2000元</td>
-                            <td>1000</td>
-                            <td>100</td>
-                            <td>手机</td>
-                            <td>上架</td>
-                            <td><a href="#" class="btn btn-danger"><span
-                                    class="glyphicon glyphicon-remove"></span>删除</a></td>
-                            <td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#updateModal"><span
-                                    class="glyphicon glyphicon-pencil"></span>修改</a></td>
-                        </tr>
+                        <tbody id="pro_content">
+
+                        </tbody>
+
                     </table>
                 </div>
                 <!--商品分页展示-->
-                <div class="row">
-                    <ul class="pager">
-                        <li><a href="#">上一页</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">下一页</a></li>
+                <div class="row text-center">
+                    <ul class="pagination" id="proPageNav">
+
                     </ul>
                 </div>
             </div>
@@ -433,7 +368,7 @@
 </div>
 
 
-<%--编辑模态框--%>
+<%--用户编辑模态框--%>
 <div class="modal fade" id="editUserModal" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog" style="width: 700px;margin-top: 150px">
         <div class="modal-content">
@@ -450,7 +385,7 @@
                         <label for="e_username" class="control-label col-md-2 "><span
                                 style="color: red">*</span>用户名</label>
                         <div class="col-md-5">
-                            <input type="text" id="e_username" name="e_username" class="form-control"disabled>
+                            <input type="text" id="e_username" name="e_username" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -541,8 +476,7 @@
         </div>
     </div>
 </div>
-
-<%--添加模态框--%>
+<%--用户添加模态框--%>
 <div class="modal fade" id="addUserModal" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog" style="width: 700px;margin-top: 150px">
         <div class="modal-content">
@@ -663,6 +597,89 @@
     </div>
 </div>
 
+<%--商品添加模态框--%>
+<div class="modal fade" tabindex="-1" data-backdrop="static" id="addProModal">
+    <div class="modal-dialog" style="width: 550px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-center">添加商品</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="pro_addForm">
+                    <div class="form-group">
+                        <input type="hidden" name="m" value="add">
+                        <label for="add_pname" class="col-sm-3 control-label">商品名称</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="add_pname" id="add_pname" placeholder="商品名字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add_pinfo" class="col-sm-3 control-label">商品信息</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="add_pinfo" id="add_pinfo" placeholder="商品信息">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add_price" class="col-sm-3 control-label">商品价格</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="add_price" id="add_price" placeholder="价格">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="add_image" class="control-label col-md-3">商品图片</label>
+                        <div class="col-md-4">
+                            <input type="file" id="add_image" name="add_image" class="form-control">
+                        </div>
+                        <div class="col-md-5" style="position: relative">
+                            <div class=" text-center" id="add_showImg" style="position: absolute;"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add_stock" class="col-sm-3 control-label">库存</label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" name="add_stock" id="add_stock" min="0" max="100" step="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add_sale" class="col-sm-3 control-label">销量</label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" name="add_sale" id="add_sale" min="0" max="100" step="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add_ptype" class="col-sm-3 control-label">类型</label>
+                        <div class="col-sm-4">
+                            <select name="add_ptype" id="add_ptype" class="form-control">
+                                <option value="0">刀</option>
+                                <option value="1">枪</option>
+                                <option value="2">手套</option>
+                                <option value="3">杂项</option>
+                                <option value="4">印花</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add_status" class="col-sm-3 control-label">状态</label>
+                        <div class="col-sm-4">
+                            <select name="add_status" id="add_status" class="form-control">
+                                <option value="0">上架</option>
+                                <option value="1">下架</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <button type="button" class="btn btn-primary btn-block" id="add_proBtn">添加</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

@@ -7,17 +7,20 @@
     <!--编写标准的resultMap-->
     <resultMap id="baseMap" type="com.woniuxy.entity.Product">
         <id column="id" property="id"/>
-        <result column="pname" property="pName"/>
-        <result column="pinfo" property="pInfo"/>
+        <result column="pname" property="pname"/>
+        <result column="pinfo" property="pinfo"/>
         <result column="price" property="price"/>
         <result column="stock" property="stock"/>
         <result column="sale" property="sale"/>
         <result column="image" property="image"/>
+        <result column="ptype" property="ptype"/>
+        <result column="status" property="status"/>
     </resultMap>
 
     <!--编写一个标准的列-->
     <sql id="baseCol">
-        id,pname,pinfo,price,stock,sale,image
+        id
+        ,pname,pinfo,price,stock,sale,image,ptype,status
     </sql>
 
     <!--    1.List<Product> findByCondition(Product product);-->
@@ -29,11 +32,11 @@
             <if test="id != null">
                 AND id=#{id}
             </if>
-            <if test="pName != null and pName != ''">
-                AND pname=#{pName}
+            <if test="pname != null and pname != ''">
+                AND pname=#{pname}
             </if>
-            <if test="pInfo != null and pInfo != ''">
-                AND pinfo=#{pInfo}
+            <if test="pinfo != null and pinfo != ''">
+                AND pinfo=#{pinfo}
             </if>
             <if test="price != null">
                 AND price=#{price}
@@ -46,6 +49,12 @@
             </if>
             <if test="image != null and image != ''">
                 AND image=#{image}
+            </if>
+            <if test="ptype != null">
+                AND ptype=#{ptype}
+            </if>
+            <if test="status != null">
+                AND status=#{status}
             </if>
         </where>
     </select>
@@ -60,11 +69,11 @@
                 <if test="product.id != null">
                     AND id=#{product.id}
                 </if>
-                <if test="product.pName != null and product.pName != ''">
-                    AND pname=#{product.pName}
+                <if test="product.pname != null and product.pname != ''">
+                    AND pname=#{product.pname}
                 </if>
-                <if test="product.pInfo != null and product.pInfo != ''">
-                    AND pinfo=#{product.pInfo}
+                <if test="product.pinfo != null and product.pinfo != ''">
+                    AND pinfo=#{product.pinfo}
                 </if>
                 <if test="product.price != null">
                     AND price=#{product.price}
@@ -78,9 +87,98 @@
                 <if test="product.image != null and product.image != ''">
                     AND image=#{product.image}
                 </if>
+                <if test="product.ptype != null ">
+                    AND ptype=#{product.ptype}
+                </if>
+                <if test="product.status != null ">
+                    AND status=#{product.status}
+                </if>
             </if>
         </where>
         ORDER BY ${kw} ${rule}
     </select>
+
+    <!--    3.List<Product> findByKeyword(String keyword);-->
+    <select id="findByKeyword" resultMap="baseMap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM t_product
+        WHERE pname LIKE CONCAT("%",#{value},"%")
+    </select>
+
+    <!--    4.int add(Product product);-->
+    <insert id="add" parameterType="com.woniuxy.entity.Product">
+        INSERT INTO t_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pname != null and pname != ''">
+                pname,
+            </if>
+            <if test="pinfo != null and pinfo != ''">
+                pinfo,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="stock != null">
+                stock,
+            </if>
+            <if test="sale != null">
+                sale,
+            </if>
+            <if test="image != null and image != ''">
+                image,
+            </if>
+            <if test="ptype != null">
+                ptype,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="pname != null and pname != ''">
+                #{pname},
+            </if>
+            <if test="pinfo != null and pinfo != ''">
+                #{pinfo},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="stock != null">
+                #{stock},
+            </if>
+            <if test="sale != null">
+                #{sale},
+            </if>
+            <if test="image != null and image != ''">
+                #{image},
+            </if>
+            <if test="ptype != null">
+                #{ptype},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+        </trim>
+    </insert>
+
+    <!--   5. int deleteByIds(@Param("ids") Integer... ids);删除-->
+    <delete id="deleteByIds">
+        DELETE FROM t_product WHERE id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            <if test="id!=null ">
+                #{id}
+            </if>
+        </foreach>
+    </delete>
+
 
 </mapper>

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -15,24 +14,27 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product implements Serializable {
-	private static final long serialVersionUID = 1l;
+public class Product {
 	private Integer id;
-	private String pName;
-	private String pInfo;
+	private String pname;
+	private String pinfo;
 	private BigDecimal price;
 	private Integer stock;
 	private Integer sale;
 	private String image;
+	private Integer ptype; // 商品类别0:刀 1:枪 2:手套 3:音乐盒 探员 4:印花
+	private Integer status; //商品状态 0:上架 1:下架
+
 
 	public Product(String pName, String pInfo, BigDecimal price, Integer stock, Integer sale, String image) {
-		this.pName = pName;
-		this.pInfo = pInfo;
+		this.pname = pName;
+		this.pinfo = pInfo;
 		this.price = price;
 		this.stock = stock;
 		this.sale = sale;
 		this.image = image;
 	}
+
 
 
 }

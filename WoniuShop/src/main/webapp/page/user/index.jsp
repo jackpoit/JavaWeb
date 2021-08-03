@@ -53,16 +53,16 @@
                 <!--2.定义若干轮播项 item-->
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img src="images/bg1.png" alt="">
+                        <img src="images/csgo/title01.png" alt="">
                     </div>
                     <div class="item">
-                        <img src="images/bg2.webp" alt="">
+                        <img src="images/csgo/title02.png" alt="">
                     </div>
                     <div class="item">
-                        <img src="images/bg3.webp" alt="">
+                        <img src="images/csgo/title03.png" alt="">
                     </div>
                     <div class="item">
-                        <img src="images/bg4.webp" alt="">
+                        <img src="images/csgo/title04.png" alt="">
                     </div>
                 </div>
                 <!--3. 轮播的翻页：上一页和下一页-->
@@ -80,14 +80,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 bg-primary adv">
-            <img src="images/ad1.webp" width="100%">
+            <img src="images/csgo/banner1.jpg" width="100%">
         </div>
     </div>
 </div>
 
 <!--精选商品-->
 <div class="container">
-    <h3 style="line-height: 40px;">精选商品</h3>
+    <h3 style="line-height: 40px;">热门饰品</h3>
     <!--热门商品展示区-->
     <div class="row" id="primeProduct">
 
@@ -96,7 +96,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 bg-primary adv">
-            <img src="images/ad2.webp" width="100%">
+            <img src="images/csgo/banner2.jpg" width="100%">
         </div>
     </div>
 </div>
@@ -104,7 +104,7 @@
 
 <!-- 热销商品-->
 <div class="container">
-    <h3 style="line-height: 40px;">热销商品</h3>
+    <h3 style="line-height: 40px;">精选刀类</h3>
     <!--热门商品展示区-->
     <div class="row" id="saleProduct">
 
@@ -113,14 +113,21 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 bg-primary adv">
-            <img src="images/ad3.webp" width="100%">
+            <img src="images/csgo/banner3.jpg" width="100%">
         </div>
     </div>
 </div>
 
-<!--手机-->
+<!--步枪-->
 <div class="container">
-    <h3 style="line-height: 40px;">手机</h3>
+    <h3 style="line-height: 40px;">精选步枪</h3>
+    <!--热门商品展示区-->
+    <div class="row" id="phoneProduct">
+
+    </div>
+</div>
+<div class="container">
+    <h3 style="line-height: 40px;">杂项</h3>
     <!--热门商品展示区-->
     <div class="row" id="phoneProduct">
 

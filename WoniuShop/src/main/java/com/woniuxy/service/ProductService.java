@@ -1,5 +1,6 @@
 package com.woniuxy.service;
 
+import com.github.pagehelper.PageInfo;
 import com.woniuxy.entity.Product;
 
 import java.util.List;
@@ -29,5 +30,19 @@ public interface ProductService {
 	 * @return 商品集合
 	 */
 	List<Product> getOrderByKeyword(String keyword ,String rule);
+
+	/**
+	 * 根据关键字查询页面
+	 * @param keyword 关键字
+	 * @return 包含list的页面信息对象
+	 */
+	PageInfo<Product> getOnePageByKeyword(int currentPage,String keyword,int pageSize);
+
+	/**
+	 * 添加商品
+	 * @param product 商品集合
+	 * @return true添加成功
+	 */
+	boolean addPro(Product product);
 
 }

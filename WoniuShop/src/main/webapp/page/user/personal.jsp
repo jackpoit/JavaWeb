@@ -178,7 +178,7 @@
                         <input type="hidden" id="add_uid" name="add_uid" value="${sesUser.id}">
                         <label for="add_name" class="col-sm-3 control-label">收货人</label>
                         <div class="col-sm-8">
-                            <input type="email" class="form-control" name="add_name" id="add_name" placeholder="名字">
+                            <input type="text" class="form-control" name="add_name" id="add_name" placeholder="名字">
                         </div>
                     </div>
                     <div class="form-group">

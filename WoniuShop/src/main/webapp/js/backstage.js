@@ -234,6 +234,7 @@ $(function () {
     });
 });
 
+
 //编辑
 function editUser(obj) {
     $('#e_h_showImg').hide(); // 让图片预览隐藏
@@ -274,7 +275,6 @@ function editUser(obj) {
 }
 
 $(function () {
-
     let pwdFlag = true;
     $('#e_pwd').blur(function () {
         let pwd = $(this).val();
@@ -394,7 +394,6 @@ $(function () {
         }
     })
 })
-
 $(function () {
     // 1. 头像预览
     $('#e_image').change(function () {
@@ -414,9 +413,163 @@ $(function () {
         }
     });
 });
+// 往上是编辑
 
 
+//展示商品
 
+let totalPage = 0;
+let keyword = "";
+
+function currentPage(num, kw) {
+        keyword = kw;
+    $.ajax({
+        url: "product",
+        type: "post",
+        data: {m: "showByKeyword", currentPage: num, keyword: keyword},
+        dataType: "json",
+        success: function (info) {
+            totalPage = info.pages;
+            let trs = "";
+            for (let pro of info.list) {
+                let type = "刀";
+                if (pro.ptype == 1) {
+                    type = "枪"
+                } else if (pro.ptype == 2) {
+                    type = "手套"
+                } else if (pro.ptype == 3) {
+                    type = "音乐盒"
+                } else if (pro.ptype == 4) {
+                    type = "印花"
+                }
+
+                let status="上架";
+                if (pro.status==1){
+                    status="下架";
+                }
+                trs += " <tr>\n" +
+                    "        <td><input type='checkbox' name='products' value=''></td>\n" +
+                    "        <td>" + pro.id + "</td>\n" +
+                    "        <td>" + pro.pname + "</td>\n" +
+                    "        <td><img src='" + pro.image + "' width='60px' alt=''>\n</td>\n" +
+                    "     <td>" + pro.price + "元</td>\n" +
+                    "     <td>" + pro.stock + "</td>\n" +
+                    "     <td>" + pro.sale + "</td>\n" +
+                    "     <td>" + type + "</td>\n" +
+                    "     <td>" + status + "</td>\n" +
+                    "     <td><a href='#' class='btn btn-danger'>" +
+                    "         <span class='glyphicon glyphicon-remove'></span>删除</a></td>" +
+                    "    <td><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#updateModal'><span" +
+                    "             class='glyphicon glyphicon-pencil'></span>修改</a></td>" +
+                    " </tr>"
+            }
+            $('#pro_content').html(trs);
+
+            let lis = "<li><a href='javascript:;' onclick='prePage(" + info.pageNum + ")'>上一页</a></li>";
+            for (let i = 1; i <= info.pages; i++) {
+                if (i == info.pageNum) {
+                    lis += "<li class='active'><a href='javascript:;'>" + i + "</a></li>"
+                } else {
+                    lis += "<li><a href='javascript:;' onclick='currentPage(" + i + ","+keyword+")'>" + i + "</a></li>"
+                }
+            }
+            lis += "<li><a href='javascript:;' onclick='nextPage(" + info.pageNum + ")'>下一页</a></li>";
+            $('#proPageNav').html(lis);
+
+        }
+    });
+}
+
+//ajax查询上一页
+function prePage(num) {
+    if (num == 1) {
+        currentPage(totalPage,keyword)
+    } else {
+        currentPage(num - 1)
+    }
+}
+
+//ajax查询下一页
+function nextPage(num) {
+    if (num == totalPage) {
+        currentPage(1,keyword)
+    } else {
+        currentPage(num + 1,keyword)
+    }
+}
+
+$(function () {
+    $('#pro-btn').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+        currentPage(1,"")
+    })
+
+    // 1. 头像预览
+    let imgFlag = false;
+    $('#add_image').change(function () {
+        let file = this.files[0];
+        let imgPattern = /image\/\w+/;// 用来匹配以 image/
+        if (!imgPattern.test(file.type)) {
+            alert("文件必须为图片！");
+            imgFlag = false;
+            return false;
+        }
+        let reader = new FileReader(); // 创建文件预览器
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            $('#add_showImg').html("<img src=" + this.result + " width='160px';height='160px' >");
+            $('#add_showImg').slideDown(1000);
+            imgFlag = true;
+        }
+    });
+
+    let priceFlag = false;
+    $('#add_price').blur(function () {
+        let price = $(this).val();
+        if (price == '') {
+            priceFlag = false;
+            return;
+        }
+        let pricePattern = /^([1-9][0-9]*)|([1-9][0-9]*\.[0-9]+)$/;
+        if (!pricePattern.test(price)) {
+            alert("请输入正确价格")
+            priceFlag = false;
+            $('#add_price').val("");
+        } else {
+            priceFlag = true;
+        }
+    })
+
+    $('#add_proBtn').click(function () {
+        if (!priceFlag || !priceFlag) {
+            alert("请正确输入价格或头像")
+            return;
+        }
+        $.ajax({
+            url: "product",
+            type: "post",
+            data: new FormData($('#pro_addForm')[0]),
+            contentType: false,
+            processData: false,
+            dataType: "text",
+            success: function (text) {
+                if ("Y" == text) {
+                    alert("添加成功")
+                    currentPage(1,"")
+                } else if ("N" == text) {
+                    alert("添加失败")
+                }
+
+                $('#addProModal').modal('hide')
+            }
+        })
+
+
+    })
+
+
+});
 
 
 

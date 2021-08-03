@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html lang="en">
 <head>
-    <% String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";%>
+    <% String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";%>
     <base href="<%=basePath%>">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,96 +27,48 @@
 
 <!--查询商品展示区-->
 <div class="container">
-    <div class="row">
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p1.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+    <c:if test="${empty info.list}">
+        <h2 class="text-center" style="color: #b0b0b0">还未帮您查询到任何数据!</h2>
+    </c:if>
+    <c:if test="${!empty info.list}">
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p2.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
+        <div class="row">
+            <c:forEach var="product" items="${info.list}">
+                <div class="col-xs-6 col-sm-4 col-md-3">
+                    <div class="thumbnail pro-item">
+                        <img src="images/${product.image}" alt="">
+                        <div class="caption">
+                            <h4 class="title">${product.pname}</h4>
+                            <p class="info">${product.pinfo}</p>
+                            <p class="price">${product.price}起</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </c:forEach>
         </div>
+        <!--分页导航条-->
+        <c:if test="${info.pages>1}">
+            <div class="col-md-12 text-center">
+                <ul class="pagination">
+                        <%--处理上一页逻辑--%>
+                    <li><a href="product?m=search&currentPage=${info.prePage}&keyword=${kw}">上一页</a></li>
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p3.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
+                        <%--处理中间页码的逻辑--%>
+                    <c:forEach var="i" begin="1" end="${info.pages}">
+                        <c:if test="${info.pageNum == i}">
+                            <li class="active"><a href="javascript:;">${i}</a></li>
+                        </c:if>
+                        <c:if test="${info.pageNum != i}">
+                            <li><a href="product?m=search&currentPage=${i}&keyword=${kw}">${i}</a></li>
+                        </c:if>
+                    </c:forEach>
 
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p4.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
+                        <%--处理下一页的逻辑--%>
+                    <li><a href="product?m=search&currentPage=${info.nextPage}&keyword=${kw}">下一页</a></li>
+                </ul>
             </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p5.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p6.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6 col-sm-4 col-md-3">
-            <div class="thumbnail pro-item">
-                <img src="images/p1.webp" alt="">
-                <div class="caption">
-                    <h4 class="title">Redmi Note 10 Pro</h4>
-                    <p class="info">天玑1100年度旗舰芯 / VC液冷散热 / 67W 闪充 5000mAh 大电池 </p>
-                    <p class="price">1599元起</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--分页导航条-->
-    <div class="row text-center">
-        <ul class="pagination">
-            <li><a href="">上一页</a></li>
-            <li><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">4</a></li>
-            <li><a href="">5</a></li>
-            <li><a href="">下一页</a></li>
-        </ul>
-    </div>
+        </c:if>
+    </c:if>
 </div>
 
 </body>

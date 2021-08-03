@@ -24,7 +24,8 @@
             </ul>
         </div>
         <div class="col-md-3 text-right">
-            <form action="page/user/proList.jsp" class="form-inline">
+            <form action="product" class="form-inline" method="post">
+                <input type="hidden" name="m" value="search">
                 <div class="form-group">
                     <label class="sr-only" for="kw">关键词</label>
                     <input type="text" class="form-control" id="kw" name="keyword" style="height: 40px">

@@ -2,14 +2,10 @@ package com.woniuxy.web.servlet;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.util.StringUtil;
-import com.mysql.cj.Session;
 import com.woniuxy.entity.User;
 import com.woniuxy.service.impl.UserServiceImpl;
 import com.woniuxy.util.BaseServlet;
-import com.woniuxy.util.DBUtil;
 import com.woniuxy.util.MD5Util;
-import javafx.scene.control.Alert;
-import sun.security.provider.MD5;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;

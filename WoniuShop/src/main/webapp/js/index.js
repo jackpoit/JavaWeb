@@ -20,9 +20,9 @@ function showProduct(num,id) {
             let divs = "";
             for (let product of list) {
                 divs += "<div class='col-xs-6 col-sm-4 col-md-3'>"+
-                    "<div class='thumbnail pro-item'><img src='images/"+product.image+
-                    "' alt=''><div class='caption'><h4 class='title'>"+product.pName+
-                    "</h4><p class='info'>"+product.pInfo+"</p><p class='price'>"+product.price+"元起</p></div></div></div>"
+                    "<div class='thumbnail pro-item'><img src='"+product.image+
+                    "' alt=''><div class='caption'><h4 class='title'>"+product.pname+
+                    "</h4><p class='info'>"+product.pinfo+"</p><p class='price'>"+product.price+"元起</p></div></div></div>"
             }
             $("#"+id).html(divs);
         }
@@ -40,9 +40,9 @@ function showSaleProduct(id) {
             let divs = "";
             for (let product of list) {
                 divs += "<div class='col-xs-6 col-sm-4 col-md-3'>"+
-                    "<div class='thumbnail pro-item'><img src='images/"+product.image+
-                    "' alt=''><div class='caption'><h4 class='title'>"+product.pName+
-                    "</h4><p class='info'>"+product.pInfo+"</p><p class='price'>"+product.price+"元起</p></div></div></div>"
+                    "<div class='thumbnail pro-item'><img src='"+product.image+
+                    "' alt=''><div class='caption'><h4 class='title'>"+product.pname+
+                    "</h4><p class='info'>"+product.pinfo+"</p><p class='price'>"+product.price+"元起</p></div></div></div>"
             }
             $("#"+id).html(divs);
         }

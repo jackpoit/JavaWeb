@@ -18,8 +18,8 @@
 }
 
 .aside {
-    height: 366px;
-    padding: 15px 0px;
+    height: 400px;
+    padding: 15px 0;
     background: rgba(0,0,0,.6);
 }
 .aside a{
@@ -31,6 +31,7 @@
 .pro-item {
     text-align: center;
 }
+
 .pro-item .title {
     color: #333;
     overflow: hidden;
@@ -48,6 +49,7 @@
     font-size: 16px;
 }
 .pro-item:hover{
+    cursor: pointer;
     box-shadow: #999 1px 1px 10px;
 }
 .pro-item img{
