@@ -32,5 +32,7 @@
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/ProductMapper.xml"/>
         <mapper resource="mapper/AddressMapper.xml"/>
+        <mapper resource="mapper/ProDetailsMapper.xml"/>
+        <mapper resource="mapper/OrderMapper.xml"/>
     </mappers>
 </configuration>

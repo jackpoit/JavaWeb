@@ -21,7 +21,7 @@ function showProductByRule(id,keyword,isDesc,type) {
         success: function (list) {
             let divs = "";
             for (let product of list) {
-                divs += "<div class='col-xs-6 col-sm-4 col-md-3'>"+
+                divs += "<div class='col-xs-6 col-sm-4 col-md-3' onclick='forwardDetails("+product.id+")'>"+
                     "<div class='thumbnail pro-item'><img src='"+product.image+
                     "' alt=''><div class='caption'><h4 class='title'>"+product.pname+
                     "</h4><p class='info'>"+product.pinfo+"</p><p class='price'>"+product.price+"元起</p></div></div></div>"
@@ -29,4 +29,10 @@ function showProductByRule(id,keyword,isDesc,type) {
             $("#"+id).html(divs);
         }
     });
+}
+
+function forwardDetails(id) {
+
+location.href="product?m=forwardDetails&pid="+id;
+
 }

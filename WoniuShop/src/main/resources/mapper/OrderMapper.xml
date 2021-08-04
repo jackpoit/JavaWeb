@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniuxy.mapper.OrderMapper">
+
+    <!--编写标准的resultMap-->
+    <resultMap id="baseMap" type="com.woniuxy.entity.Order">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="ono" property="ono"/>
+        <result column="pid" property="pid"/>
+        <result column="detail" property="detail"/>
+        <result column="num" property="num"/>
+        <result column="starttime" property="startTime"/>
+        <result column="endtime" property="endTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!--编写一个标准的列-->
+    <sql id="baseCol">
+        id,uid,ono,pid,detail,num,starttime,endtime,status
+    </sql>
+
+    <!--    1.int add(Order order);-->
+    <insert id="add" parameterType="com.woniuxy.entity.Order">
+        INSERT INTO t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="ono != null and ono != ''">
+                ono,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="detail != null and detail != ''">
+                detail,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="startTime != null and startTime != ''">
+                starttime,
+            </if>
+            <if test="endTime != null and endTime != ''">
+                endtime,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="ono != null and ono != ''">
+                #{ono},
+            </if>
+            <if test="pid != null">
+                #{pid},
+            </if>
+            <if test="detail != null and detail != ''">
+                #{detail},
+            </if>
+            <if test="num != null">
+                #{num},
+            </if>
+            <if test="startTime != null and startTime != ''">
+                #{startTime},
+            </if>
+            <if test="endTime != null and endTime != ''">
+                #{endTime},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+        </trim>
+    </insert>
+
+    <!--    2.Order findById(int id);-->
+    <select id="findById" resultMap="baseMap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM t_order
+        WHERE id=#{value}
+    </select>
+
+    <!--    3.int update(Order order);-->
+    <update id="update" parameterType="com.woniuxy.entity.Order">
+        UPDATE t_order
+        <set>
+            <if test="uid != null">
+                uid=#{uid},
+            </if>
+            <if test="ono != null and ono != ''">
+                ono=#{ono},
+            </if>
+            <if test="pid != null">
+                pid=#{pid},
+            </if>
+            <if test="detail != null and detail != ''">
+                detail=#{detail},
+            </if>
+            <if test="num != null">
+                num=#{num},
+            </if>
+            <if test="startTime != null and startTime != ''">
+                starttime=#{startTime},
+            </if>
+            <if test="endTime != null and endTime != ''">
+                endtime=#{endTime},
+            </if>
+            <if test="status != null">
+                status=#{status},
+            </if>
+        </set>
+        WHERE id==#{id}
+    </update>
+
+
+</mapper>

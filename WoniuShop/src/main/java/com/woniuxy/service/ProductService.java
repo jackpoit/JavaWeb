@@ -13,10 +13,10 @@ import java.util.List;
 public interface ProductService {
 
 	/**
-	 * 获取所有商品集合
-	 * @return 商品集合
+	 * 获取一个
+	 * @return 商品对象
 	 */
-	List<Product> getAll();
+	Product getOnePro(int id);
 
 	/**
 	 * 首页商品获取

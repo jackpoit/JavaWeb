@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author: jackpoit
  * @date: 2021/8/1
- * @description:
+ * @description: 地址持久层接口
  **/
 public interface AddressMapper {
 	/**

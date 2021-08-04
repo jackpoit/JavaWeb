@@ -18,11 +18,13 @@ import java.util.List;
  */
 public class ProductServiceImpl implements ProductService {
 	@Override
-	public List<Product> getAll() {
+	public Product getOnePro(int id) {
 		ProductMapper mapper = DBUtil.getMapper(ProductMapper.class);
-		List<Product> list = mapper.findByCondition(null);
+		Product product = new Product();
+		product.setId(id);
+		List<Product> list = mapper.findByCondition(product);
 		DBUtil.close();
-		return list.isEmpty()?null:list;
+		return list.size()==1?list.get(0):null;
 	}
 
 	@Override
@@ -32,7 +34,6 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> list = mapper.findByCondition(null);
 		DBUtil.close();
 		return list.isEmpty()?null:list;
-
 	}
 
 	@Override

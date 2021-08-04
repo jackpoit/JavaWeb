@@ -96,3 +96,29 @@ function delPro(obj) {
        calTotalPrice();
    }
 }
+
+
+function commitOrder() {
+    $.ajax({
+        url: "order",
+        type: "post",
+        data: {m:'commitOrder'},
+        dataType: "text",
+        success: function (text) {
+            if ('Y' == text) { //成功
+                alert('提交成功');
+            } else if ('N' == text) {
+                alert('提交失败');
+            }
+        }
+    })
+
+}
+$(function () {
+    $('#commitOrder').click(function () {
+
+        commitOrder();
+    })
+
+
+})

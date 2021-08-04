@@ -196,34 +196,47 @@
 
     <!--    7.int update(Product product);-->
     <update id="update" parameterType="com.woniuxy.entity.Product">
-            UPDATE t_product 
+        UPDATE t_product
         <set>
             <if test="pname != null and pname != ''">
-                 pname=#{pname},
+                pname=#{pname},
             </if>
             <if test="pinfo != null and pinfo != ''">
-                 pinfo=#{pinfo},
+                pinfo=#{pinfo},
             </if>
             <if test="price != null">
-                 price=#{price},
+                price=#{price},
             </if>
             <if test="stock != null">
-                 stock=#{stock},
+                stock=#{stock},
             </if>
             <if test="sale != null">
-                 sale=#{sale},
+                sale=#{sale},
             </if>
             <if test="image != null and image != ''">
-                 image=#{image},
+                image=#{image},
             </if>
             <if test="ptype != null ">
-                 ptype=#{ptype},
+                ptype=#{ptype},
             </if>
             <if test="status != null ">
-                 status=#{status},
+                status=#{status},
             </if>
         </set>
         WHERE id=#{id}
     </update>
+
+    <!--    8.int setSaleAndStock(@Param("id") int id,@Param("num") int num,@Param("isBuy") String isBuy);-->
+    <update id="setSaleAndStock">
+        UPDATE t_product
+        <if test="isBuy=='true'">
+            SET sale=sale+#{num},stock=stock-#{num}
+        </if>
+        <if test="isBuy=='false'">
+            SET sale=sale-#{num},stock=stock+#{num}
+        </if>
+        WHERE id=#{id}
+    </update>
+
 
 </mapper>

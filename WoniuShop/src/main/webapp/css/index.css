@@ -98,6 +98,9 @@
     color: gray;
     font-size: 16px;
 }
+.detail .rule div:hover{
+    cursor: pointer;
+}
 .detail .rule .active {
     border-color: #ff6700;
     color: #ff6700;
@@ -117,6 +120,10 @@
 .option .shopcart{
     background: linear-gradient(to right, yellow, orange);
     border-radius: 20px 0px 0px 20px;
+}
+.option .shopcart:hover,.option .buy:hover{
+    color: #42cc9e;
+    cursor: pointer;
 }
 .option .buy{
     background: linear-gradient(to right, orangered, darkorange);

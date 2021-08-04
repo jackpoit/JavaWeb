@@ -3,8 +3,10 @@ package com.woniuxy.web.servlet;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
+import com.woniuxy.entity.ProDetails;
 import com.woniuxy.entity.Product;
 import com.woniuxy.entity.User;
+import com.woniuxy.service.impl.ProDetailsServiceImpl;
 import com.woniuxy.service.impl.ProductServiceImpl;
 import com.woniuxy.util.BaseServlet;
 import com.woniuxy.util.MD5Util;
@@ -16,10 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author: jackpoit
@@ -31,26 +30,27 @@ import java.util.UUID;
 @WebServlet("/product")
 public class ProductServlet extends BaseServlet {
 	private ProductServiceImpl psi = new ProductServiceImpl();
+	ProDetailsServiceImpl pdsi = new ProDetailsServiceImpl();
 
 	//规则排序
 	public void showPageByRule(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String keyword = req.getParameter("keyword");
-		if (StringUtil.isEmpty(keyword)){
-			keyword="";
+		if (StringUtil.isEmpty(keyword)) {
+			keyword = "";
 		}
 		String isDesc = req.getParameter("isDesc");
-		if (StringUtil.isEmpty(keyword)||"false".equals(isDesc)){
-			isDesc="ASC";
-		}else {
-			isDesc="DESC";
+		if (StringUtil.isEmpty(keyword) || "false".equals(isDesc)) {
+			isDesc = "ASC";
+		} else {
+			isDesc = "DESC";
 		}
-		Product product =null;
+		Product product = null;
 		String type = req.getParameter("type");
-		if (!StringUtil.isEmpty(type)){
-			product=new Product();
+		if (!StringUtil.isEmpty(type)) {
+			product = new Product();
 			product.setPtype(Integer.parseInt(type));
 		}
-		List<Product> list = psi.getOrderByKeyword(product,keyword, isDesc);
+		List<Product> list = psi.getOrderByKeyword(product, keyword, isDesc);
 		String jsonStr = JSON.toJSONString(list);
 		resp.getWriter().write(jsonStr);
 	}
@@ -66,14 +66,38 @@ public class ProductServlet extends BaseServlet {
 		if (!StringUtil.isEmpty(cp))
 			currentPage = Integer.parseInt(cp);
 
-		PageInfo<Product> info = psi.getOnePageByKeyword(currentPage, keyword,8,null,null);
+		PageInfo<Product> info = psi.getOnePageByKeyword(currentPage, keyword, 8, null, null);
 
-		req.setAttribute("info",info);
-		req.setAttribute("kw",keyword);
+		req.setAttribute("info", info);
+		req.setAttribute("kw", keyword);
 
 
-		 return "forward:/page/user/proList.jsp";
+		return "forward:/page/user/proList.jsp";
 	}
+
+	public String forwardDetails(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		String pidStr = req.getParameter("pid");
+		if (StringUtil.isEmpty(pidStr)) {
+			return null;
+		}
+		int pid = Integer.parseInt(pidStr);
+		Product product = psi.getOnePro(pid);
+		List<ProDetails> list = pdsi.getDetailsByPid(pid);
+		if (list!=null){
+			product.setDetails(list);
+		}
+		System.out.println(product);
+		req.setAttribute("product",product);
+
+		return "forward:/page/user/detail.jsp";
+	}
+
+
+
+
+
+
+
 
 
 	//后台
@@ -114,12 +138,12 @@ public class ProductServlet extends BaseServlet {
 		String imgPath = null;
 		Part part = req.getPart("add_image");
 
-		if (part!=null &&part.getSize() != 0) {
+		if (part != null && part.getSize() != 0) {
 			String fileName = part.getSubmittedFileName();
 			String suffix = fileName.substring(fileName.lastIndexOf(".")); // 文件的扩展名
-			fileName =pName.replace("|","").replace(" ","") ;
-			String uploadPath = "D:/MyProgram/nginx-1.18.0/html/upload/" + "product/"+fileName;
-			String imageName ="head" + suffix;
+			fileName = pName.replace("|", "").replace(" ", "");
+			String uploadPath = "D:/MyProgram/nginx-1.18.0/html/upload/" + "product/" + fileName;
+			String imageName = "head" + suffix;
 			File file = new File(uploadPath);
 			if (!file.exists()) {
 				file.mkdirs(); // 创建用户目录用于存放自己的图片
@@ -127,7 +151,7 @@ public class ProductServlet extends BaseServlet {
 			uploadPath = uploadPath + File.separator + imageName;
 			// 上传到服务器
 			part.write(uploadPath);
-			imgPath = "http://localhost/upload/" + "product" + "/" +fileName+"/"+ imageName;
+			imgPath = "http://localhost/upload/" + "product" + "/" + fileName + "/" + imageName;
 			product.setImage(imgPath);
 
 		}
@@ -140,7 +164,7 @@ public class ProductServlet extends BaseServlet {
 	public void showByKeyword(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
 		String keyword = req.getParameter("keyword");
-		if (keyword == null||"-1".equals(keyword))
+		if (keyword == null || "-1".equals(keyword))
 			keyword = "";
 
 		String cp = req.getParameter("currentPage");
@@ -148,22 +172,23 @@ public class ProductServlet extends BaseServlet {
 		if (!StringUtil.isEmpty(cp))
 			currentPage = Integer.parseInt(cp);
 
-		Integer fromPrice=null;
+		Integer fromPrice = null;
 		String fp = req.getParameter("fromPrice");
-		if (!StringUtil.isEmpty(fp)&&!"-1".equals(fp))
+		if (!StringUtil.isEmpty(fp) && !"-1".equals(fp))
 			fromPrice = Integer.parseInt(fp);
 
-		Integer toPrice=null;
+		Integer toPrice = null;
 		String tp = req.getParameter("toPrice");
-		if (!StringUtil.isEmpty(tp)&&!"-1".equals(tp))
-			toPrice = Integer.parseInt(cp);
+		if (!StringUtil.isEmpty(tp) && !"-1".equals(tp))
+			toPrice = Integer.parseInt(tp);
 
-
-		PageInfo<Product> info = psi.getOnePageByKeyword(currentPage, keyword,5,fromPrice,toPrice);
+		System.out.println(toPrice);
+		PageInfo<Product> info = psi.getOnePageByKeyword(currentPage, keyword, 5, fromPrice, toPrice);
 
 		String s = JSON.toJSONString(info);
 		resp.getWriter().write(s);
 	}
+
 	//修改
 	public void edit(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
@@ -173,7 +198,7 @@ public class ProductServlet extends BaseServlet {
 			return;
 		}
 		product.setId(Integer.parseInt(pid));
-		
+
 		String pName = req.getParameter("e_add_pname");
 		if (!StringUtil.isEmpty(pName)) {
 			product.setPname(pName);
@@ -207,12 +232,12 @@ public class ProductServlet extends BaseServlet {
 		String imgPath = null;
 		Part part = req.getPart("e_add_image");
 
-		if (part!=null &&part.getSize() != 0) {
+		if (part != null && part.getSize() != 0) {
 			String fileName = part.getSubmittedFileName();
 			String suffix = fileName.substring(fileName.lastIndexOf(".")); // 文件的扩展名
-			fileName =pName.replace("|","").replace(" ","") ;
-			String uploadPath = "D:/MyProgram/nginx-1.18.0/html/upload/" + "product/"+fileName;
-			String imageName ="head" + suffix;
+			fileName = pName.replace("|", "").replace(" ", "");
+			String uploadPath = "D:/MyProgram/nginx-1.18.0/html/upload/" + "product/" + fileName;
+			String imageName = "head" + suffix;
 
 			File file = new File(uploadPath);
 			if (!file.exists()) {
@@ -221,13 +246,14 @@ public class ProductServlet extends BaseServlet {
 			uploadPath = uploadPath + File.separator + imageName;
 			// 上传到服务器
 			part.write(uploadPath);
-			imgPath = "http://localhost/upload/" + "product" + "/" +fileName+"/"+ imageName;
+			imgPath = "http://localhost/upload/" + "product" + "/" + fileName + "/" + imageName;
 			product.setImage(imgPath);
 		}
 		boolean flag = psi.editPro(product);
 
 		resp.getWriter().write(flag ? "Y" : "N");
 	}
+
 	//根据id删除商品
 	public void deleteByIds(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 

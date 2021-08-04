@@ -427,6 +427,7 @@ function currentPage(num, kw, fp, tp) {
     keyword = kw;
     fromPrice = fp;
     toPrice = tp;
+
     $.ajax({
         url: "product",
         type: "post",

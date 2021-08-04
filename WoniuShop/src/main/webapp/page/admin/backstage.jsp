@@ -266,13 +266,11 @@
                                 <label for="state" class="control-label">订单状态</label>
                                 <select name="state" id="state" style="width: 120px" class="form-control">
                                     <option value="">全部</option>
-                                    <option value="">未付款</option>
-                                    <option value="">已付款</option>
-                                    <option value="">未发货</option>
-                                    <option value="">已发货</option>
-                                    <option value="">确认收货</option>
-                                    <option value="">未评论</option>
-                                    <option value="">已评论</option>
+                                    <option value="0">未付款</option>
+                                    <option value="1">已付款/未发货</option>
+                                    <option value="2">已发货</option>
+                                    <option value="3">已完成/未评论</option>
+                                    <option value="4">已完成/已评论/</option>
                                 </select>
                             </div>
                             <button type="button" class="btn btn-primary">

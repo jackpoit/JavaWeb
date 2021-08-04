@@ -194,7 +194,8 @@
         <div class="cal">
             <span>已选择<span class="num" id="chooseNum">0</span>件商品</span>
             <span>总价 <span class="totalPrice" id="totalPrice">¥0.00</span></span>
-            <button type="button" class="btn-cal">结 算</button>
+<%--            <button type="button" class="btn-cal">结 算</button>--%>
+            <button type="button" class="btn-cal" id="commitOrder">提交订单</button>
         </div>
     </div>
 </div>

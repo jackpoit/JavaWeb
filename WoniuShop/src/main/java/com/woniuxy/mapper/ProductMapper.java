@@ -65,4 +65,13 @@ public interface ProductMapper {
 	 * @return 受影响行数
 	 */
 	int update(Product product);
+
+	/**
+	 * 设置销量和库存
+	 * @param id 商品id
+	 * @param num	数量
+	 * @param isBuy "true":销量+ 库存-
+	 * @return 受影响行数
+	 */
+	int setSaleAndStock(@Param("id") int id,@Param("num") int num,@Param("isBuy") String isBuy);
 }

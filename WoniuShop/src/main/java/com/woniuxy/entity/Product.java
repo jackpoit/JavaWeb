@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author jackpoit
@@ -24,6 +25,8 @@ public class Product {
 	private String image;
 	private Integer ptype; // 商品类别0:刀 1:枪 2:手套 3:杂项 4:印花
 	private Integer status; //商品状态 0:上架 1:下架
+
+	private List<ProDetails> details;
 
 
 	public Product(String pName, String pInfo, BigDecimal price, Integer stock, Integer sale, String image) {

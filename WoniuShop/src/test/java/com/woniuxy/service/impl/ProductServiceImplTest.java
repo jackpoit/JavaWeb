@@ -24,6 +24,10 @@ public class ProductServiceImplTest {
 
 	@Test
 	public void getAll() {
+
+		ProductMapper mapper = DBUtil.getMapper(ProductMapper.class);
+		int row = mapper.setSaleAndStock(1, 10, "true");
+		System.out.println(row);
 	}
 
 	@Test
