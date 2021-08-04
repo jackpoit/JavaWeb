@@ -143,3 +143,9 @@ body {
     opacity: 1;
 }
 
+.del>span:hover{
+    cursor: pointer;
+}
+.info:hover, .pimg:hover{
+    cursor: pointer;
+}

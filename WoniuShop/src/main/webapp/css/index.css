@@ -135,7 +135,7 @@
 .order .addr {
     height: 130px;
     border: 2px solid #b0b0b0;
-    padding: 10px;
+    padding-left: 16px;
     border-radius: 8px;
 }
 .order .logo span{
@@ -167,4 +167,16 @@
 }
 .order .msg{
     color: #ff6700;
+}
+.addBox{
+    float: left;
+    margin-bottom: 5px;
+}
+.addr:hover{
+    cursor: pointer;
+    border: 2px solid #ff6700 ;
+}
+.add_active .addr{
+ border: 2px solid #ff6700 ;
+
 }

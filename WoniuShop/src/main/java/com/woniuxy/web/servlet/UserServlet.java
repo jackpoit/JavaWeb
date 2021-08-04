@@ -173,8 +173,9 @@ public class UserServlet extends BaseServlet {
 
 		boolean flag = usi.doUpdate(user);
 		if (flag){
+			User upUser = usi.findById(user.getId());
 			HttpSession session = req.getSession();
-			session.setAttribute("sesUser", user);
+			session.setAttribute("sesUser", upUser);
 		}
 		resp.getWriter().write("<script>alert('" + (flag ? "更新成功" : "更新失败") + "')</script>");
 

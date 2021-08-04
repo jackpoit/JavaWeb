@@ -21,5 +21,7 @@ public class Order {
 	private Integer num;    //商品数量
 	private String startTime; //创建时间
 	private String endTime;   //完成时间
-	private Integer status; // 订单状态 1:未付款 未付款 2:未发货(已付款) 3:已发货(未收货) 4:已完成 :已完成
+	private Integer status; // 订单状态0:购物车 1:未付款 未付款 2:未发货(已付款) 3:已发货(未收货) 4:已完成 :已完成
+
+
 }

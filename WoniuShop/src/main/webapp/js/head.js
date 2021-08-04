@@ -83,23 +83,12 @@ $(function () {
         })
     })
 
-    function hideAndShowNav() {
-        $('#n_nav_login').css({"display": "none"});
-        $('#n_nav_exist').css({"display": "inline-block"});
-        $('#n_nav_register').addClass("disabled");
-        $('#n_nav_register').attr("data-target", "####");
-        $('#n_nav_personal').removeClass("disabled");
-        $('#n_nav_personal').attr("href", "page/user/personal.jsp");
-        $('#n_nav_shopcart').removeClass("disabled");
-        $('#n_nav_shopcart').attr("href", "page/user/shopcart.jsp");
-    }
+
 
     $('#nav_exist').click(function () {
         exitLogin();
     })
-    $('#n_nav_exist').click(function () {
-        exitLogin();
-    })
+
 
     function exitLogin() {
         $.ajax({
@@ -363,3 +352,16 @@ function loginRes() {
         $('#infoModal').modal('hide')
     }, 2000)
 }
+
+
+$(function () {
+
+    $('#nav_shopcart').click(function () {
+        let uid=$('#id').val();
+        location.href="order?m=showOrderPage&uid="+uid;
+    })
+    $('#nav_order').click(function () {
+        let uid=$('#id').val();
+        location.href="order?m=showCommitedOrder&uid="+uid;
+    })
+})

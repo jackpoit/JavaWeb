@@ -5,11 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import com.woniuxy.entity.ProDetails;
 import com.woniuxy.entity.Product;
-import com.woniuxy.entity.User;
 import com.woniuxy.service.impl.ProDetailsServiceImpl;
 import com.woniuxy.service.impl.ProductServiceImpl;
 import com.woniuxy.util.BaseServlet;
-import com.woniuxy.util.MD5Util;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;

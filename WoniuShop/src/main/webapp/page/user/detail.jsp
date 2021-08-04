@@ -97,7 +97,6 @@
                         <div class="col-md-6 text-center">
                             <div class="row rule" id="style" style="height: 84px">
                                 <c:if test="${!empty product.details}">
-                                    <%--        <div class="col-md-5 table-bordered active">陶瓷黑</div>--%>
                                     <c:forEach var="detail" items="${product.details}">
                                         <div class="col-md-5 table-bordered">${detail.style}</div>
                                     </c:forEach>
@@ -109,17 +108,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div style="font-size: 16px;margin: 5px">选择图案:</div>
+                        <div style="font-size: 16px;margin: 5px">选择版本:</div>
                         <div class="col-md-6 text-center">
                             <div class="row rule" id="edition" style="height: 84px">
                                 <c:if test="${!empty product.details}">
-                                    <%--                        <div class="col-md-5 table-bordered active">陶瓷黑</div>--%>
                                     <c:forEach var="detail" items="${product.details}">
                                         <div class="col-md-5 table-bordered">${detail.edition}</div>
                                     </c:forEach>
                                 </c:if>
                                 <c:if test="${empty product.details}">
-                                    <div class="col-md-5 table-bordered">崭新出厂</div>
+                                    <div class="col-md-5 table-bordered">普通</div>
+                                    <div class="col-md-5 table-bordered">纪念品</div>
                                 </c:if>
 
                             </div>

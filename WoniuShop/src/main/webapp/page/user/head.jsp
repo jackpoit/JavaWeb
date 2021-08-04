@@ -8,6 +8,7 @@
 <!--头部导航-->
 <div class="navbar-fixed-top banner">
     <div class="container">
+        <input type="hidden" id="id" value="${sesUser.id}">
         <c:if test="${empty sesUser}">
             <div class="row">
                 <div class="col-md-2 navbar-left" id="n_nav_name">
@@ -17,10 +18,6 @@
                     <button type="button" class="btn btn-danger" id="n_nav_login" >
                         <span class="glyphicon glyphicon-log-in"></span>
                         登录
-                    </button>
-                    <button type="button" class="btn btn-warning" id="n_nav_exist" style="display: none">
-                        <span class="glyphicon glyphicon-log-in"></span>
-                        注销
                     </button>
                     <button type="button" class="btn btn-info" id="n_nav_register" data-toggle="modal"
                             data-target="#registerModal">
@@ -33,15 +30,6 @@
                         首页
                     </a>
 
-                    <a href="javascript:;" id="n_nav_personal"  class="btn btn-success disabled" >
-                        <span class="glyphicon glyphicon-user"></span>
-                        个人中心
-                    </a>
-
-                    <a href="javascript:;" id="n_nav_shopcart" class="btn btn-warning disabled" >
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                        购物车
-                    </a>
                 </div>
             </div>
         </c:if>
@@ -51,34 +39,26 @@
                     <img src='${sesUser.image}' width='40px' class='img-circle' alt=''><span class='person' onclick='$("#loginModal").modal("show")'>${sesUser.username}</span>
                 </div>
                 <div class="col-md-5 navbar-right text-right">
-<%--                    <button type="button" class="btn btn-danger" id="nav_login" data-toggle="modal"--%>
-<%--                            data-target="#loginModal"  style="display: none">--%>
-<%--                        <span class="glyphicon glyphicon-log-in"></span>--%>
-<%--                        登录--%>
-<%--                    </button>--%>
-                    <button type="button" class="btn btn-warning" id="nav_exist">
-                        <span class="glyphicon glyphicon-log-in"></span>
-                        注销
-                    </button>
-                    <button type="button" class="btn btn-info " id="nav_register"  disabled>
-                        <span class="glyphicon glyphicon-plus"></span>
-                        注册
-                    </button>
-
                     <a href="page/user/index.jsp" class="btn btn-primary">
                         <span class="glyphicon glyphicon-home"></span>
                         首页
                     </a>
-
-                    <a href="page/user/personal.jsp" id="nav_personal" class="btn btn-success">
+                    <a href="page/user/personal.jsp" id="nav_personal" class="btn btn-info">
                         <span class="glyphicon glyphicon-user"></span>
                         个人中心
                     </a>
-
-                    <a href="page/user/shopcart.jsp" id="nav_shopcart" class="btn btn-warning">
+                    <button type="button" id="nav_shopcart" class="btn btn-warning">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                         购物车
-                    </a>
+                    </button>
+                    <button type="button" id="nav_order" class="btn btn-success">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        订单提交
+                    </button>
+                    <button type="button" class="btn btn-danger" id="nav_exist">
+                        <span class="glyphicon glyphicon-log-in"></span>
+                        注销
+                    </button>
                 </div>
             </div>
         </c:if>

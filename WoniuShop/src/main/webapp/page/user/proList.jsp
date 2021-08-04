@@ -13,7 +13,13 @@
     <script src="bootstrap/js/jquery-3.5.1.js"></script>
     <script src="bootstrap/js/bootstrap.js"></script>
     <link rel="stylesheet" href="css/index.css">
+    <script>
+        function forwardDetails(id) {
 
+            location.href="product?m=forwardDetails&pid="+id;
+
+        }
+    </script>
 </head>
 <body>
 <%--包含头部菜单--%>
@@ -34,7 +40,7 @@
 
         <div class="row">
             <c:forEach var="product" items="${info.list}">
-                <div class="col-xs-6 col-sm-4 col-md-3">
+                <div class="col-xs-6 col-sm-4 col-md-3" onclick='forwardDetails(${product.id})'>
                     <div class="thumbnail pro-item">
                         <img src="${product.image}" alt="">
                         <div class="caption">

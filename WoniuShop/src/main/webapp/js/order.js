@@ -88,79 +88,8 @@ function updateTotal() {
     $('#s_total').text(total);
 }
 
-// // 删除商品
-// function delPro(obj) {
-//    let flag = confirm("您确认要从购物车中删除这个商品吗？");
-//    if(flag){
-//        //1. 找到当前行的元素tr
-//        let tr = $(obj).parent().parent();
-//        //2. 获取到被删除商品的id
-//        let id = tr.children().eq(0).children().eq(0).val();
-//        // 3. 发送请求到后端，后端在到数据库
-//        tr.remove();  // 回显数据（实时更新数据）
-//        // 4. 更新商品总数
-//        updateTotal();
-//        // 5. 更新已选中的商品个数
-//        $('#chooseNum').text($('input[name="product"]:checked').length);
-//        // 6. 更新总价
-//        calTotalPrice();
-//    }
-// }
 
-function commitOrder() {
-    $.ajax({
-        url: "order",
-        type: "post",
-        data: {m: 'commitOrder', id: 1},
-        dataType: "text",
-        success: function (text) {
-            if ('Y' == text) { //成功
-                alert('提交成功');
-            } else if ('N' == text) {
-                alert('提交失败');
-            }
-        }
-    })
 
-}
-
-//提交
-function commitOrderAjax(ids) {
-    let uid = $('#uid').val();
-    $.ajax({
-        url: "order",
-        type: "post",
-        traditional: "true",//数组选项
-        data: {m: "commitOrder", ids: ids},
-        dataType: "text",
-        success: function (text) {
-            alert(text);
-            location.href = "order?m=showCommitedOrder&uid=" + uid;
-
-        }
-    })
-}
-
-function commitAllOrder() {
-    let $ids = $('input[name="product"]').filter(":checked")
-    if ($ids.length === 0) {
-        alert("没有选择的订单")
-        return;
-    }
-    let ids = [];
-    let idStr = "";
-    for (let i = 0; i < $ids.length; i++) {
-        ids[i] = $ids.eq(i).val();
-        idStr += ids[i];
-        if (i != $ids.length - 1) {
-            idStr += ",";
-        }
-    }
-    let flag = confirm("您确认要提交" + idStr + "号订单吗?");
-    if (flag) {
-        commitOrderAjax(ids);
-    }
-}
 
 //删除
 function deleteOrderAjax(ids) {
@@ -169,15 +98,11 @@ function deleteOrderAjax(ids) {
         url: "order",
         type: "post",
         traditional: "true",//数组选项
-        data: {m: "deleteByIds", ids: ids},
+        data: {m: "deleteCommitedOrders", ids: ids},
         dataType: "text",
         success: function (text) {
-            if ("Y" == text) {
-                alert("删除成功")
-                location.href = "order?m=showOrderPage&uid=" + uid;
-            } else if ("N" == text) {
-                alert("删除失败")
-            }
+            alert(text);
+            location.href = "order?m=showCommitedOrder&uid=" + uid;
         }
     })
 }
@@ -210,6 +135,54 @@ function deleteAllOrder() {
     }
 }
 
+$(function () {
+showAllAdd();
+
+})
+
+function showAllAdd() {
+    let uid = $('#uid').val();
+    $.ajax({
+        url: "address",
+        type: "get",
+        data: {m: "showAll", uid: uid},
+        dataType: "json",
+        success: function (list) {
+            let trs = ""
+            for (let add of list) {
+                trs += " <div class='col-md-4 addBox'>\n" +
+                    "                <div class='addr'>\n" +
+                    "                    <div class='logo col-md-2' style='padding: 0'>\n" +
+                    "                        <span class='glyphicon glyphicon-map-marker'></span>\n" +
+                    "                    </div>\n" +
+                    "                     <div class='add_id_class' style='display: none'>"+add.id+"</div>"+
+                    "                    <div class='info col-md-10'>\n" +
+                    "                        <p>\n" +
+                    "                            <span class='name'>"+add.username+"</span>\n" +
+                    "                            <span class='mobile'>"+add.mobile+"</span>\n" +
+                    "                        </p>\n" +
+                    "                        <p>"+add.area+"</p>\n" +
+                    "                        <p>"+add.location+"</p>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "            </div>"
+            }
+            $("#add_content").html(trs);
+            addr_css();
+        }
+    })
+}
+
+function addr_css() {
+
+    $('#add_content .addBox').eq(0).addClass("add_active");
+
+    // 选择颜色
+    $('#add_content .addBox').click(function () {
+        $(this).addClass("add_active").siblings().removeClass("add_active");
+    })
+
+}
 function forwardDetails(id) {
 
     location.href="product?m=forwardDetails&pid="+id;

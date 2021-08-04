@@ -86,4 +86,14 @@ public class UserServiceImpl implements UserService {
 		return info;
 	}
 
+	@Override
+	public User findById(int id) {
+		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
+		User user = new User();
+		user.setId(id);
+		List<User> list = mapper.findByCondition(user);
+		DBUtil.close();
+		return list.size()==1?list.get(0):null;
+	}
+
 }

@@ -62,7 +62,7 @@
                         <img src="images/csgo/title03.png" alt="">
                     </div>
                     <div class="item">
-                        <img src="images/csgo/title06.jpg" alt="" style="height: 400px;width: 100%;>
+                        <img src="images/csgo/title06.jpg" alt="" style="height: 400px; width: 100%;">
                     </div>
                 </div>
                 <!--3. 轮播的翻页：上一页和下一页-->

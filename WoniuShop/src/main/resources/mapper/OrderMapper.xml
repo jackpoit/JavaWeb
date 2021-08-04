@@ -123,8 +123,54 @@
                 status=#{status},
             </if>
         </set>
-        WHERE id==#{id}
+        WHERE id=#{id}
     </update>
+
+    <!--    4.List<Order> findByCondition(Order order);-->
+    <select id="findByCondition" parameterType="com.woniuxy.entity.Order" resultMap="baseMap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM t_order
+        <where>
+            <if test="id != null">
+                AND id=#{id}
+            </if>
+            <if test="uid != null">
+                AND uid=#{uid}
+            </if>
+            <if test="ono != null and ono != ''">
+                AND ono=#{ono}
+            </if>
+            <if test="pid != null">
+                AND pid=#{pid}
+            </if>
+            <if test="detail != null and detail != ''">
+                AND detail=#{detail}
+            </if>
+            <if test="num != null">
+                AND num=#{num}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND starttime=#{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND endtime=#{endTime}
+            </if>
+            <if test="status != null">
+                AND status=#{status}
+            </if>
+        </where>
+    </select>
+
+    <!--   5. int deleteByIds(@Param("ids") Integer... ids);删除-->
+    <delete id="deleteByIds">
+        DELETE FROM t_order WHERE id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            <if test="id!=null ">
+                #{id}
+            </if>
+        </foreach>
+    </delete>
 
 
 </mapper>
