@@ -61,10 +61,11 @@ public interface OrderService {
 	 */
 	boolean updateNum(Order order);
 
+
 	/**
 	 * 根据关键字查询页面
 	 * @param ono 关键字
 	 * @return 包含list的页面信息对象
 	 */
-	OrderPageModal getOnePageByKeyword(int currentPage,int pageSize,String ono,Integer status,String pname);
+	OrderPageModal getOnePageBySome(int currentPage, int pageSize, String ono, Integer status, String pname, Integer uid);
 }

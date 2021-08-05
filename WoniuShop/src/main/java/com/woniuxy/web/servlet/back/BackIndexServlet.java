@@ -25,7 +25,7 @@ public class BackIndexServlet extends HttpServlet {
 		resp.setContentType("text/html;charset=utf-8");
 		req.setCharacterEncoding("utf-8");
 
-		PageInfo<User> info = usi.findOnePage(1, "");
+		PageInfo<User> info = usi.findOnePage(1, null,"","");
 
 		req.setAttribute("info", info);
 		req.getRequestDispatcher("/page/admin/backstage.jsp").forward(req, resp);

@@ -58,17 +58,17 @@
                             <input type="hidden" name="m" value="page">
                             <div class="form-group">
                                 <label for="uid" class="control-label">编号:</label>
-                                <input type="text" id="uid" name="uid" class="form-control" placeholder="用户编号"
+                                <input type="text" id="uid" name="uid" class="form-control" placeholder="用户编号" value="${kw_id}"
                                        style="width: 130px">
                             </div>
                             <div class="form-group">
                                 <label for="uname" class="control-label">用户名:</label>
-                                <input type="text" id="uname" name="uname" class="form-control" placeholder="用户名"
+                                <input type="text" id="uname" name="uname" class="form-control" placeholder="用户名" value="${kw_un}"
                                        style="width: 130px">
                             </div>
                             <div class="form-group">
                                 <label for="uphone" class="control-label">手机:</label>
-                                <input type="text" id="uphone" name="uphone" class="form-control" placeholder="手机号码"
+                                <input type="text" id="uphone" name="uphone" class="form-control" placeholder="手机号码" value="${kw_mo}"
                                        style="width: 130px">
                             </div>
                             <button type="submit" class="btn btn-primary">
@@ -151,7 +151,7 @@
                         <ul class="pagination">
                                 <%--上一页--%>
                             <li>
-                                <a href="page/admin/user?m=page&currentUserPage=${info.prePage}&keyword=${keyword}">上一页</a>
+                                <a href="page/admin/user?m=page&currentUserPage=${info.prePage}&uid=${kw_id}&uname=${kw_un}&uphone=${kw_mo}">上一页</a>
                             </li>
                                 <%--中间页码--%>
                             <c:forEach var="i" begin="1" end="${info.pages}">
@@ -160,12 +160,12 @@
                                 </c:if>
                                 <c:if test="${info.pageNum!=i}">
                                     <li>
-                                        <a href="page/admin/user?m=page&currentUserPage=${i}&keyword=${keyword}">${i}</a>
+                                        <a href="page/admin/user?m=page&currentUserPage=${i}&uid=${kw_id}&uname=${kw_un}&uphone=${kw_mo}">${i}</a>
                                     </li>
                                 </c:if>
                             </c:forEach>
                             <li>
-                                <a href="page/admin/user?m=page&currentUserPage=${info.nextPage}&keyword=${keyword}">下一页</a>
+                                <a href="page/admin/user?m=page&currentUserPage=${info.nextPage}&uid=${kw_id}&uname=${kw_un}&uphone=${kw_mo}">下一页</a>
                             </li>
                         </ul>
                     </div>
@@ -194,7 +194,7 @@
                                        placeholder="最终价格">
                             </div>
                             <button type="button" class="btn btn-primary" id="pro_search">
-                                <span class="glyphicon glyphicon-search" ></span> 搜索
+                                <span class="glyphicon glyphicon-search"></span> 搜索
                             </button>
                         </div>
 
@@ -208,7 +208,7 @@
                             <button type="button" class="btn btn-success">
                                 <span class="glyphicon glyphicon-upload"></span> 上传
                             </button>
-                            <button  type="button" class="btn btn-info">
+                            <button type="button" class="btn btn-info">
                                 <span class="glyphicon glyphicon-download"></span> 下载
                             </button>
                         </div>
@@ -265,22 +265,23 @@
                             <div class="form-group">
                                 <label for="state" class="control-label">订单状态</label>
                                 <select name="state" id="state" style="width: 120px" class="form-control">
-                                    <option value="">全部</option>
-                                    <option value="0">未付款</option>
-                                    <option value="1">已付款/未发货</option>
-                                    <option value="2">已发货</option>
-                                    <option value="3">已完成/未评论</option>
-                                    <option value="4">已完成/已评论/</option>
+                                    <option value="-1">全部</option>
+                                    <option value="1">未付款</option>
+                                    <option value="2">已付款/未发货</option>
+                                    <option value="3">已发货</option>
+                                    <option value="4">已完成/未评论</option>
+                                    <%--                                    <option value="5">已完成/已评论</option>--%>
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary" id="orderSearch">
                                 <span class="glyphicon glyphicon-search"></span> 搜索
                             </button>
                         </div>
 
                         <div class="col-md-4 text-center">
-                            <a href="" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-remove-sign"></span> 批量删除</a>
+                            <button type="button" class="btn btn-danger" onclick="o_deleteAll()">
+                                <span class="glyphicon glyphicon-remove-sign"></span> 批量删除
+                            </button>
                             <a href="" class="btn btn-success">
                                 <span class="glyphicon glyphicon-upload"></span> 上传</a>
                             <a href="" class="btn btn-info">
@@ -295,7 +296,7 @@
                         <tr style="font-weight: bold;background:#666;color: #fff98a">
                             <td>
                                 <input type="checkbox" id="oall">
-                                <label for="pall">全选</label>
+                                <label for="oall">全选</label>
                             </td>
                             <td>订单号</td>
                             <td>商品名称</td>
@@ -308,38 +309,16 @@
                             <td>订单状态</td>
                             <td>其他操作</td>
                         </tr>
-<%--                        <tr>--%>
-<%--                            <td><input type='checkbox' name='orders' value=''></td>--%>
-<%--                            <td>202107150034</td>--%>
-<%--                            <td>蜗牛Plus</td>--%>
-<%--                            <td>--%>
-<%--                                <img src='images/p1.webp' width='60px' alt=''>--%>
-<%--                            </td>--%>
-<%--                            <td>2000元</td>--%>
-<%--                            <td>10</td>--%>
-<%--                            <td>20000元</td>--%>
-<%--                            <td>2021/07/15 00:00:00</td>--%>
-<%--                            <td>2021/07/16 09:20:00</td>--%>
-<%--                            <td>已完成</td>--%>
-<%--                            <td><a href='#' class='btn btn-danger'><span--%>
-<%--                                    class='glyphicon glyphicon-remove'></span>删除</a></td>--%>
-<%--                        </tr>--%>
+
                         <tbody id="ori_content">
 
                         </tbody>
                     </table>
                 </div>
                 <!--订单分页展示-->
-                <div class="row">
-                    <ul class="pager">
-                        <li><a href="#">上一页</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">下一页</a></li>
+                <div class="row text-center">
+                    <ul class="pagination" id="oriPageNav">
+
                     </ul>
                 </div>
             </div>
@@ -603,7 +582,7 @@
                     <div class="form-group">
                         <label for="add_pinfo" class="col-sm-3 control-label">商品信息</label>
                         <div class="col-sm-8">
-                            <input type="hidden" class="form-control" name="add_pinfo" id="add_pinfo" >
+                            <input type="hidden" class="form-control" name="add_pinfo" id="add_pinfo">
                             <textarea class="form-control" rows="3" id="add_pinfo_area" placeholder="商品描述信息"></textarea>
                         </div>
                     </div>
@@ -626,13 +605,15 @@
                     <div class="form-group">
                         <label for="add_stock" class="col-sm-3 control-label">库存</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" name="add_stock" id="add_stock" min="0" max="100" step="1">
+                            <input type="number" class="form-control" name="add_stock" id="add_stock" min="0" max="100"
+                                   step="1">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="add_sale" class="col-sm-3 control-label">销量</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" name="add_sale" id="add_sale" min="0" max="100" step="1">
+                            <input type="number" class="form-control" name="add_sale" id="add_sale" min="0" max="100"
+                                   step="1">
                         </div>
                     </div>
                     <div class="form-group">
@@ -681,23 +662,26 @@
                 <form class="form-horizontal" id="pro_editForm">
                     <div class="form-group">
                         <input type="hidden" name="m" value="edit">
-                        <input type="hidden" name="pid" id="pid" >
+                        <input type="hidden" name="pid" id="pid">
                         <label for="e_add_pname" class="col-sm-3 control-label">商品名称</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="e_add_pname" id="e_add_pname" placeholder="商品名字">
+                            <input type="text" class="form-control" name="e_add_pname" id="e_add_pname"
+                                   placeholder="商品名字">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="e_add_pinfo" class="col-sm-3 control-label">商品信息</label>
                         <div class="col-sm-8">
-                            <input type="hidden" class="form-control" name="e_add_pinfo" id="e_add_pinfo" >
-                            <textarea class="form-control" rows="3" id="e_add_pinfo_area" placeholder="商品描述信息"></textarea>
+                            <input type="hidden" class="form-control" name="e_add_pinfo" id="e_add_pinfo">
+                            <textarea class="form-control" rows="3" id="e_add_pinfo_area"
+                                      placeholder="商品描述信息"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="e_add_price" class="col-sm-3 control-label">商品价格</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="e_add_price" id="e_add_price" placeholder="价格">
+                            <input type="text" class="form-control" name="e_add_price" id="e_add_price"
+                                   placeholder="价格">
                         </div>
                     </div>
 
@@ -713,13 +697,15 @@
                     <div class="form-group">
                         <label for="e_add_stock" class="col-sm-3 control-label">库存</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" name="e_add_stock" id="e_add_stock" min="0" max="100" step="1">
+                            <input type="number" class="form-control" name="e_add_stock" id="e_add_stock" min="0"
+                                   max="100" step="1">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="e_add_sale" class="col-sm-3 control-label">销量</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" name="e_add_sale" id="e_add_sale" min="0" max="100" step="1">
+                            <input type="number" class="form-control" name="e_add_sale" id="e_add_sale" min="0"
+                                   max="100" step="1">
                         </div>
                     </div>
                     <div class="form-group">

@@ -32,8 +32,10 @@
             <ul class="nav nav-stacked navbar-default aside-tab" role="tablist">
                 <li role="presentation" class="active"><a href="#person" data-toggle="tab">个人资料</a></li>
                 <li role="presentation"><a href="#address" data-toggle="tab" id="address-btn">收货地址</a></li>
-                <li role="presentation"><a href="#order" data-toggle="tab">订单管理</a></li>
+                <li role="presentation"><a href="#order" data-toggle="tab" id="ori-btn">订单管理</a></li>
             </ul>
+            <input type="hidden" id="uid" value="${sesUser.id}">
+
         </div>
 
         <!-- 导航面板 -->
@@ -134,27 +136,17 @@
                                         <td>订单状态</td>
                                         <td colspan="2">操作</td>
                                     </tr>
-                                    <tr>
-                                        <td>202010210434</td>
-                                        <td>
-                                            <img src="/WoniuShop/images/p1.webp" width="60px" height="60px" alt="">
-                                        </td>
-                                        <td>1000元</td>
-                                        <td>4</td>
-                                        <td>4000元</td>
-                                        <td>2021年07月25日 00:00:00</td>
-                                        <td>2021年07月28日 09:00:00</td>
-                                        <td>确认收货</td>
-                                        <td>
-                                            <button class="btn btn-info">修改</button>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger">删除</button>
-                                        </td>
-                                    </tr>
+                                    <tbody id="ori_content">
+
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div class="row text-center">
+                        <ul class="pagination" id="oriPageNav">
+
+                        </ul>
                     </div>
                 </div>
             </div>

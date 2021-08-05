@@ -99,25 +99,26 @@ public class UserServlet extends BaseServlet {
 			currentUserPage = Integer.parseInt(currentUserPageStr);
 		}
 		//获取模糊查询关键字
-		String keyword = req.getParameter("keyword");
-		String userIdKeyword = req.getParameter("uid");
-		String usernameKeyword = req.getParameter("uname");
-		String userPhoneKeyword = req.getParameter("uphone");
-		if (keyword == null) {
-			if (userIdKeyword == null && usernameKeyword == null && userPhoneKeyword == null) {
-				keyword = "";
-			} else if ("".equals(userIdKeyword) && "".equals(usernameKeyword) && "".equals(userPhoneKeyword)) {
-				keyword = "";
-			} else if (!"".equals(userIdKeyword)) {
-				keyword = userIdKeyword;
-			} else {
-				keyword = "".equals(usernameKeyword) ? userPhoneKeyword : usernameKeyword;
-			}
+
+		Integer id=null;
+		String idStr = req.getParameter("uid");
+		if (!StringUtil.isEmpty(idStr)) {
+			id=Integer.parseInt(idStr);
+		}
+		String username = req.getParameter("uname");
+		if (username == null) {
+			username="";
+		}
+		String mobile = req.getParameter("uphone");
+		if (mobile == null) {
+			mobile="";
 		}
 
-		PageInfo<User> info = usi.findOnePage(currentUserPage, keyword);
+		PageInfo<User> info = usi.findOnePage(currentUserPage, id,username,mobile);
 		req.setAttribute("info", info);
-		req.setAttribute("keyword", keyword);
+		req.setAttribute("kw_id", id);
+		req.setAttribute("kw_un", username);
+		req.setAttribute("kw_mo", mobile);
 
 		return "forward:/page/admin/backstage.jsp";
 	}

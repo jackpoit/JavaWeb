@@ -9,6 +9,7 @@ import com.woniuxy.mapper.OrderMapper;
 import com.woniuxy.mapper.ProductMapper;
 import com.woniuxy.service.OrderService;
 import com.woniuxy.util.DBUtil;
+import org.apache.ibatis.session.SqlSession;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -154,8 +155,9 @@ public class OrderServiceImpl implements OrderService {
 		return false;
 	}
 
+
 	@Override
-	public OrderPageModal getOnePageByKeyword(int currentPage, int pageSize, String ono, Integer status, String pname) {
+	public OrderPageModal getOnePageBySome(int currentPage, int pageSize, String ono, Integer status, String pname, Integer uid) {
 		OrderMapper orderMapper = DBUtil.getMapper(OrderMapper.class);
 		ProductMapper productMapper = DBUtil.getMapper(ProductMapper.class);
 		List<Product> products = productMapper.findByKeyword(pname);
@@ -167,7 +169,7 @@ public class OrderServiceImpl implements OrderService {
 			ids[i] = products.get(i).getId();
 		}
 		PageHelper.startPage(currentPage, pageSize);
-		List<Order> list = orderMapper.findBySome(ono, status, ids);
+		List<Order> list = orderMapper.findBySome(ono, status, ids,uid);
 		PageInfo<Order> pageInfo = new PageInfo<>(list);
 		OrderPageModal orderPageModal = new OrderPageModal();
 		orderPageModal.setOno(ono);
@@ -182,6 +184,8 @@ public class OrderServiceImpl implements OrderService {
 			map.put("order", order);
 			product.setId(order.getPid());
 			List<Product> pros = productMapper.findByCondition(product);
+			SqlSession sqlSession = DBUtil.openSqlSession(true);
+			sqlSession.clearCache();
 			Product product1 = pros.get(0);
 			map.put("product", product1);
 			res.add(map);

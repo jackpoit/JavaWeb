@@ -50,7 +50,7 @@ public interface UserService {
 	 * @param keyword 关键词
 	 * @return 包含用户集合和页面信息的分页对象
 	 */
-	PageInfo<User> findOnePage(int currentPage,String keyword);
+	PageInfo<User> findOnePage(int currentPage,Integer id,String username,String mobile);
 
 	/**
 	 * 根据id查用户

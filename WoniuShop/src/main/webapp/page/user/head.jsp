@@ -53,7 +53,7 @@
                     </button>
                     <button type="button" id="nav_order" class="btn btn-success">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                        订单提交
+                        订单中心
                     </button>
                     <button type="button" class="btn btn-danger" id="nav_exist">
                         <span class="glyphicon glyphicon-log-in"></span>

@@ -74,13 +74,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PageInfo<User> findOnePage(int currentPage, String keyword) {
-		if (currentPage < 0 || keyword == null) {
+	public PageInfo<User> findOnePage(int currentPage,Integer id,String username,String mobile) {
+		if (currentPage < 0) {
 			return null;
 		}
 		UserMapper mapper = DBUtil.getMapper(UserMapper.class);
 		PageHelper.startPage(currentPage, 5);
-		List<User> list = mapper.findByKeyword(keyword);
+		List<User> list = mapper.findBySome(id,username,mobile);
 		PageInfo<User> info = new PageInfo<>(list);
 		DBUtil.close();
 		return info;

@@ -417,9 +417,6 @@ $(function () {
 // 往上是用户
 
 
-
-
-
 //商品
 //展示商品
 let totalPage = 0;
@@ -457,7 +454,7 @@ function currentPage(num, kw, fp, tp) {
                     status = "下架";
                 }
                 trs += " <tr>\n" +
-                    "        <td><input type='checkbox' name='products' value='"+pro.id+"'></td>\n" +
+                    "        <td><input type='checkbox' name='products' value='" + pro.id + "'></td>\n" +
                     "        <td>" + pro.id + "</td>\n" +
                     "        <td>" + pro.pname + "</td>\n" +
                     "        <td><img src='" + pro.image + "' width='60px' alt=''>\n</td>\n" +
@@ -466,12 +463,12 @@ function currentPage(num, kw, fp, tp) {
                     "     <td>" + pro.sale + "</td>\n" +
                     "     <td>" + type + "</td>\n" +
                     "     <td>" + status + "</td>\n" +
-                    "     <td><button class='btn btn-danger' onclick='deletePros("+pro.id+")'>" +
+                    "     <td><button class='btn btn-danger' onclick='deletePros(" + pro.id + ")'>" +
                     "         <span class='glyphicon glyphicon-remove'></span>删除</button></td>" +
                     "    <td><button class='btn btn-primary' onclick='showeEdit(this)'><span" +
                     "             class='glyphicon glyphicon-pencil'></span>修改</button></td>" +
-                    "<td style='display: none'>"+pro.pinfo+"</td>"
-                    " </tr>"
+                    "<td style='display: none'>" + pro.pinfo + "</td>"
+                " </tr>"
             }
             $('#pro_content').html(trs);
             let lis = "<li><a href='javascript:;' onclick='prePage(" + info.pageNum + ")'>上一页</a></li>";
@@ -515,13 +512,14 @@ function deleteAjax(ids) {
         success: function (text) {
             if ("Y" == text) {
                 alert("删除成功")
-                currentPage(1, keyword,fromPrice,toPrice);
+                currentPage(1, keyword, fromPrice, toPrice);
             } else if ("N" == text) {
                 alert("删除失败")
             }
         }
     })
 }
+
 function deletePros(id) {
     let flag = confirm("您确认要删除" + id + "号商品吗?");
     if (flag) {
@@ -535,12 +533,12 @@ function deleteAll() {
         alert("没有选择的商品")
         return;
     }
-    let ids=[];
+    let ids = [];
     let idStr = "";
     for (let i = 0; i < $ids.length; i++) {
-        ids[i]=$ids.eq(i).val();
+        ids[i] = $ids.eq(i).val();
         idStr += ids[i];
-        if (i != $ids.length-1) {
+        if (i != $ids.length - 1) {
             idStr += ",";
         }
     }
@@ -687,7 +685,7 @@ $(function () {
             success: function (text) {
                 if ("Y" == text) {
                     alert("添加成功")
-                    currentPage(1, keyword,fromPrice,toPrice);
+                    currentPage(1, keyword, fromPrice, toPrice);
                 } else if ("N" == text) {
                     alert("添加失败")
                 }
@@ -697,18 +695,18 @@ $(function () {
         })
     })
 
-    
+
 });
 
 
 //修改
-function showeEdit(obj){
+function showeEdit(obj) {
     $('#e_add_showImg').hide(); // 让图片预览隐藏
     let tds = $(obj).parent().parent().children();
-    let id=tds.eq(1).text();
+    let id = tds.eq(1).text();
     let name = tds.eq(2).text();
     let priceStr = tds.eq(4).text();
-    let price=priceStr.substr(0,priceStr.indexOf('元'))
+    let price = priceStr.substr(0, priceStr.indexOf('元'))
     let stock = tds.eq(5).text();
     let sale = tds.eq(6).text();
     let type = tds.eq(7).text();
@@ -724,19 +722,19 @@ function showeEdit(obj){
     $('#e_add_sale').val(sale);
     if (type == '刀') {
         $("#e_add_ptype>option[value='0']").prop("selected", true);
-    }else if (type == '枪') {
+    } else if (type == '枪') {
         $("#e_add_ptype option[value='1']").prop("selected", true)
-    }else if (type == "手套") {
+    } else if (type == "手套") {
         $("#e_add_ptype option[value='2']").prop("selected", true)
-    }else if (type == "杂项") {
+    } else if (type == "杂项") {
         $("#e_add_ptype option[value='3']").prop("selected", true)
-    }else if (type == "印花") {
+    } else if (type == "印花") {
         $("#e_add_ptype option[value='4']").prop("selected", true)
     }
 
     if (status == '上架') {
         $("#e_add_status>option[value='0']").prop("selected", true);
-    }else if (status == '下架') {
+    } else if (status == '下架') {
         $("#e_add_status option[value='1']").prop("selected", true)
     }
 
@@ -801,7 +799,6 @@ $(function () {
             $('#e_add_sale').val("");
         }
     })
-
     // $('#e_add_pinfo_area').blur(function () {
     //     let pInfo = $(this).val();
     //     if (pInfo == '') {
@@ -812,7 +809,7 @@ $(function () {
 
 
     $('#e_add_proBtn').click(function () {
-        if ( !imgFlag) {
+        if (!imgFlag) {
             alert("请添加商品图片")
             return;
         }
@@ -827,7 +824,7 @@ $(function () {
             success: function (text) {
                 if ("Y" == text) {
                     alert("修改成功")
-                    currentPage(1, keyword,fromPrice,toPrice);
+                    currentPage(1, keyword, fromPrice, toPrice);
                 } else if ("N" == text) {
                     alert("修改失败")
                 }
@@ -839,9 +836,13 @@ $(function () {
 
 //向上是商品
 
-//商品
-//展示商品
+
+
+//订单
 let or_totalPage = 0;
+let del_ono = '-1';
+let del_status = '-1';
+let del_pname = '-1';
 
 function or_currentPage(num, ono, status, pname) {
 
@@ -851,150 +852,163 @@ function or_currentPage(num, ono, status, pname) {
         data: {m: "showByKeyword", currentPage: num, ono: ono, status: status, pname: pname},
         dataType: "json",
         success: function (info) {
+            let pname = '-1';
+            if ('' != info.pname) {
+                pname = info.pname;
+            }
+            let ono = '-1';
+            if ('' != info.ono) {
+                ono = info.ono;
+            }
+            let status = "-1";
+            if (info.hasOwnProperty("status")) {
+                status = info.status
+            }
+
             or_totalPage = info.pages;
+            del_ono = ono;
+            del_status = status;
+            del_pname = pname;
             let trs = "";
             for (let map of info.list) {
-                let endStr="暂无";
-                if (map.order.endTime!='undefined'){
-                    alert(map.order.endTime)
-                    endStr=map.order.endTime;
+                let endStr = "暂无";
+                if (map.order.hasOwnProperty("endTime")) {
+                    endStr = map.order.endTime;
                 }
-                let status='未付款';
-                let sd=map.order.status
-                if (sd=='2'){
-                    status='已付款';
-                }else if (sd='3'){
-                    status='已付款';
-                }else if (sd=='4'){
-                    status='已付款';
+                let statusStr = '未付款';
+                let sd = map.order.status
+                if (sd == '2') {
+                    statusStr = '已付款';
+                } else if (sd == '3') {
+                    statusStr = '已发货';
+                } else if (sd == '4') {
+                    statusStr = '已完成';
                 }
-
-
                 trs += "<tr>\n" +
-                    "                            <td><input type='checkbox' name='orders' value=''></td>\n" +
-                    "                            <td>"+map.order.ono+"</td>\n" +
-                    "                            <td>"+map.product.pname+"</td>\n" +
+                    "                            <td><input type='checkbox' name='orders' value='" + map.order.id + "'></td>\n" +
+                    "                            <td>" + map.order.ono + "</td>\n" +
+                    "                            <td>" + map.product.pname + "</td>\n" +
                     "                            <td>\n" +
-                    "                                <img src='"+map.product.image+"' width='60px' alt=''>\n" +
+                    "                                <img src='" + map.product.image + "' width='60px' alt=''>\n" +
                     "                            </td>\n" +
-                    "                            <td>"+map.product.price+"元</td>\n" +
-                    "                            <td>"+map.order.num+"</td>\n" +
-                    "                            <td>"+(map.order.num*map.product.price)+"元</td>\n" +
-                    "                            <td>"+map.order.startTime+"</td>\n" +
-                    "                            <td>"+endStr+"</td>\n" +
-                    "                            <td>"+status+"</td>\n" +
-                    "                            <td><a href='#' class='btn btn-danger'><span\n" +
-                    "                                    class='glyphicon glyphicon-remove'></span>删除</a></td>\n" +
+                    "                            <td>" + map.product.price + "元</td>\n" +
+                    "                            <td>" + map.order.num + "</td>\n" +
+                    "                            <td>" + (map.order.num * map.product.price) + "元</td>\n" +
+                    "                            <td>" + map.order.startTime + "</td>\n" +
+                    "                            <td>" + endStr + "</td>\n" +
+                    "                            <td>" + statusStr + "</td>\n" +
+                    "                            <td><button type='button' class='btn btn-danger' onclick='o_deletePros(" + map.order.id + ")'><span\n" +
+                    "                                    class='glyphicon glyphicon-remove'></span>删除</button></td>\n" +
                     "                        </tr>"
             }
             $('#ori_content').html(trs);
-            // let lis = "<li><a href='javascript:;' onclick='prePage(" + info.pageNum + ")'>上一页</a></li>";
-            // for (let i = 1; i <= info.pages; i++) {
-            //     if (i == info.pageNum) {
-            //         lis += "<li class='active'><a href='javascript:;'>" + i + "</a></li>"
-            //     } else {
-            //         lis += "<li><a href='javascript:;' onclick='or_currentPage(" + i + "," + keyword + "," + fromPrice + "," + toPrice + ")'>" + i + "</a></li>"
-            //     }
-            // }
-            // lis += "<li><a href='javascript:;' onclick='nextPage(" + info.pageNum + ")'>下一页</a></li>";
-            // $('#proPageNav').html(lis);
-            // checkBoxClick();
+            let lis = "<li><a href='javascript:;' onclick='o_prePage(" + info.pageNum + "," + ono + "," + status + "," + pname + ")'>上一页</a></li>";
+            for (let i = 1; i <= info.pages; i++) {
+                if (i == info.pageNum) {
+                    lis += "<li class='active'><a href='javascript:;'>" + i + "</a></li>"
+                } else {
+                    lis += "<li><a href='javascript:;' onclick='or_currentPage(" + i + "," + ono + "," + status + "," + pname + ")'>" + i + "</a></li>"
+                }
+            }
+            lis += "<li><a href='javascript:;' onclick='o_nextPage(" + info.pageNum + "," + ono + "," + status + "," + pname + ")'>下一页</a></li>";
+            $('#oriPageNav').html(lis);
+            or_checkBoxClick();
         }
     });
 }
-//
-// function checkBoxClick() {
-//     let $products = $('input[name="products"]');
-//     let total = $('input[name="products"]').length;
-//
-//     //全选全消
-//     $('#pall').click(function () {
-//         let flag = this.checked;
-//         $products.prop("checked", flag);
-//     });
-//     $products.click(function () {
-//         let count = $('input[name="products"]').filter(":checked").length;
-//         $('#pall').prop("checked", count === total);
-//     });
-// }
-//
-// //删除
-// function deleteAjax(ids) {
-//     $.ajax({
-//         url: "product",
-//         type: "post",
-//         traditional: "true",//数组选项
-//         data: {m: "deleteByIds", ids: ids},
-//         dataType: "text",
-//         success: function (text) {
-//             if ("Y" == text) {
-//                 alert("删除成功")
-//                 or_currentPage(1, keyword,fromPrice,toPrice);
-//             } else if ("N" == text) {
-//                 alert("删除失败")
-//             }
-//         }
-//     })
-// }
-// function deletePros(id) {
-//     let flag = confirm("您确认要删除" + id + "号商品吗?");
-//     if (flag) {
-//         deleteAjax(id);
-//     }
-// }
-//
-// function deleteAll() {
-//     let $ids = $('input[name="products"]').filter(":checked")
-//     if ($ids.length === 0) {
-//         alert("没有选择的商品")
-//         return;
-//     }
-//     let ids=[];
-//     let idStr = "";
-//     for (let i = 0; i < $ids.length; i++) {
-//         ids[i]=$ids.eq(i).val();
-//         idStr += ids[i];
-//         if (i != $ids.length-1) {
-//             idStr += ",";
-//         }
-//     }
-//     let flag = confirm("您确认要删除" + idStr + "号商品吗?");
-//     if (flag) {
-//         deleteAjax(ids);
-//     }
-// }
-//
-// //ajax查询上一页
-// function prePage(num) {
-//     if (num == 1) {
-//         or_currentPage(or_totalPage, keyword, fromPrice, toPrice)
-//     } else {
-//         or_currentPage(num - 1, keyword, fromPrice, toPrice)
-//     }
-// }
-//
-// //ajax查询下一页
-// function nextPage(num) {
-//     if (num == or_totalPage) {
-//         or_currentPage(1, keyword, fromPrice, toPrice)
-//     } else {
-//         or_currentPage(num + 1, keyword, fromPrice, toPrice)
-//     }
-// }
+
+function or_checkBoxClick() {
+    let $products = $('input[name="orders"]');
+    let total = $('input[name="orders"]').length;
+
+    //全选全消
+    $('#oall').click(function () {
+        let flag = this.checked;
+        $products.prop("checked", flag);
+    });
+    $products.click(function () {
+        let count = $('input[name="orders"]').filter(":checked").length;
+        $('#oall').prop("checked", count === total);
+    });
+}
+
+//删除
+function o_deleteAjax(ids) {
+    $.ajax({
+        url: "order",
+        type: "post",
+        traditional: "true",//数组选项
+        data: {m: "deleteByIds", ids: ids},
+        dataType: "text",
+        success: function (text) {
+            if ("Y" == text) {
+                alert("删除成功")
+                or_currentPage(1, del_ono, del_status, del_pname);
+            } else if ("N" == text) {
+                alert("删除失败")
+            }
+        }
+    })
+}
+
+function o_deletePros(id) {
+    let flag = confirm("您确认要删除" + id + "号商品吗?");
+    if (flag) {
+        o_deleteAjax(id);
+    }
+}
+
+function o_deleteAll() {
+    let $ids = $('input[name="orders"]').filter(":checked")
+    if ($ids.length === 0) {
+        alert("没有选择的订单")
+        return;
+    }
+    let ids = [];
+    let idStr = "";
+    for (let i = 0; i < $ids.length; i++) {
+        ids[i] = $ids.eq(i).val();
+        idStr += ids[i];
+        if (i != $ids.length - 1) {
+            idStr += ",";
+        }
+    }
+    let flag = confirm("您确认要删除" + idStr + "号订单吗?");
+    if (flag) {
+        o_deleteAjax(ids);
+    }
+}
+
+//ajax查询上一页
+function o_prePage(num, ono, status, pname) {
+    if (num == 1) {
+        or_currentPage(or_totalPage, ono, status, pname)
+    } else {
+        or_currentPage(num - 1, ono, status, pname)
+    }
+}
+
+//ajax查询下一页
+function o_nextPage(num, ono, status, pname) {
+    if (num == or_totalPage) {
+        or_currentPage(1, ono, status, pname)
+    } else {
+        or_currentPage(num + 1, ono, status, pname)
+    }
+}
 
 //添加
 $(function () {
 
-    // //搜索按钮
-    // $('#pro_search').click(function () {
-    //     let kw = $('#pname').val()
-    //     let fp = $('#start').val()
-    //     let tp = $('#end').val()
-    //     keyword = kw == '' ? -1 : kw
-    //     fromPrice = fp == '' ? -1 : fp
-    //     toPrice = tp == '' ? -1 : tp
-    //     or_currentPage(1, keyword, fromPrice, toPrice);
-    // })
+    //搜索按钮
+    $('#orderSearch').click(function () {
+        let oid = $('#oid').val()
+        let opname = $('#opname').val()
+        let status = $('#state option:selected').val()
+        ono = oid == '' ? "-1" : oid
+        pname = opname == '' ? "-1" : opname
+        or_currentPage(1, ono, status, pname);
+    })
 
     //标签页按钮
     $('#ori-btn').click(function (e) {
@@ -1002,17 +1016,8 @@ $(function () {
         $(this).tab('show')
         or_currentPage(1, '-1', '-1', '-1')
     })
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
 })
 
 

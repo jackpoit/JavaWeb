@@ -173,7 +173,7 @@
         </foreach>
     </delete>
 
-    <!--    6.List<Order> findBySome(@Param("ono")String ono,@Param("status") Integer status,@Param("pids") Integer[] pids);-->
+<!--    6.List<Order> findBySome(@Param("ono")String ono,@Param("status") Integer status,@Param("pids") Integer[] pids,@Param("uid") Integer uid);-->
     <select id="findBySome" resultMap="baseMap">
         SELECT
         <include refid="baseCol"/>
@@ -195,6 +195,9 @@
                         #{pid}
                     </if>
                 </foreach>
+            </if>
+            <if test='uid != null'>
+                AND uid = #{uid}
             </if>
         </where>
 

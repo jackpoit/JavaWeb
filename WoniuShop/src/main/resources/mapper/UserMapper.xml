@@ -237,4 +237,23 @@
     </select>
 
 
+<!--    6.List<User> findBySome(@Param("id")Integer id, @Param("username") String username,@Param("mobile") String mobile);-->
+    <select id="findBySome" resultMap="baseMap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM t_user
+        <where>
+            <if test='id != null'>
+                AND id LIKE CONCAT("%",#{id},"%")
+            </if>
+            <if test="username != null and username !=''">
+                AND username LIKE CONCAT("%",#{username},"%")
+            </if>
+            <if test="mobile != null and mobile !=''">
+                AND mobile LIKE CONCAT("%",#{mobile},"%")
+            </if>
+        </where>
+
+    </select>
+
 </mapper>

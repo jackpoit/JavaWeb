@@ -351,3 +351,122 @@ $(function () {
 
     })
 })
+
+
+
+//订单
+let or_totalPage = 0;
+
+function or_currentPage(num) {
+    let id=$('#uid').val();
+    $.ajax({
+        url: "order",
+        type: "post",
+        data: {m: "showByUid", currentPage: num,uid:id},
+        dataType: "json",
+        success: function (info) {
+
+            or_totalPage = info.pages;
+            let trs = "";
+            for (let map of info.list) {
+                let endStr = "暂无";
+                if (map.order.hasOwnProperty("endTime")) {
+                    endStr = map.order.endTime;
+                }
+                let statusStr = '未付款';
+                let sd = map.order.status
+                if (sd == '2') {
+                    statusStr = '已付款';
+                } else if (sd == '3') {
+                    statusStr = '已发货';
+                } else if (sd == '4') {
+                    statusStr = '已完成';
+                }
+                trs += "<tr>\n" +
+                    "                            <td>" + map.order.ono + "</td>\n" +
+                    "                            <td>\n" +
+                    "                                <img src='" + map.product.image + "' width='60px' alt=''>\n" +
+                    "                            </td>\n" +
+                    "                            <td>" + map.product.price + "元</td>\n" +
+                    "                            <td>" + map.order.num + "</td>\n" +
+                    "                            <td>" + (map.order.num * map.product.price) + "元</td>\n" +
+                    "                            <td>" + map.order.startTime + "</td>\n" +
+                    "                            <td>" + endStr + "</td>\n" +
+                    "                            <td>" + statusStr + "</td>\n" +
+                    "                            <td><button type='button' class='btn btn-info'>修改</button></td>"+
+                    "                            <td><button type='button' class='btn btn-danger' onclick='o_deletePros(" + map.order.id + ")'>删除</button></td>\n" +
+                    "                            </tr>"
+            }
+            $('#ori_content').html(trs);
+            let lis = "<li><a href='javascript:;' onclick='o_prePage(" + info.pageNum  + ")'>上一页</a></li>";
+            for (let i = 1; i <= info.pages; i++) {
+                if (i == info.pageNum) {
+                    lis += "<li class='active'><a href='javascript:;'>" + i + "</a></li>"
+                } else {
+                    lis += "<li><a href='javascript:;' onclick='or_currentPage(" + i + ")'>" + i + "</a></li>"
+                }
+            }
+            lis += "<li><a href='javascript:;' onclick='o_nextPage(" + info.pageNum  + ")'>下一页</a></li>";
+            $('#oriPageNav').html(lis);
+        }
+    });
+}
+
+//删除
+function o_deleteAjax(ids) {
+    $.ajax({
+        url: "order",
+        type: "post",
+        traditional: "true",//数组选项
+        data: {m: "deleteByIds", ids: ids},
+        dataType: "text",
+        success: function (text) {
+            if ("Y" == text) {
+                alert("删除成功")
+                or_currentPage(1);
+            } else if ("N" == text) {
+                alert("删除失败")
+            }
+        }
+    })
+}
+
+function o_deletePros(id) {
+    let flag = confirm("您确认要删除" + id + "号商品吗?");
+    if (flag) {
+        o_deleteAjax(id);
+    }
+}
+
+//ajax查询上一页
+function o_prePage(num) {
+    if (num == 1) {
+        or_currentPage(or_totalPage)
+    } else {
+        or_currentPage(num - 1)
+    }
+}
+
+//ajax查询下一页
+function o_nextPage(num) {
+    if (num == or_totalPage) {
+        or_currentPage(1)
+    } else {
+        or_currentPage(num + 1)
+    }
+}
+
+//添加
+$(function () {
+
+    //标签页按钮
+    $('#ori-btn').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+        or_currentPage(1)
+    })
+
+
+})
+
+

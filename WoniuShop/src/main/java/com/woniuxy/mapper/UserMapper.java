@@ -1,5 +1,6 @@
 package com.woniuxy.mapper;
 
+import com.woniuxy.entity.Order;
 import com.woniuxy.entity.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -46,6 +47,14 @@ public interface UserMapper {
 	 */
 	List<User> findByKeyword(String keyword);
 
+	/**
+	 * 根据一些关键词查询
+	 * @param id 用户编号
+	 * @param username 用户名
+	 * @param mobile 手机号
+	 * @return  用户集合
+	 */
+	List<User> findBySome(@Param("id")Integer id, @Param("username") String username,@Param("mobile") String mobile);
 
 }
 

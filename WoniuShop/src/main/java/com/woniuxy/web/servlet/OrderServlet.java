@@ -203,11 +203,11 @@ public class OrderServlet extends BaseServlet {
 
 	}
 
-	//根据关键词分页
+	//根据关键词分页 后台分页
 	public void showByKeyword(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
 		String ono = req.getParameter("ono");
-		if (ono == null||"-1".equals(ono))
+		if (ono == null || "-1".equals(ono))
 			ono = "";
 
 		String cp = req.getParameter("currentPage");
@@ -217,18 +217,40 @@ public class OrderServlet extends BaseServlet {
 
 		Integer status = null;
 		String st = req.getParameter("status");
-		if (!StringUtil.isEmpty(st)&&!"-1".equals(st))
+		if (!StringUtil.isEmpty(st) && !"-1".equals(st))
 			status = Integer.parseInt(st);
 
 		String pname = req.getParameter("pname");
-		if (pname == null||"-1".equals(pname) )
+		if (pname == null || "-1".equals(pname))
 			pname = "";
 
-		OrderPageModal info = osi.getOnePageByKeyword(currentPage, 5, ono, status, pname);
+		OrderPageModal info = osi.getOnePageBySome(currentPage, 5, ono, status, pname,null);
 
 		String s = JSON.toJSONString(info);
 		System.out.println(s);
 		resp.getWriter().write(s);
 	}
 
+	public void showByUid(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		String uidStr = req.getParameter("uid");
+		if (StringUtil.isEmpty(uidStr)){
+			return;
+		}
+		Integer uid=Integer.parseInt(uidStr);
+
+		String cp = req.getParameter("currentPage");
+		int currentPage = 1;
+		if (!StringUtil.isEmpty(cp))
+			currentPage = Integer.parseInt(cp);
+
+		OrderPageModal info = osi.getOnePageBySome(currentPage, 5, "", null, "",uid);
+
+		String s = JSON.toJSONString(info);
+		System.out.println(s);
+		resp.getWriter().write(s);
+
+
+
+
+	}
 }
