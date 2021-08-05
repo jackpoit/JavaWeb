@@ -19,7 +19,8 @@
 
     <!--编写一个标准的列-->
     <sql id="baseCol">
-        id,uid,ono,pid,detail,num,starttime,endtime,status
+        id
+        ,uid,ono,pid,detail,num,starttime,endtime,status
     </sql>
 
     <!--    1.int add(Order order);-->
@@ -171,6 +172,33 @@
             </if>
         </foreach>
     </delete>
+
+    <!--    6.List<Order> findBySome(@Param("ono")String ono,@Param("status") Integer status,@Param("pids") Integer[] pids);-->
+    <select id="findBySome" resultMap="baseMap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM t_order
+        <where>
+            <if test="ono != null and ono !=''">
+                AND ono LIKE CONCAT("%",#{ono},"%")
+            </if>
+            <if test='status != null'>
+                AND status = #{status}
+            </if>
+            <if test='status == null'>
+                AND status != 0
+            </if>
+            <if test='pids != null'>
+                AND pid in
+                <foreach collection="pids" item="pid" open="(" close=")" separator=",">
+                    <if test="pid!=null ">
+                        #{pid}
+                    </if>
+                </foreach>
+            </if>
+        </where>
+
+    </select>
 
 
 </mapper>

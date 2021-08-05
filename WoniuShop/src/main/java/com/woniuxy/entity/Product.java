@@ -28,7 +28,6 @@ public class Product {
 
 	private List<ProDetails> details;
 
-
 	public Product(String pName, String pInfo, BigDecimal price, Integer stock, Integer sale, String image) {
 		this.pname = pName;
 		this.pinfo = pInfo;

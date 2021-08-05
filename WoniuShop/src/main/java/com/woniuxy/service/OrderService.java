@@ -1,6 +1,7 @@
 package com.woniuxy.service;
 
 import com.woniuxy.entity.Order;
+import com.woniuxy.entity.OrderPageModal;
 
 import java.util.List;
 
@@ -52,4 +53,18 @@ public interface OrderService {
 	 * @return true成功
 	 */
 	boolean deleteCommitedOrders(int id);
+
+	/**
+	 * 更新购物车订单数量
+	 * @param order 订单对象
+	 * @return true成功
+	 */
+	boolean updateNum(Order order);
+
+	/**
+	 * 根据关键字查询页面
+	 * @param ono 关键字
+	 * @return 包含list的页面信息对象
+	 */
+	OrderPageModal getOnePageByKeyword(int currentPage,int pageSize,String ono,Integer status,String pname);
 }

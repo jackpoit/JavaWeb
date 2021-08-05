@@ -75,7 +75,7 @@
                             ¥<span>${map.product.price}</span>
                         </td>
                         <td class="num">
-                            <input type="number" min="1" max="1000" value="${map.order.num}" name="count">
+                            <input type="number" min="1" max="1000" value="${map.order.num}" name="count" id="num">
                         </td>
                         <td class="subtotal">
                             ¥<span>${(map.product.price)*(map.order.num)}</span>
@@ -95,8 +95,8 @@
                 <input type="checkbox" id="delAll">
                 <label for="delAll">全选</label>
                 <a href="javascript:;" onclick="deleteAllOrder()">删除选中的商品</a>
-                <a href="">移入关注</a>
-                <a href="">清理购物车</a>
+<%--                <a href="">移入关注</a>--%>
+<%--                <a href="">清理购物车</a>--%>
             </div>
             <div class="cal">
                 <span>已选择<span class="num" id="chooseNum">0</span>件商品</span>

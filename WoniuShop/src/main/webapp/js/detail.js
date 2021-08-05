@@ -81,7 +81,6 @@ function shopCartAjax() {
     let pid=$('#pid').val();
     let detail=$('#style .active').text()+","+$('#edition .active').text();
     let num=$('#num').val();
-    alert(detail)
     $.ajax({
         url: "order",
         type: "post",

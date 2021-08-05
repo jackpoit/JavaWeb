@@ -38,11 +38,29 @@ $(function () {
 
     //3. 当商品数量改变时需要更新小计
     $('input[name="count"]').change(function () {
-        let price = $(this).parent().prev().children().text();
-        let count = $(this).val();
-        let subTotal = price * count;
-        $(this).parent().next().children().text(subTotal); // 更新小计
-        calTotalPrice(); //更新总价
+        let uid=$('#uid').val();
+        let $num=$(this);
+        let num = $num.val();
+        let id=$(this).parent().parent().children().eq(0).children().eq(0).val();
+        $.ajax({
+            url: "order",
+            type: "post",
+            data: {m: 'updateNum', id: id,num:num},
+            dataType: "text",
+            success: function (text) {
+                if ('Y' == text) { //成功
+                    let price = $num.parent().prev().children().text();
+                    let count = $num.val();
+                    let subTotal = price * count;
+                    $num.parent().next().children().text(subTotal); // 更新小计
+                    calTotalPrice(); //更新总价
+                } else if ('N' == text) {
+                    alert("商品数量超过库存");
+                    location.href="order?m=showOrderPage&uid="+uid;
+                }
+            }
+        })
+
     });
 
 });
@@ -107,22 +125,39 @@ function updateTotal() {
 //    }
 // }
 
-function commitOrder() {
+function changeNum() {
     $.ajax({
         url: "order",
         type: "post",
-        data: {m: 'commitOrder', id: 1},
+        data: {m: 'updateNum', id: 1},
         dataType: "text",
         success: function (text) {
             if ('Y' == text) { //成功
-                alert('提交成功');
+
             } else if ('N' == text) {
-                alert('提交失败');
+
             }
         }
     })
 
 }
+
+// function commitOrder() {
+//     $.ajax({
+//         url: "order",
+//         type: "post",
+//         data: {m: 'commitOrder', id: 1},
+//         dataType: "text",
+//         success: function (text) {
+//             if ('Y' == text) { //成功
+//                 alert('提交成功');
+//             } else if ('N' == text) {
+//                 alert('提交失败');
+//             }
+//         }
+//     })
+//
+// }
 
 //提交
 function commitOrderAjax(ids) {

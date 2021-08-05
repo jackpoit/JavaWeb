@@ -1,16 +1,20 @@
 package com.woniuxy.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.woniuxy.entity.Order;
+import com.woniuxy.entity.OrderPageModal;
 import com.woniuxy.entity.Product;
 import com.woniuxy.mapper.OrderMapper;
 import com.woniuxy.mapper.ProductMapper;
 import com.woniuxy.service.OrderService;
 import com.woniuxy.util.DBUtil;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -45,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
 			Product product = new Product();
 			product.setId(order.getPid());
 			List<Product> products = productMapper.findByCondition(product);
-			if (products==null||products.get(0).getStock()<0)
+			if (products == null || products.get(0).getStock() < 0)
 				throw new SQLException();
 
 			Order commitOrder = new Order();
@@ -73,17 +77,17 @@ public class OrderServiceImpl implements OrderService {
 		OrderMapper mapper = DBUtil.getMapper(OrderMapper.class);
 		List<Order> list = mapper.findByCondition(order);
 		DBUtil.close();
-		return list.isEmpty()?null:list;
+		return list.isEmpty() ? null : list;
 	}
 
 	@Override
 	public boolean updateOrder(Order order) {
-		if (order==null)
+		if (order == null)
 			return false;
 		OrderMapper mapper = DBUtil.getMapper(OrderMapper.class);
 		int row = mapper.update(order);
 		DBUtil.close();
-		return row>0;
+		return row > 0;
 	}
 
 	@Override
@@ -100,8 +104,6 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public boolean deleteCommitedOrders(int id) {
 		OrderMapper orderMapper = DBUtil.getTransMapper(OrderMapper.class);
-
-
 		ProductMapper productMapper = DBUtil.getTransMapper(ProductMapper.class);
 		try {
 			Order order = orderMapper.findById(id);
@@ -123,5 +125,69 @@ public class OrderServiceImpl implements OrderService {
 			DBUtil.close();
 		}
 		return false;
+	}
+
+	@Override
+	public boolean updateNum(Order order) {
+		OrderMapper orderMapper = DBUtil.getTransMapper(OrderMapper.class);
+		ProductMapper productMapper = DBUtil.getTransMapper(ProductMapper.class);
+		try {
+
+			Product product = new Product();
+			product.setId(order.getPid());
+			List<Product> products = productMapper.findByCondition(product);
+			if (products == null || products.get(0).getStock() < order.getNum())
+				throw new SQLException();
+
+			int row = orderMapper.update(order);
+			if (row == 0) {
+				throw new SQLException();
+			}
+			DBUtil.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			DBUtil.rollback();
+		} finally {
+			DBUtil.close();
+		}
+		return false;
+	}
+
+	@Override
+	public OrderPageModal getOnePageByKeyword(int currentPage, int pageSize, String ono, Integer status, String pname) {
+		OrderMapper orderMapper = DBUtil.getMapper(OrderMapper.class);
+		ProductMapper productMapper = DBUtil.getMapper(ProductMapper.class);
+		List<Product> products = productMapper.findByKeyword(pname);
+		if (products == null) {
+			return null;
+		}
+		Integer[] ids = new Integer[products.size()];
+		for (int i = 0; i < ids.length; i++) {
+			ids[i] = products.get(i).getId();
+		}
+		PageHelper.startPage(currentPage, pageSize);
+		List<Order> list = orderMapper.findBySome(ono, status, ids);
+		PageInfo<Order> pageInfo = new PageInfo<>(list);
+		OrderPageModal orderPageModal = new OrderPageModal();
+		orderPageModal.setOno(ono);
+		orderPageModal.setPname(pname);
+		orderPageModal.setStatus(status);
+		orderPageModal.setPages(pageInfo.getPages());
+		orderPageModal.setPageNum(currentPage);
+		ArrayList<HashMap<String, Object>> res = new ArrayList<>();
+		Product product = new Product();
+		for (Order order : list) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("order", order);
+			product.setId(order.getPid());
+			List<Product> pros = productMapper.findByCondition(product);
+			Product product1 = pros.get(0);
+			map.put("product", product1);
+			res.add(map);
+		}
+		orderPageModal.setList(res);
+
+		return orderPageModal;
 	}
 }

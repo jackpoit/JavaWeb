@@ -1,7 +1,9 @@
 package com.woniuxy.web.servlet;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.util.StringUtil;
 import com.woniuxy.entity.Order;
+import com.woniuxy.entity.OrderPageModal;
 import com.woniuxy.entity.Product;
 import com.woniuxy.service.impl.OrderServiceImpl;
 import com.woniuxy.service.impl.ProductServiceImpl;
@@ -55,11 +57,11 @@ public class OrderServlet extends BaseServlet {
 			upOrder.setNum(oriOrder.getNum() + num);
 			flag = osi.updateOrder(upOrder);
 		}
-		String res="";
-		if (!flag){
-			res="N";
-		}else {
-			res=osi.getOrder(order).get(0).getId().toString();
+		String res = "";
+		if (!flag) {
+			res = "N";
+		} else {
+			res = osi.getOrder(order).get(0).getId().toString();
 		}
 		resp.getWriter().write(res);
 	}
@@ -185,38 +187,48 @@ public class OrderServlet extends BaseServlet {
 
 	}
 
-//	public void buyNow(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-//		boolean flag = false;
-//		String uid = req.getParameter("o_uid");
-//		if (StringUtil.isEmpty(uid)) {
-//			return;
-//		}
-//		Order order = new Order();
-//		order.setUid(Integer.parseInt(uid));
-//		order.setStatus(0);
-//		String pid = req.getParameter("o_pid");
-//		if (!StringUtil.isEmpty(pid)) {
-//			order.setPid(Integer.parseInt(pid));
-//		}
-//		order.setDetail(req.getParameter("o_detail"));
-//		String numStr = req.getParameter("o_num");
-//		if (StringUtil.isEmpty(numStr))
-//			return;
-//		int num = Integer.parseInt(numStr);
-//		List<Order> list = osi.getOrder(order);
-//		if (list == null) {
-//			order.setNum(num);
-//			Date now = new Date();
-//			order.setOno(sdf.format(now));
-//			flag = osi.addOrder(order);
-//		} else {
-//			Order oriOrder = list.get(0);
-//			Order upOrder = new Order();
-//			upOrder.setId(oriOrder.getId());
-//			upOrder.setNum(oriOrder.getNum()+num);
-//			flag = osi.updateOrder(upOrder);
-//		}
-//		resp.getWriter().write(flag ? "Y" : "N");
-//	}
+	public void updateNum(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		String idStr = req.getParameter("id");
+		if (StringUtil.isEmpty(idStr))
+			return;
+		Order order = new Order();
+		order.setId(Integer.parseInt(idStr));
+		String numStr = req.getParameter("num");
+		if (StringUtil.isEmpty(numStr))
+			return;
+		order.setNum(Integer.parseInt(numStr));
+
+		boolean flag = osi.updateNum(order);
+		resp.getWriter().write(flag ? "Y" : "N");
+
+	}
+
+	//根据关键词分页
+	public void showByKeyword(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+		String ono = req.getParameter("ono");
+		if (ono == null||"-1".equals(ono))
+			ono = "";
+
+		String cp = req.getParameter("currentPage");
+		int currentPage = 1;
+		if (!StringUtil.isEmpty(cp))
+			currentPage = Integer.parseInt(cp);
+
+		Integer status = null;
+		String st = req.getParameter("status");
+		if (!StringUtil.isEmpty(st)&&!"-1".equals(st))
+			status = Integer.parseInt(st);
+
+		String pname = req.getParameter("pname");
+		if (pname == null||"-1".equals(pname) )
+			pname = "";
+
+		OrderPageModal info = osi.getOnePageByKeyword(currentPage, 5, ono, status, pname);
+
+		String s = JSON.toJSONString(info);
+		System.out.println(s);
+		resp.getWriter().write(s);
+	}
 
 }

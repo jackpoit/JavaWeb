@@ -46,4 +46,15 @@ public interface OrderMapper {
 	 * @return 受影响行数
 	 */
 	int deleteByIds(@Param("ids") Integer... ids);
+
+	/**
+	 * 根据多个条件查询
+	 * @param ono 订单号 /null ''查所有名称的订单
+	 * @param status 订单状态 null查所有状态
+	 * @param pids 商品id集合  null查所有
+	 * @return 订单对象集合
+	 */
+	List<Order> findBySome(@Param("ono")String ono,@Param("status") Integer status,@Param("pids") Integer[] pids);
+
+
 }

@@ -41,7 +41,7 @@
         <ul class="nav nav-stacked navbar-default" style="height: 560px;padding: 50px 0px" role="tablist">
             <li role="presentation" class="active"><a href="#user" data-toggle="tab">用户管理</a></li>
             <li role="presentation"><a href="#product" data-toggle="tab" id="pro-btn">商品管理</a></li>
-            <li role="presentation"><a href="#order" data-toggle="tab">订单管理</a></li>
+            <li role="presentation"><a href="#order" data-toggle="tab" id="ori-btn">订单管理</a></li>
             <li role="presentation"><a href="#extend" data-toggle="tab">扩展功能</a></li>
         </ul>
     </div>
@@ -308,38 +308,25 @@
                             <td>订单状态</td>
                             <td>其他操作</td>
                         </tr>
-                        <tr>
-                            <td><input type="checkbox" name="orders" value=""></td>
-                            <td>202107150034</td>
-                            <td>蜗牛Plus</td>
-                            <td>
-                                <img src="images/p1.webp" width="60px" alt="">
-                            </td>
-                            <td>2000元</td>
-                            <td>10</td>
-                            <td>20000元</td>
-                            <td>2021/07/15 00:00:00</td>
-                            <td>2021/07/16 09:20:00</td>
-                            <td>已完成</td>
-                            <td><a href="#" class="btn btn-danger"><span
-                                    class="glyphicon glyphicon-remove"></span>删除</a></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="orders" value=""></td>
-                            <td>202107150023</td>
-                            <td>iphone</td>
-                            <td>
-                                <img src="images/p2.webp" width="60px" alt="">
-                            </td>
-                            <td>6000元</td>
-                            <td>2</td>
-                            <td>12000元</td>
-                            <td>2021/07/14 00:00:00</td>
-                            <td>暂无</td>
-                            <td>未收货</td>
-                            <td><a href="#" class="btn btn-danger"><span
-                                    class="glyphicon glyphicon-remove"></span>删除</a></td>
-                        </tr>
+<%--                        <tr>--%>
+<%--                            <td><input type='checkbox' name='orders' value=''></td>--%>
+<%--                            <td>202107150034</td>--%>
+<%--                            <td>蜗牛Plus</td>--%>
+<%--                            <td>--%>
+<%--                                <img src='images/p1.webp' width='60px' alt=''>--%>
+<%--                            </td>--%>
+<%--                            <td>2000元</td>--%>
+<%--                            <td>10</td>--%>
+<%--                            <td>20000元</td>--%>
+<%--                            <td>2021/07/15 00:00:00</td>--%>
+<%--                            <td>2021/07/16 09:20:00</td>--%>
+<%--                            <td>已完成</td>--%>
+<%--                            <td><a href='#' class='btn btn-danger'><span--%>
+<%--                                    class='glyphicon glyphicon-remove'></span>删除</a></td>--%>
+<%--                        </tr>--%>
+                        <tbody id="ori_content">
+
+                        </tbody>
                     </table>
                 </div>
                 <!--订单分页展示-->

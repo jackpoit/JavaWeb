@@ -88,7 +88,7 @@
                             ¥<span>${map.product.price}</span>
                         </td>
                         <td class="num">
-                            <input type="number" min="1" max="1000" value="${map.order.num}" name="count">
+                            <input type="number" min="1" max="1000" value="${map.order.num}" name="count" disabled>
                         </td>
                         <td class="subtotal">
                             ¥<span>${(map.product.price)*(map.order.num)}</span>
