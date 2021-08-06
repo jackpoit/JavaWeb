@@ -50,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
 			Product product = new Product();
 			product.setId(order.getPid());
 			List<Product> products = productMapper.findByCondition(product);
+			System.out.println(products);
 			if (products == null || products.get(0).getStock() < 0)
 				throw new SQLException();
 
@@ -201,5 +202,16 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> list = mapper.findByIds(ids);
 		DBUtil.close();
 		return list.isEmpty()?null:list;
+	}
+
+	@Override
+	public boolean confirmOrderByIds(Integer[] ids) {
+		if (ids==null){
+			return false;
+		}
+		OrderMapper mapper = DBUtil.getMapper(OrderMapper.class);
+		int row = mapper.confirmOrderByIds(ids);
+		DBUtil.close();
+		return row>0;
 	}
 }

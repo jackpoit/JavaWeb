@@ -69,6 +69,17 @@ public interface OrderService {
 	 */
 	OrderPageModal getOnePageBySome(int currentPage, int pageSize, String ono, Integer status, String pname, Integer uid);
 
-
+	/**
+	 * 根据id 查订单集合
+	 * @param ids 订单编号
+	 * @return 订单集合
+	 */
 	List<Order> findByIds(Integer[] ids);
+
+	/**
+	 * 更新订单对象
+	 * @param ids 订单编号集合
+	 * @return true成功
+	 */
+	boolean confirmOrderByIds(Integer[] ids);
 }

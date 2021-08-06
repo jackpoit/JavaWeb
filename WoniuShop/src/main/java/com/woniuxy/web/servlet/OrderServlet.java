@@ -24,6 +24,7 @@ import java.util.*;
 @WebServlet("/order")
 public class OrderServlet extends BaseServlet {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddmmss");
+	private SimpleDateFormat confirmSdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	private OrderServiceImpl osi = new OrderServiceImpl();
 	private ProductServiceImpl psi = new ProductServiceImpl();
 
@@ -259,8 +260,10 @@ public class OrderServlet extends BaseServlet {
 		}
 		Integer id=Integer.parseInt(idStr);
 		Order order = new Order();
+		Date now = new Date();
 		order.setId(id);
 		order.setStatus(4);
+		order.setEndTime(confirmSdf.format(now));
 		boolean flag = osi.updateOrder(order);
 		resp.getWriter().write(flag ? "Y" : "N");
 	}

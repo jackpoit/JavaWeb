@@ -129,11 +129,18 @@
                         库存（<span id="stock" style="color: red">${product.stock}</span>）件
                         销量（<span id="sale" style="color: red">${product.sale}</span>）件
                     </div>
-
-                    <div class="option">
-                        <div class="shopcart" id="addShopCart">加入购物车</div>
-                        <div class="buy" id="buyNow">立即购买</div>
-                    </div>
+                    <c:if test="${product.stock==0}">
+                        <div class="option">
+                            <div class="shopcart disabled" >无货</div>
+                            <div class="buy disabled" >敬请期待</div>
+                        </div>
+                    </c:if>
+                    <c:if test="${product.stock>0}">
+                        <div class="option">
+                            <div class="shopcart" id="addShopCart">加入购物车</div>
+                            <div class="buy" id="buyNow">立即购买</div>
+                        </div>
+                    </c:if>
                 </div>
             </c:if>
         </div>

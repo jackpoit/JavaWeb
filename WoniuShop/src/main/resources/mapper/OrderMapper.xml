@@ -200,7 +200,7 @@
                 AND uid = #{uid}
             </if>
         </where>
-
+        ORDER BY id DESC
     </select>
 
 <!--    7.List<Order> findByIds(@Param("ids") Integer[] ids);-->
@@ -216,5 +216,14 @@
         </foreach>
     </select>
 
-
+<!--    8.int confirmOrderByIds(@Param("ids")Integer[] ids);-->
+    <update id="confirmOrderByIds" >
+        UPDATE t_order SET status=2
+        WHERE id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            <if test="id!=null ">
+                #{id}
+            </if>
+        </foreach>
+    </update>
 </mapper>

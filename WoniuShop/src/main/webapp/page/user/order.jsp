@@ -65,6 +65,7 @@
                     <td width="90px" align="center">单价</td>
                     <td width="100px" align="center">数量</td>
                     <td width="120px" align="center">小计</td>
+                    <td width="120px" align="center">操作</td>
                 </tr>
 
 

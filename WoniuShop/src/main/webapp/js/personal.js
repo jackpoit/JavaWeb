@@ -368,6 +368,8 @@ function or_currentPage(num) {
             or_totalPage = info.pages;
             let trs = "";
             for (let map of info.list) {
+                let pname="'"+map.product.pname+"'"
+
                 let endStr = "暂无";
                 if (map.order.hasOwnProperty("endTime")) {
                     endStr = map.order.endTime;
@@ -392,7 +394,7 @@ function or_currentPage(num) {
                     "                            <td>" + map.order.startTime + "</td>\n" +
                     "                            <td>" + endStr + "</td>\n" +
                     "                            <td>" + statusStr + "</td>\n" +
-                    "                            <td><button type='button' class='btn btn-info' onclick='editOrder(" + map.order.status + "," + map.order.id + ")'>修改</button></td>" +
+                    "                            <td><button type='button' class='btn btn-info' onclick=\"editOrder(" + map.order.status + "," + map.order.id +","+(map.order.num * map.product.price)+","+info.pageNum+","+pname+")\">修改</button></td>" +
                     "                            <td><button type='button' class='btn btn-danger' onclick='o_deletePros(" + map.order.status + "," + map.order.id + ")'>删除</button></td>\n" +
                     "                            </tr>"
             }
@@ -412,12 +414,12 @@ function or_currentPage(num) {
 }
 
 //修改
-function editOrder(status, id) {
+function editOrder(status, id, money,currentPage,pname) {
     let uid = $("#uid").val()
     if ('1' == status) {
         let flag = confirm("确定要跳转支付页面吗?");
         if (flag) {
-            location.href = "order?m=showCommitedOrder&uid=" + uid;
+            submitOrder(id, money,pname);
         } else {
             return;
         }
@@ -426,8 +428,7 @@ function editOrder(status, id) {
     } else if ('3' == status) {
         let flag = confirm("要确定收货吗");
         if (flag) {
-            location.href = "order?m=confirmOrder&id=" + id;
-
+            confirmOrder(id,currentPage)
         } else {
             return;
         }
@@ -441,14 +442,20 @@ function editOrder(status, id) {
     }
 }
 
-function confirmOrder(id) {
+function confirmOrder(id,currentPage) {
 
     $.ajax({
         url: "order",
         type: "post",
-        data: {m: "confirmOrder", currentPage: num, uid: id},
-        dataType: "json",
-        success: function (info) {
+        data: {m: "confirmOrder", currentPage: currentPage, id: id},
+        dataType: "text",
+        success: function (text) {
+            if ("Y" == text) {
+                alert("确认收货成功")
+                or_currentPage(1);
+            } else if ("N" == text) {
+                alert("确认收货失败")
+            }
         }
     })
 
@@ -473,7 +480,21 @@ function o_deleteAjax(ids) {
         }
     })
 }
-
+//删除
+function deleteOrderAjax(ids) {
+    let uid = $('#uid').val();
+    $.ajax({
+        url: "order",
+        type: "post",
+        traditional: "true",//数组选项
+        data: {m: "deleteCommitedOrders", ids: ids},
+        dataType: "text",
+        success: function (text) {
+            alert(text);
+            location.href = "order?m=showCommitedOrder&uid=" + uid;
+        }
+    })
+}
 function o_deletePros(status, id) {
     if ("2" == status) {
         alert("已付款 无法删除")
@@ -483,10 +504,13 @@ function o_deletePros(status, id) {
         return;
     }
 
-
     let flag = confirm("您确认要删除" + id + "号商品吗?");
     if (flag) {
-        o_deleteAjax(id);
+        if ("1" == status) {
+            deleteOrderAjax(id)
+        } else if ('4' == status) {
+            o_deleteAjax(id);
+        }
     }
 }
 
@@ -521,4 +545,12 @@ $(function () {
 
 })
 
+function submitOrder(id, money,pname) {
 
+    $('#money').val(money);
+    $('#pname').val(pname);
+    $('#ids').val(id);
+    // $('#address').val(aid);
+    $('#aliForm').submit();
+
+}

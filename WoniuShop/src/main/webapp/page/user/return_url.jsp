@@ -70,11 +70,29 @@
         out.println("验签失败");
     }
     //——请在这里编写您的程序（以上代码仅作参考）——
+    ProductMapper mapper = DBUtil.getMapper(ProductMapper.class);
+    AddressMapper addressMapper = DBUtil.getMapper(AddressMapper.class);
 
     String uid = (String) session.getAttribute("uid");
     String idsStr = (String) session.getAttribute("ids");
-    String aid = (String) session.getAttribute("address");
-    System.out.println(uid);
+    String aidStr = (String) session.getAttribute("address");
+    Integer aid=null;
+    Address address = new Address();
+    String addr="空";
+    if ("".equals(aidStr)){
+    	address.setUid(Integer.parseInt(uid));
+        List<Address> addressList = addressMapper.findByCondition(address, "id", "DESC");
+        if (!addressList.isEmpty()){
+            aid=addressList.get(0).getId();
+            addr = addressList.get(0).getArea() + addressList.get(0).getLocation();
+        }
+    }else {
+        address.setId(Integer.parseInt(aidStr));
+        List<Address> addressList = addressMapper.findByCondition(address, "id", "DESC");
+        addr = addressList.get(0).getArea() + addressList.get(0).getLocation();
+    }
+
+
     String[] idsStrs = idsStr.split(",");
     Integer[] ids = new Integer[idsStrs.length];
     for (int i = 0; i < ids.length; i++) {
@@ -82,13 +100,17 @@
             ids[i] = Integer.parseInt(idsStrs[i]);
         }
     }
-    System.out.println(ids.toString());
     OrderServiceImpl osi = new OrderServiceImpl();
     List<Order> list = osi.findByIds(ids);
     ArrayList<HashMap<String, Object>> res = new ArrayList<>();
     Product product = new Product();
-    ProductMapper mapper = DBUtil.getMapper(ProductMapper.class);
+    Order updateOrder=new Order();
     for (Order order : list) {
+    	if (!"空".equals(addr)){
+            updateOrder.setId(order.getId());
+            updateOrder.setAid(aid);
+            osi.updateOrder(updateOrder);
+        }
         HashMap<String, Object> map = new HashMap<>();
         map.put("order", order);
         product.setId(order.getPid());
@@ -99,11 +121,14 @@
         map.put("product", product1);
         res.add(map);
     }
-    AddressMapper addressMapper = DBUtil.getMapper(AddressMapper.class);
-    Address address = new Address();
-    address.setId(Integer.parseInt(aid));
-    List<Address> addressList = addressMapper.findByCondition(address, "id", "DESC");
-    String addr = addressList.get(0).getArea() + addressList.get(0).getLocation();
+
+
+
+    //更改订单状态
+    boolean flag = osi.confirmOrderByIds(ids);
+    session.removeAttribute("uid");
+    session.removeAttribute("ids");
+    session.removeAttribute("address");
     DBUtil.close();
     out.println("<div class='container' style='margin-top: 100px'>\n" +
             "    <h2 class='text-center'>订单快照</h2>\n" +
@@ -144,10 +169,10 @@
             "\n" +
             "<div class='row'>\n" +
             "    <div class='col-md-3 col-md-offset-3'>\n" +
-            "        <a class='btn btn-primary' href='page/user/index.jsp;'>返回首页</a>\n" +
+            "        <a class='btn btn-primary' href='order?m=showCommitedOrder&uid="+uid+"'>返回订单中心</a>\n" +
             "    </div>\n" +
             "    <div class='col-md-3 '>\n" +
-            "        <button class='btn btn-danger' type='button' onclick='closeIndex()'>关闭页面</button>\n" +
+            "        <a class='btn btn-primary' href='page/user/index.jsp;'>返回首页</a>\n" +
             "    </div>\n" +
             "</div>"+
             "</div>");
@@ -155,17 +180,6 @@
 <%--<jsp:forward page="order?m=showCommitedOrder&uid=${uid}"></jsp:forward>--%>
 <body>
 
-<script type="javascript">
-
-    function closeIndex() {
-        if (confirm("您确定要关闭本页吗？")){
-            window.opener=null;
-            window.open('','_self');
-
-        }
-    }
-
-</script>
     
 </body>
 </html>

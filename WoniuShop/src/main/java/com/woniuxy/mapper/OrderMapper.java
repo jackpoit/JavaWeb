@@ -64,4 +64,11 @@ public interface OrderMapper {
 	 * @return 订单对象集合
 	 */
 	List<Order> findByIds(@Param("ids") Integer[] ids);
+
+	/**
+	 * 更新订单对象
+	 * @param ids 订单编号集合
+	 * @return 受影响行数
+	 */
+	int confirmOrderByIds(@Param("ids") Integer[] ids);
 }

@@ -37,6 +37,7 @@ $(function () {
 
 
 })
+
 //提交
 function commitOrderAjax(ids) {
     let uid = $('#uid').val();
@@ -47,50 +48,55 @@ function commitOrderAjax(ids) {
         data: {m: "commitOrder", ids: ids},
         dataType: "text",
         success: function (text) {
-            if ("提交成功"==text){
+            if ("提交成功" == text) {
                 alert("马上进入订单页面")
                 location.href = "order?m=showCommitedOrder&uid=" + uid;
-            }else {
+            } else {
                 alert("对不起订单添加失败")
             }
 
         }
     })
 }
+
 function buyNow() {
-    let uid=$('#uid').val();
-    let pid=$('#pid').val();
-    let detail=$('#style .active').text()+","+$('#edition .active').text();
-    let num=$('#num').val();
+    let uid = $('#uid').val();
+    let pid = $('#pid').val();
+    let detail = $('#style .active').text() + "," + $('#edition .active').text();
+    let num = $('#num').val();
     $.ajax({
         url: "order",
         type: "post",
-        data: {m:'addOrder',o_uid:uid,o_pid:pid,o_detail:detail,o_num:num},
+        data: {m: 'addOrder', o_uid: uid, o_pid: pid, o_detail: detail, o_num: num},
         dataType: "text",
         success: function (text) {
             if ('N' == text) {
                 alert('对不起订单添加失败,已帮您添加至购物车');
-            }else{ //成功
+            } else {
                 commitOrderAjax(text);
             }
         }
     })
 }
+
 function shopCartAjax() {
-    let uid=$('#uid').val();
-    let pid=$('#pid').val();
-    let detail=$('#style .active').text()+","+$('#edition .active').text();
-    let num=$('#num').val();
+    let uid = $('#uid').val();
+    let pid = $('#pid').val();
+    let detail = $('#style .active').text() + "," + $('#edition .active').text();
+    let num = $('#num').val();
     $.ajax({
         url: "order",
         type: "post",
-        data: {m:'addOrder',o_uid:uid,o_pid:pid,o_detail:detail,o_num:num},
+        data: {m: 'addOrder', o_uid: uid, o_pid: pid, o_detail: detail, o_num: num},
         dataType: "text",
         success: function (text) {
-            if ('N' == text) {
-                alert('添加购物车失败');
-            }else{ //成功
+            if (parseInt(text) > 0) {
                 alert('添加购物车成功');
+            } else if ('N' == text) {
+                alert('添加购物车失败');
+            } else {
+                alert("请先登录")
+                location.href = "welcome/user"
             }
         }
     })
@@ -98,6 +104,6 @@ function shopCartAjax() {
 
 function forwardDetails(id) {
 
-    location.href="product?m=forwardDetails&pid="+id;
+    location.href = "product?m=forwardDetails&pid=" + id;
 
 }

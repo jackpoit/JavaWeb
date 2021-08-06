@@ -148,6 +148,13 @@
 
                         </ul>
                     </div>
+                    <form action="goAlipay" method="post" class="sr-only" id="aliForm">
+                        <input type="hidden" name="money" id="money">
+                        <input type="hidden" name="pname" id="pname">
+                        <input type="hidden" name="ids" id="ids">
+                        <input type="hidden" name="uid" value="${sesUser.id}">
+                        <input type="hidden" name="address" id="addr">
+                    </form>
                 </div>
             </div>
         </div>
