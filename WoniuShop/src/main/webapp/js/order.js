@@ -89,8 +89,6 @@ function updateTotal() {
 }
 
 
-
-
 //删除
 function deleteOrderAjax(ids) {
     let uid = $('#uid').val();
@@ -136,7 +134,7 @@ function deleteAllOrder() {
 }
 
 $(function () {
-showAllAdd();
+    showAllAdd();
 
 })
 
@@ -155,14 +153,14 @@ function showAllAdd() {
                     "                    <div class='logo col-md-2' style='padding: 0'>\n" +
                     "                        <span class='glyphicon glyphicon-map-marker'></span>\n" +
                     "                    </div>\n" +
-                    "                     <div class='add_id_class' style='display: none'>"+add.id+"</div>"+
+                    "                     <input type='hidden' name='addr' value='"+ add.id +"'>" +
                     "                    <div class='info col-md-10'>\n" +
                     "                        <p>\n" +
-                    "                            <span class='name'>"+add.username+"</span>\n" +
-                    "                            <span class='mobile'>"+add.mobile+"</span>\n" +
+                    "                            <span class='name'>" + add.username + "</span>\n" +
+                    "                            <span class='mobile'>" + add.mobile + "</span>\n" +
                     "                        </p>\n" +
-                    "                        <p>"+add.area+"</p>\n" +
-                    "                        <p>"+add.location+"</p>\n" +
+                    "                        <p>" + add.area + "</p>\n" +
+                    "                        <p>" + add.location + "</p>\n" +
                     "                    </div>\n" +
                     "                </div>\n" +
                     "            </div>"
@@ -183,8 +181,41 @@ function addr_css() {
     })
 
 }
+
 function forwardDetails(id) {
 
-    location.href="product?m=forwardDetails&pid="+id;
+    location.href = "product?m=forwardDetails&pid=" + id;
 
 }
+
+function submitOrder() {
+    let aid=$('.add_active input[name="addr"]').val();
+    let orders = $('input[name="product"]:checked')
+    if (orders.length==0){
+        alert("没有选中的订单");
+        return;
+    }
+
+    let pname = '';
+    let idsStr = '';
+    for (let i = 0; i < orders.length; i++) {
+        pname += orders.eq(i).parent().children().eq(0).val()
+        idsStr += orders.eq(i).val();
+        if (i!=orders.length-1){
+            idsStr+=','
+            pname +=','
+        }
+    }
+    let money = $('#totalPrice').text();
+    let uid = $('#uid').val();
+
+    money = money.replace("¥", "");
+    $('#money').val(money);
+    $('#pname').val(pname);
+    $('#ids').val(idsStr);
+    $('#address').val(aid);
+    $('#aliForm').submit();
+
+}
+
+

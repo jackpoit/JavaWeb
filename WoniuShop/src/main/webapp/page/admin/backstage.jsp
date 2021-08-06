@@ -26,10 +26,10 @@
             <img src="images/logo-woniu.png" width="200px" height="50px" alt="">
         </div>
         <div class="col-md-4 navbar-right userInfo">
-            <img src="images/user/1.jpg" width="50px" class="img-circle" alt="">
-            <span>上海 . 研发部 . 张无忌</span>
-            <a href="#" style="color: yellow">[修改密码]</a>
-            <a href="#" style="color: red">[注销]</a>
+            <img src="${admin.image}" width="50px" class="img-circle" alt="">
+            <span>${admin.username}</span>
+<%--            <a href="#" style="color: yellow">[修改密码]</a>--%>
+            <a href="javascript:;" style="color: red"  onclick=" exitLogin();">[注销]</a>
         </div>
     </div>
 </div>

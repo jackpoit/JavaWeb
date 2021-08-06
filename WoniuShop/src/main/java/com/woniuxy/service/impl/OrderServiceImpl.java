@@ -194,4 +194,12 @@ public class OrderServiceImpl implements OrderService {
 
 		return orderPageModal;
 	}
+
+	@Override
+	public List<Order> findByIds(Integer[] ids) {
+		OrderMapper mapper = DBUtil.getMapper(OrderMapper.class);
+		List<Order> list = mapper.findByIds(ids);
+		DBUtil.close();
+		return list.isEmpty()?null:list;
+	}
 }

@@ -353,16 +353,15 @@ $(function () {
 })
 
 
-
 //订单
 let or_totalPage = 0;
 
 function or_currentPage(num) {
-    let id=$('#uid').val();
+    let id = $('#uid').val();
     $.ajax({
         url: "order",
         type: "post",
-        data: {m: "showByUid", currentPage: num,uid:id},
+        data: {m: "showByUid", currentPage: num, uid: id},
         dataType: "json",
         success: function (info) {
 
@@ -373,7 +372,7 @@ function or_currentPage(num) {
                 if (map.order.hasOwnProperty("endTime")) {
                     endStr = map.order.endTime;
                 }
-                let statusStr = '未付款';
+                let statusStr = '未付款'; //1 未付款
                 let sd = map.order.status
                 if (sd == '2') {
                     statusStr = '已付款';
@@ -393,12 +392,12 @@ function or_currentPage(num) {
                     "                            <td>" + map.order.startTime + "</td>\n" +
                     "                            <td>" + endStr + "</td>\n" +
                     "                            <td>" + statusStr + "</td>\n" +
-                    "                            <td><button type='button' class='btn btn-info'>修改</button></td>"+
-                    "                            <td><button type='button' class='btn btn-danger' onclick='o_deletePros(" + map.order.id + ")'>删除</button></td>\n" +
+                    "                            <td><button type='button' class='btn btn-info' onclick='editOrder(" + map.order.status + "," + map.order.id + ")'>修改</button></td>" +
+                    "                            <td><button type='button' class='btn btn-danger' onclick='o_deletePros(" + map.order.status + "," + map.order.id + ")'>删除</button></td>\n" +
                     "                            </tr>"
             }
             $('#ori_content').html(trs);
-            let lis = "<li><a href='javascript:;' onclick='o_prePage(" + info.pageNum  + ")'>上一页</a></li>";
+            let lis = "<li><a href='javascript:;' onclick='o_prePage(" + info.pageNum + ")'>上一页</a></li>";
             for (let i = 1; i <= info.pages; i++) {
                 if (i == info.pageNum) {
                     lis += "<li class='active'><a href='javascript:;'>" + i + "</a></li>"
@@ -406,11 +405,55 @@ function or_currentPage(num) {
                     lis += "<li><a href='javascript:;' onclick='or_currentPage(" + i + ")'>" + i + "</a></li>"
                 }
             }
-            lis += "<li><a href='javascript:;' onclick='o_nextPage(" + info.pageNum  + ")'>下一页</a></li>";
+            lis += "<li><a href='javascript:;' onclick='o_nextPage(" + info.pageNum + ")'>下一页</a></li>";
             $('#oriPageNav').html(lis);
         }
     });
 }
+
+//修改
+function editOrder(status, id) {
+    let uid = $("#uid").val()
+    if ('1' == status) {
+        let flag = confirm("确定要跳转支付页面吗?");
+        if (flag) {
+            location.href = "order?m=showCommitedOrder&uid=" + uid;
+        } else {
+            return;
+        }
+    } else if ('2' == status) {
+        alert("等待发货 无需操作");
+    } else if ('3' == status) {
+        let flag = confirm("要确定收货吗");
+        if (flag) {
+            location.href = "order?m=confirmOrder&id=" + id;
+
+        } else {
+            return;
+        }
+    } else if ('4' == status) {
+        let flag = confirm("要去评论吗?");
+        if (flag) {
+            location.href = "order?m=showCommitedOrder&uid=" + uid;
+        } else {
+            return;
+        }
+    }
+}
+
+function confirmOrder(id) {
+
+    $.ajax({
+        url: "order",
+        type: "post",
+        data: {m: "confirmOrder", currentPage: num, uid: id},
+        dataType: "json",
+        success: function (info) {
+        }
+    })
+
+}
+
 
 //删除
 function o_deleteAjax(ids) {
@@ -431,7 +474,16 @@ function o_deleteAjax(ids) {
     })
 }
 
-function o_deletePros(id) {
+function o_deletePros(status, id) {
+    if ("2" == status) {
+        alert("已付款 无法删除")
+        return;
+    } else if ('3' == status) {
+        alert("已发货 无法删除")
+        return;
+    }
+
+
     let flag = confirm("您确认要删除" + id + "号商品吗?");
     if (flag) {
         o_deleteAjax(id);

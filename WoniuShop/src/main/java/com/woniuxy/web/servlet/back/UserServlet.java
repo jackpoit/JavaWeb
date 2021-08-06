@@ -1,5 +1,6 @@
 package com.woniuxy.web.servlet.back;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import com.woniuxy.entity.User;
@@ -9,9 +10,7 @@ import com.woniuxy.util.MD5Util;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
@@ -173,5 +172,37 @@ public class UserServlet extends BaseServlet {
 		boolean flag = usi.doRegister(user);
 		resp.getWriter().write("<script>alert('" + (flag ? "添加成功" : "添加失败") + "')</script>");
 		return "redirect:/page/admin/user?m=page";
+	}
+
+	//注销
+	public void exit(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+		HttpSession session = req.getSession();
+		session.invalidate();
+		resp.getWriter().write("Y");
+
+	}
+
+	//登录
+	public void login(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		String username = req.getParameter("l_username");
+		String password = req.getParameter("l_pwd");
+		if (StringUtil.isEmpty(password)) {
+			return;
+		}
+
+		User user = null;
+		String md5Code = "";
+
+		if (StringUtil.isEmpty(md5Code)) {
+			md5Code = MD5Util.getMd5(password, "com.woniuxy");
+		}
+		user = usi.doLogin(new User(username, md5Code, 1));
+
+		HttpSession session = req.getSession();
+		session.setAttribute("admin", user);
+
+		String jsonStr = JSON.toJSONString(user);
+		resp.getWriter().write(jsonStr);
 	}
 }

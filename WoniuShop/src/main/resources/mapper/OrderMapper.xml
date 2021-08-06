@@ -203,5 +203,18 @@
 
     </select>
 
+<!--    7.List<Order> findByIds(@Param("ids") Integer[] ids);-->
+    <select id="findByIds" resultMap="baseMap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM t_order
+        WHERE id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            <if test="id!=null ">
+                #{id}
+            </if>
+        </foreach>
+    </select>
+
 
 </mapper>

@@ -897,7 +897,7 @@ function or_currentPage(num, ono, status, pname) {
                     "                            <td>" + map.order.startTime + "</td>\n" +
                     "                            <td>" + endStr + "</td>\n" +
                     "                            <td>" + statusStr + "</td>\n" +
-                    "                            <td><button type='button' class='btn btn-danger' onclick='o_deletePros(" + map.order.id + ")'><span\n" +
+                    "                            <td><button type='button' class='btn btn-danger' onclick='o_deletePros(" + map.order.id +","+map.order.status+ ")'><span\n" +
                     "                                    class='glyphicon glyphicon-remove'></span>删除</button></td>\n" +
                     "                        </tr>"
             }
@@ -951,8 +951,13 @@ function o_deleteAjax(ids) {
     })
 }
 
-function o_deletePros(id) {
-    let flag = confirm("您确认要删除" + id + "号商品吗?");
+function o_deletePros(id,status) {
+    if ("4" != status&&"1"!=status) {
+        alert("无法删除")
+        return;
+    }
+
+    let flag = confirm("您确认要删除" + id + "号订单吗?");
     if (flag) {
         o_deleteAjax(id);
     }
@@ -1020,7 +1025,19 @@ $(function () {
 
 })
 
-
-
+function exitLogin() {
+    $.ajax({
+        url: "page/admin/user",
+        type: "get",
+        data: {m: "exit"},
+        datatype: "text",
+        success: function (text) {
+            if ("Y" == text) {
+                alert("注销成功");
+                location.href = "welcome/admin";
+            }
+        }
+    })
+}
 
 

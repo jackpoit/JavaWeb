@@ -23,12 +23,13 @@
             <span class="glyphicon glyphicon-send"></span> 蜗牛商城后台登录系统
         </div>
         <div class="col-md-8 col-md-offset-2 text-center" style="padding: 40px 0;">
-            <form action="" class="form-horizontal">
+            <form  class="form-horizontal" id="login_form">
+                <input type="hidden" name="m" value="login">
                 <div class="form-group">
                     <label class="sr-only" for="username"></label>
                     <div class="input-group">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                        <input type="text" id="username" name="username" class="form-control">
+                        <input type="password" id="username" name="l_username" class="form-control">
                     </div>
                 </div>
                 <div class="form-group"></div>
@@ -36,20 +37,36 @@
                     <label class="sr-only" for="pwd"></label>
                     <div class="input-group">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                        <input type="text" id="pwd" name="pwd" class="form-control">
+                        <input type="text" id="pwd" name="l_pwd" class="form-control">
                     </div>
                 </div>
                 <div class="form-group"></div>
                 <div class="form-group ">
                     <div class="col-md-6 col-md-offset-3 ">
-                        <button type="submit" class="btn btn-primary btn-block">Login</button>
-                        <a href="page/admin/back" class="btn btn-primary btn-block">Login</a>
+                        <button type="button" class="btn btn-primary btn-block" onclick="loginBack()">Login</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    function loginBack() {
+        $.ajax({
+            url: "page/admin/user",
+            type: "post",
+            data: $('#login_form').serialize(),
+            dataType: "json",
+            success: function (user) {
+                if (user != null) { //成功
+                    location.href="page/admin/back"
+                } else if (user == null) {
+                    alert("用户名或密码错误")
+                }
+            }
+        })
+    }
 
+</script>
 </body>
 </html>

@@ -8,6 +8,7 @@ import com.woniuxy.entity.Product;
 import com.woniuxy.service.impl.OrderServiceImpl;
 import com.woniuxy.service.impl.ProductServiceImpl;
 import com.woniuxy.util.BaseServlet;
+import org.apache.ibatis.annotations.ResultMap;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -249,8 +250,18 @@ public class OrderServlet extends BaseServlet {
 		System.out.println(s);
 		resp.getWriter().write(s);
 
+	}
 
-
-
+	public void confirmOrder(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		String idStr = req.getParameter("id");
+		if (StringUtil.isEmpty(idStr)){
+			return;
+		}
+		Integer id=Integer.parseInt(idStr);
+		Order order = new Order();
+		order.setId(id);
+		order.setStatus(4);
+		boolean flag = osi.updateOrder(order);
+		resp.getWriter().write(flag ? "Y" : "N");
 	}
 }

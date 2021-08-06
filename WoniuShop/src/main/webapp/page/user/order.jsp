@@ -65,13 +65,13 @@
                     <td width="90px" align="center">单价</td>
                     <td width="100px" align="center">数量</td>
                     <td width="120px" align="center">小计</td>
-                    <td width="100px" align="center">操作</td>
                 </tr>
 
 
                 <c:forEach var="map" items="${list}">
                     <tr class="item">
                         <td class="check">
+                            <input type="hidden" name="z" value="${map.product.pname}">
                             <input type="checkbox" name="product" value="${map.order.id}">
                         </td>
                         <td class="pimg" onclick='forwardDetails(${map.product.id})'>
@@ -82,7 +82,6 @@
                         </td>
                         <td class="size">
                             <p>${map.order.detail}</p>
-
                         </td>
                         <td class="price">
                             ¥<span>${map.product.price}</span>
@@ -112,11 +111,21 @@
             <div class="cal">
                 <span>已选择<span class="num" id="chooseNum">0</span>份订单</span>
                 <span>总价 <span class="totalPrice" id="totalPrice">¥0.00</span></span>
-                <button type="button" class="btn-cal" onclick="commitAllOrder()">结 算</button>
+                <button type="button" class="btn-cal" onclick="submitOrder()">结 算</button>
+                <form action="goAlipay" method="post" class="sr-only" id="aliForm">
+                    <input type="hidden" name="money" id="money">
+                    <input type="hidden" name="pname" id="pname">
+                    <input type="hidden" name="ids" id="ids">
+                    <input type="hidden" name="uid" value="${sesUser.id}">
+                    <input type="hidden" name="address" id="address">
+                </form>
             </div>
         </div>
     </div>
 </c:if>
 
+<div style="display: none" id="returnAliForm">
+
+</div>
 </body>
 </html>

@@ -58,4 +58,10 @@ public interface OrderMapper {
 	List<Order> findBySome(@Param("ono")String ono,@Param("status") Integer status,@Param("pids") Integer[] pids,@Param("uid") Integer uid);
 
 
+	/**
+	 * 根据id查
+	 * @param ids id集合
+	 * @return 订单对象集合
+	 */
+	List<Order> findByIds(@Param("ids") Integer[] ids);
 }

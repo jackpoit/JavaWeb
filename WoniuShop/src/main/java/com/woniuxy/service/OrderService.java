@@ -68,4 +68,7 @@ public interface OrderService {
 	 * @return 包含list的页面信息对象
 	 */
 	OrderPageModal getOnePageBySome(int currentPage, int pageSize, String ono, Integer status, String pname, Integer uid);
+
+
+	List<Order> findByIds(Integer[] ids);
 }

@@ -8,7 +8,6 @@
 //登录按钮 ajax
 $(function () {
 
-
     //得到cookie
     function getCookie(cname) {
         let name = cname + "=";
@@ -26,7 +25,6 @@ $(function () {
     function delCookie(name, domain) {
         document.cookie = name + '=' + getCookie(name) + ';expires=' + (new Date(1)) + ';domain=' + domain + ';path=/';
     }
-
 
     $('#n_nav_loginSpan').click(function () {
         $('#loginModal').modal('show');
@@ -49,7 +47,6 @@ $(function () {
             $('#rememberLogin').prop("checked", true);
         }
     }
-
 
     $('#login_btn').click(function () {
         let uname = $('#l_username').val();
