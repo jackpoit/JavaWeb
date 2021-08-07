@@ -76,18 +76,18 @@
     String uid = (String) session.getAttribute("uid");
     String idsStr = (String) session.getAttribute("ids");
     String aidStr = (String) session.getAttribute("address");
-    Integer aid=null;
+    Integer aid = null;
     Address address = new Address();
-    String addr="";
-    if ("".equals(aidStr)){
-    	address.setUid(Integer.parseInt(uid));
+    String addr = "";
+    if ("".equals(aidStr)) {
+        address.setUid(Integer.parseInt(uid));
         List<Address> addressList = addressMapper.findByCondition(address, "id", "DESC");
-        if (!addressList.isEmpty()){
-            aid=addressList.get(0).getId();
+        if (!addressList.isEmpty()) {
+            aid = addressList.get(0).getId();
             addr = addressList.get(0).getArea() + addressList.get(0).getLocation();
         }
-    }else {
-    	aid=Integer.parseInt(aidStr);
+    } else {
+        aid = Integer.parseInt(aidStr);
         address.setId(Integer.parseInt(aidStr));
         List<Address> addressList = addressMapper.findByCondition(address, "id", "DESC");
         addr = addressList.get(0).getArea() + addressList.get(0).getLocation();
@@ -105,9 +105,9 @@
     List<Order> list = osi.findByIds(ids);
     ArrayList<HashMap<String, Object>> res = new ArrayList<>();
     Product product = new Product();
-    Order updateOrder=new Order();
+    Order updateOrder = new Order();
     for (Order order : list) {
-    	if (!"".equals(addr)){
+        if (!"".equals(addr)) {
             updateOrder.setId(order.getId());
             updateOrder.setAid(aid);
             osi.updateOrder(updateOrder);
@@ -123,8 +123,6 @@
         map.put("product", product1);
         res.add(map);
     }
-
-
 
     //更改订单状态
     boolean flag = osi.confirmOrderByIds(ids);
@@ -148,15 +146,13 @@
         product = (Product) map.get("product");
         order = (Order) map.get("order");
         out.println("\n" +
-                "<tr>"+
+                "<tr>" +
                 "            <td>" + order.getOno() + "</td>\n" +
                 "            <td>" + product.getPname() + "</td>\n" +
                 "            <td> ¥<span>" + product.getPrice() + "</span></td>\n" +
                 "            <td>" + order.getNum() + "</td>\n" +
                 "            <td> ¥<span>" + (product.getPrice().multiply(new BigDecimal(order.getNum()))) + "</span></td>" +
                 "</tr>");
-
-
     }
     out.println("  </tbody>\n" +
             "        <tr>\n" +
@@ -171,17 +167,14 @@
             "\n" +
             "<div class='row'>\n" +
             "    <div class='col-md-3 col-md-offset-3'>\n" +
-            "        <a class='btn btn-primary' href='order?m=showCommitedOrder&uid="+uid+"'>返回订单中心</a>\n" +
+            "        <a class='btn btn-primary' href='order?m=showCommitedOrder&uid=" + uid + "'>返回订单中心</a>\n" +
             "    </div>\n" +
             "    <div class='col-md-3 '>\n" +
             "        <a class='btn btn-primary' href='page/user/index.jsp;'>返回首页</a>\n" +
             "    </div>\n" +
-            "</div>"+
+            "</div>" +
             "</div>");
 %>
-<%--<jsp:forward page="order?m=showCommitedOrder&uid=${uid}"></jsp:forward>--%>
 <body>
-
-    
 </body>
 </html>
