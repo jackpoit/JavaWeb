@@ -349,7 +349,7 @@
                         <label for="e_username" class="control-label col-md-2 "><span
                                 style="color: red">*</span>用户名</label>
                         <div class="col-md-5">
-                            <input type="text" id="e_username" name="e_username" class="form-control" disabled>
+                            <input type="text" id="e_username" name="e_username" class="form-control " readonly>
                         </div>
                     </div>
                     <div class="form-group">

@@ -46,6 +46,7 @@ public class UserServlet extends BaseServlet {
 
 		user.setId(Integer.parseInt(req.getParameter("eid")));
 		String username = req.getParameter("e_username");
+		System.out.println(username);
 		String password = req.getParameter("e_pwd");
 		if (!StringUtil.isEmpty(password)) {
 			user.setPassword(password);

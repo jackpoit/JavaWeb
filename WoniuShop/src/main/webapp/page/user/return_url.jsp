@@ -78,7 +78,7 @@
     String aidStr = (String) session.getAttribute("address");
     Integer aid=null;
     Address address = new Address();
-    String addr="空";
+    String addr="";
     if ("".equals(aidStr)){
     	address.setUid(Integer.parseInt(uid));
         List<Address> addressList = addressMapper.findByCondition(address, "id", "DESC");
@@ -87,6 +87,7 @@
             addr = addressList.get(0).getArea() + addressList.get(0).getLocation();
         }
     }else {
+    	aid=Integer.parseInt(aidStr);
         address.setId(Integer.parseInt(aidStr));
         List<Address> addressList = addressMapper.findByCondition(address, "id", "DESC");
         addr = addressList.get(0).getArea() + addressList.get(0).getLocation();
@@ -106,11 +107,12 @@
     Product product = new Product();
     Order updateOrder=new Order();
     for (Order order : list) {
-    	if (!"空".equals(addr)){
+    	if (!"".equals(addr)){
             updateOrder.setId(order.getId());
             updateOrder.setAid(aid);
             osi.updateOrder(updateOrder);
         }
+        mapper = DBUtil.getMapper(ProductMapper.class);
         HashMap<String, Object> map = new HashMap<>();
         map.put("order", order);
         product.setId(order.getPid());

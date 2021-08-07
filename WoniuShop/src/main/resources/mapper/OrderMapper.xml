@@ -123,6 +123,9 @@
             <if test="status != null">
                 status=#{status},
             </if>
+            <if test="aid != null">
+                aid=#{aid},
+            </if>
         </set>
         WHERE id=#{id}
     </update>

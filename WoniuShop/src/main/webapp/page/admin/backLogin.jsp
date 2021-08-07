@@ -29,7 +29,7 @@
                     <label class="sr-only" for="username"></label>
                     <div class="input-group">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                        <input type="password" id="username" name="l_username" class="form-control">
+                        <input type="text" id="username" name="l_username" class="form-control">
                     </div>
                 </div>
                 <div class="form-group"></div>
@@ -37,7 +37,7 @@
                     <label class="sr-only" for="pwd"></label>
                     <div class="input-group">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                        <input type="text" id="pwd" name="l_pwd" class="form-control">
+                        <input type="password" id="pwd" name="l_pwd" class="form-control">
                     </div>
                 </div>
                 <div class="form-group"></div>

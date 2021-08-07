@@ -159,7 +159,7 @@ public class UserServlet extends BaseServlet {
 			String fileName = part.getSubmittedFileName();
 			String suffix = fileName.substring(fileName.lastIndexOf(".")); // 文件的扩展名
 			fileName = "head" + suffix;
-			String uploadPath = "C:/JavaProgram/java_class/1/" + username;
+			String uploadPath = "D:/MyProgram/nginx-1.18.0/html/upload/" + username;
 			File file = new File(uploadPath);
 			if (!file.exists()) {
 				file.mkdirs(); // 创建用户目录用于存放自己的图片
