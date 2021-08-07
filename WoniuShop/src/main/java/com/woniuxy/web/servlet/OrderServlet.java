@@ -199,10 +199,12 @@ public class OrderServlet extends BaseServlet {
 		if (StringUtil.isEmpty(numStr))
 			return;
 		order.setNum(Integer.parseInt(numStr));
-
+		Integer[] ids=new Integer[1];
+		ids[0]=order.getId();
+		List<Order> list = osi.findByIds(ids);
+		order.setPid(list.get(0).getPid());
 		boolean flag = osi.updateNum(order);
 		resp.getWriter().write(flag ? "Y" : "N");
-
 	}
 
 	//根据关键词分页 后台分页
